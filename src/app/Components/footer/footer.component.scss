@@ -1,0 +1,32 @@
+a{
+  display: flex;
+  align-items: center;
+}
+
+.footer {
+  display: flex;
+  background-color: #0C1E58;
+  color: #fff;
+  padding: 0.5rem;
+  text-align: center;
+  align-items: center;
+  justify-content: space-between;
+
+  .social-media {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+  }
+}
+
+.logo {
+  height: 2rem;
+  width: 4rem;
+}
+
+.img-logo{
+  height: 1rem;
+  width: 1rem;
+}
