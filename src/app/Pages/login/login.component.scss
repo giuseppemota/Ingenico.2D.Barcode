@@ -1,0 +1,81 @@
+.login-forms { // Estilo da div que contém o card
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin-top: 50px;
+}
+
+p-card { // Estilo do card
+  border-radius: 15px;
+
+  h1 { // Título do card
+    font-weight: 600;
+    text-align: center;
+    color: #0C1E58;
+    padding: 30px 20px 20px 20px;
+  }
+
+  p { // Texto de descrição do card
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: #0C1E58;
+    text-align: center;
+    padding: 0 40px 0 40px;
+  }
+
+  form { // Formulário de login
+    padding-top: 70px;
+  }
+}
+
+textarea:focus, input:focus, select:focus { // Reset das bordas dos inputs
+  box-shadow: 0 0 0 0;
+}
+
+div input { // Estilo dos inputs
+  width: 100%;
+  height: 50px;
+  font-size: 1.3rem;
+  background: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 3px solid rgba(#0C1E58, 0.5);
+}
+
+div p-message{
+  transition: 3s;
+}
+
+div input:focus { // Estilo do input no modo focus
+  border: none;
+  border-bottom: 3px solid #0C1E58;
+}
+
+div input::placeholder { // Placeholder dos inputs
+  font-size: 1.3rem;
+  color: rgba(#404B52, 0.5);
+}
+
+.campos { // Div com os conjuntos de inputs
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  height: auto;
+  padding: 0 30px 70px 30px;
+}
+
+.campos div { // Divs com campo de input
+  height: 80px;
+}
+
+form button { // Estilo botão de login
+  width: 100%;
+  height: 100px;
+  background: #0C1E58;
+  color: white;
+  font-size: 1.8rem;
+  border: none;
+  border-radius: 0;
+  cursor: pointer;
+}
