@@ -1,7 +1,31 @@
 <div class="login-forms">
-  <p-card header="Login" styleClass="ui-card-shadow">
-    <form (ngSubmit)="onSubmit()">
+  <p-card [style]="{ width: '400px', background:'#F8F8F8'}">
+    <ng-template pTemplate="header">
+      <h1>LOGIN</h1>
+    </ng-template>
 
+    <p>Seja bem vindo, faça login para continuar.</p>
+
+    <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
+      <div class="campos">
+        <div>
+          <input [(ngModel)]="loginData.username" name="username" pInputText required type="text" placeholder="USUÁRIO" autofocus>
+          <p-message
+            *ngIf="loginForm.controls['username']?.invalid && (loginForm.controls['username'].dirty || !loginForm.controls['username'].untouched)"
+            severity="error"
+            text="Preencha o campo usuário!"></p-message>
+        </div>
+        <div>
+          <input [(ngModel)]="loginData.password" name="password" pInputText placeholder="SENHA" required
+                 type="password">
+          <p-message
+            *ngIf="loginForm.controls['password']?.invalid && (loginForm.controls['password'].dirty || !loginForm.controls['password'].untouched)"
+            severity="error"
+            text="Preencha o campo da senha!"></p-message>
+        </div>
+      </div>
+      <button [disabled]="loginForm.invalid" label="ENTRAR" pButton
+              type="submit"></button>
     </form>
   </p-card>
 </div>
