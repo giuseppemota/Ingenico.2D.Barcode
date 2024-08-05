@@ -1,8 +1,20 @@
+.conteiner{
+  height: 60px;
+  padding: 10px 30px 10px 30px;
+  display: flex;
+  align-items: center;
+  position: sticky;
+}
 .logo {
-  width: 5.5rem;
-  height: 1.5rem;
-  margin-top: 1rem;
-  margin-left: 1rem;
-  margin-bottom:0.5rem;
+  width: 7rem;
 }
 
+@media (max-width: 768px) {
+  .conteiner{
+    justify-content:center;
+    padding: 0;
+  }
+  .logo {
+    width: 6rem;
+  }
+}
