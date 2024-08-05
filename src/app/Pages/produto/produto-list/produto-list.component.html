@@ -1,0 +1,43 @@
+<div class="container">
+    <h1 class="title">Listagem de Produtos</h1>
+    <div class="header">
+      <button pButton type="button" label="Novo Produto" icon="pi pi-plus" (click)="showFormDialog()" class="new-product-button"></button>
+    </div>
+
+    <div class="card-container">
+      <p-card *ngFor="let produto of produtos" class="product-card">
+        <ng-template pTemplate="header">
+          <div class="card-header">
+            <h2>{{ produto.nome }}</h2>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="content">
+          <div class="card-content">
+            <p>Marca: {{ produto.marca }}</p>
+            <p>Validade: {{ produto.validade | date : 'dd/MM/yyyy' }}</p>
+            <p>Peso: {{ produto.peso }} {{ produto.unidadeDeMedida }}</p>
+            <p>Categoria: {{ produto.categoria }}</p>
+          </div>
+        </ng-template>
+        <ng-template pTemplate="footer">
+          <div class="card-footer">
+            <button pButton icon="pi pi-eye" (click)="viewProduct(produto)" pTooltip="Mais detalhes" tooltipPosition="top"  aria-label="Detalhes"></button>
+            <button pButton icon="pi pi-pencil" (click)="editProduct(produto)"  pTooltip="Editar" tooltipPosition="top" aria-label="Editar"></button>
+            <button pButton icon="pi pi-trash" (click)="deleteProduct(produto)"  pTooltip="Excluir" tooltipPosition="top" aria-label="Excluir"></button>
+          </div>
+        </ng-template>
+      </p-card>
+    </div>
+
+    <p-paginator [rows]="rows" [totalRecords]="totalRecords" (onPageChange)="onPageChange($event)" [rowsPerPageOptions]="[9, 18, 27]"></p-paginator>
+
+    <p-dialog header="{{ isEditMode ? 'Editar Produto' : 'Cadastrar Produto' }}" [style]="{width: '80vw'}" [baseZIndex]="10000" [(visible)]="displayFormDialog" [modal]="true" [closable]="true" [resizable]="false" (onHide)="closeFormDialog()">
+        <app-produto-form [product]="selectedProduct" (save)="onSave($event)" (cancel)="closeFormDialog()"></app-produto-form>
+    </p-dialog>
+    <p-dialog header="Detalhes do Produto" [style]="{width: '80vw'}" [baseZIndex]="10000" [(visible)]="displayDetailsDialog" [modal]="true" [closable]="true" [resizable]="false" (onHide)="closeDetailsDialog()">
+      <app-produto-details [product]="selectedProduct"></app-produto-details>
+    </p-dialog>
+  </div>
+  <p-toast></p-toast>
+  <p-confirmDialog></p-confirmDialog>
+
