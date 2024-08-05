@@ -1,0 +1,64 @@
+.form-container {
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.form-content {
+  padding: 2rem;
+}
+
+.form-grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.form-row {
+  display: flex;
+  gap: 1rem;
+}
+
+.form-col {
+  flex: 1;
+}
+
+.p-field {
+  width: 100%; /* Faz com que o campo ocupe toda a largura disponível */
+}
+
+.full-width {
+  width: 100%; /* Faz com que o elemento ocupe toda a largura disponível */
+}
+
+input[type="text"],
+input[type="number"],
+textarea,
+.p-dropdown,
+.p-calendar {
+  width: 100%; /* Faz com que os inputs e textareas ocupem toda a largura do contêiner pai */
+}
+
+/* Alinha os campos em linha e garante largura adequada */
+.form-row-inline {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap; /* Permite quebra de linha se necessário */
+}
+
+.form-col-inline {
+  flex: 1;
+  min-width: 200px; /* Define uma largura mínima para evitar que os campos fiquem muito pequenos */
+}
+
+/* Botões */
+.form-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+@media (max-width: 600px) {
+  .form-row {
+    flex-direction: column;
+  }
+}
