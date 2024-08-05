@@ -1,5 +1,5 @@
 <div class="login-forms">
-  <p-card [style]="{ width: '400px', background:'#F8F8F8'}">
+  <p-card [style]="{background:'#F8F8F8'}">
     <ng-template pTemplate="header">
       <h1>LOGIN</h1>
     </ng-template>
@@ -21,7 +21,7 @@
           <p-message
             *ngIf="loginForm.controls['password']?.invalid && (loginForm.controls['password'].dirty || !loginForm.controls['password'].untouched)"
             severity="error"
-            text="Preencha o campo da senha!"></p-message>
+            text="Preencha o campo senha!"></p-message>
         </div>
       </div>
       <button [disabled]="loginForm.invalid" label="ENTRAR" pButton
