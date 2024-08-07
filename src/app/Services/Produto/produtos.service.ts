@@ -5,7 +5,7 @@ import { Observable, of } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class ProdutosService {
+export class ProdutosService { // TODO: Serviço de teste
   private products: Produto[] = [
     {
       id: 1,
@@ -32,8 +32,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 3,
+      nome: 'Produto 3',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -44,8 +44,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 4,
+      nome: 'Produto 4',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -56,8 +56,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 5,
+      nome: 'Produto 5',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -68,8 +68,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 6,
+      nome: 'Produto 6',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -80,8 +80,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 7,
+      nome: 'Produto 7',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -92,8 +92,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 8,
+      nome: 'Produto 8',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -104,8 +104,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 9,
+      nome: 'Produto 9',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -116,8 +116,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 10,
+      nome: 'Produto 10',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -128,8 +128,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 11,
+      nome: 'Produto 11',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -140,8 +140,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 12,
+      nome: 'Produto 12',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -152,8 +152,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 13,
+      nome: 'Produto 13',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -164,8 +164,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 14,
+      nome: 'Produto 14',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
@@ -176,8 +176,8 @@ export class ProdutosService {
       categoria: 'Bebidas',
     },
     {
-      id: 2,
-      nome: 'Produto 2',
+      id: 15,
+      nome: 'Produto 15',
       descricao: 'Descrição do Produto 2',
       marca: 'Marca 2',
       validade: new Date(),
