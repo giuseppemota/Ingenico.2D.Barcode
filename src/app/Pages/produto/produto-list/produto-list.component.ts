@@ -1,26 +1,26 @@
-import { Component, OnInit } from '@angular/core';
-import { Produto } from '../../../Models/product.model';
-import { ProdutosService } from '../../../Services/Produto/produtos.service';
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { TableModule } from 'primeng/table';
-import { FormsModule } from '@angular/forms';
-import { CommonModule } from '@angular/common';
-import { ButtonModule } from 'primeng/button';
-import { PaginatorModule } from 'primeng/paginator';
-import { ConfirmationService, MessageService } from 'primeng/api';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { ToastModule } from 'primeng/toast';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { CheckboxModule } from 'primeng/checkbox';
-import { InputMaskModule } from 'primeng/inputmask';
-import { CardModule } from 'primeng/card';
-import { TooltipModule } from 'primeng/tooltip';
-import { Router } from '@angular/router';
-import { ProdutoFormComponent } from '../produto-form/produto-form.component';
-import { ProdutoDetailsComponent } from '../produto-details/produto-details.component';
+import {Component, OnInit} from '@angular/core';
+import {Produto} from '../../../Models/product.model';
+import {ProdutosService} from '../../../Services/Produto/produtos.service';
+import {DialogModule} from 'primeng/dialog';
+import {DropdownModule} from 'primeng/dropdown';
+import {TableModule} from 'primeng/table';
+import {FormsModule} from '@angular/forms';
+import {CommonModule} from '@angular/common';
+import {ButtonModule} from 'primeng/button';
+import {PaginatorModule} from 'primeng/paginator';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {ToastModule} from 'primeng/toast';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {CheckboxModule} from 'primeng/checkbox';
+import {InputMaskModule} from 'primeng/inputmask';
+import {CardModule} from 'primeng/card';
+import {TooltipModule} from 'primeng/tooltip';
+import {Router} from '@angular/router';
+import {ProdutoFormComponent} from '../produto-form/produto-form.component';
+import {ProdutoDetailsComponent} from '../produto-details/produto-details.component';
 
 @Component({
   selector: 'app-produto-list',
@@ -58,10 +58,10 @@ export class ProdutoListComponent implements OnInit {
   displayDetailsDialog: boolean = false;
   isEditMode: boolean = false;
   isViewMode: boolean = false;
-  
+
   // Variáveis para paginação
   totalRecords: number = 0;
-  rows: number = 9; // Número de registros por página
+  rows: number = 12; // Número de registros por página
   first: number = 0; // Índice do primeiro registro da página
 
   constructor(
@@ -74,7 +74,7 @@ export class ProdutoListComponent implements OnInit {
   ngOnInit(): void {
     this.loadProducts();
   }
-  
+
 
   loadProducts(): void {
     const page = this.first / this.rows;
@@ -129,7 +129,7 @@ export class ProdutoListComponent implements OnInit {
       icon: 'pi pi-info-circle',
       acceptButtonStyleClass: 'p-button-danger p-button-text',
       rejectButtonStyleClass: 'p-button-text p-button-text',
-      acceptLabel: 'Sim', 
+      acceptLabel: 'Sim',
       rejectLabel: 'Não',
       acceptIcon: 'none',
       rejectIcon: 'none',
@@ -155,13 +155,13 @@ export class ProdutoListComponent implements OnInit {
         this.produtoService.updateProduct(product.id, product).subscribe(() => {
           this.loadProducts();
           this.closeFormDialog();
-          this.router.navigate(['/produtos']); 
+          this.router.navigate(['/produtos']);
         });
       } else {
         this.produtoService.createProduct(product).subscribe(() => {
           this.loadProducts();
           this.closeFormDialog();
-          this.router.navigate(['/produtos']); 
+          this.router.navigate(['/produtos']);
         });
       }
     }
