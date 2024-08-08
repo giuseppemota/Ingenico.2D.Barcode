@@ -1,6 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
-import { ProdutosService } from '../../../Services/Produto/produtos.service';
-import { ActivatedRoute, Router } from '@angular/router';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { Produto } from '../../../Models/product.model';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -9,7 +7,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { CardModule } from 'primeng/card';
 import { InputMaskModule } from 'primeng/inputmask';
-import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
+import {AbstractControl, FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators} from '@angular/forms';
 import { PaginatorModule } from 'primeng/paginator';
 import { ButtonModule } from 'primeng/button';
 import { CommonModule } from '@angular/common';
@@ -44,7 +42,6 @@ import { CalendarModule } from 'primeng/calendar';
     CalendarModule,
     ReactiveFormsModule,
     InputNumberModule,
-
   ],
   templateUrl: './produto-form.component.html',
   styleUrl: './produto-form.component.scss',
@@ -54,10 +51,18 @@ export class ProdutoFormComponent implements OnInit {
   @Output() save = new EventEmitter<Produto>();
   @Output() cancel = new EventEmitter<void>();
 
+  // TODO: Implementar a lógica de categorias
   categorias: { name: string; code: string }[] = [
     { name: 'Categoria 1', code: 'cat1' },
     { name: 'Categoria 2', code: 'cat2' },
     { name: 'Categoria 3', code: 'cat3' },
+  ];
+  unidadesDeMedida: { name: string; code: string }[] = [
+    { name: 'Unidade', code: 'un' },
+    { name: 'Quilograma', code: 'kg' },
+    { name: 'Litro', code: 'l' },
+    { name: 'Grama', code: 'g' },
+    { name: 'Mililitro', code: 'ml'},
   ];
 
   produtoForm!: FormGroup;
@@ -66,28 +71,28 @@ export class ProdutoFormComponent implements OnInit {
 
   ngOnInit(): void {
     this.produtoForm = this.fb.group({
-      nome: ['', Validators.required],
-      marca: [''],
-      descricao: [''],
-      validade: [''],
-      peso: [0],
-      unidadeDeMedida: [''],
-      ingredientes: [''],
-      paisOrigem: [''],
-      categoria: ['']
+      nome: ['', [Validators.required, Validators.minLength(3), Validators.maxLength(50)]],
+      marca: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(30)]],
+      descricao: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
+      validade: ['', [Validators.required, this.validadeValidator]],
+      peso: [0, [Validators.required, Validators.min(0.1), Validators.max(1000)]],
+      unidadeDeMedida: ['', Validators.required],
+      ingredientes: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
+      paisOrigem: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
+      categoria: ['', Validators.required]
     });
 
-    // Inicializar o formulário com os dados do produto, se disponíveis
     if (this.product) {
       this.produtoForm.patchValue(this.product);
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['product'] && changes['product'].currentValue) {
-      this.produtoForm.patchValue(changes['product'].currentValue);
-    }
-  }
+  // TODO: Implementar a lógica de edição
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['product'] && changes['product'].currentValue) {
+  //     this.produtoForm.patchValue(changes['product'].currentValue);
+  //   }
+  // }
 
   onSave(): void {
     if (this.produtoForm.valid) {
@@ -96,6 +101,16 @@ export class ProdutoFormComponent implements OnInit {
   }
 
   onCancel(): void {
+    this.produtoForm.reset();
     this.cancel.emit();
+  }
+
+  validadeValidator(control: AbstractControl): { [key: string]: boolean } | null {
+    const validade = new Date(control.value);
+    const today = new Date();
+    if (validade < today) {
+      return { 'invalidDate': true };
+    }
+    return null;
   }
 }
