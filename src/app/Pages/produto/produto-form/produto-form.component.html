@@ -1,79 +1,83 @@
 <div class="form-container">
   <p-card>
-    <div class="form-content">
-      <form (ngSubmit)="onSave()" [formGroup]="produtoForm">
-        <div class="form-grid">
+    <form (ngSubmit)="onSave()" [formGroup]="produtoForm">
+      <div class="form-grid">
 
-          <!-- Nome e Marca na mesma linha -->
-          <div class="form-row">
-            <div class="p-field form-col">
-              <label for="nome">Nome:</label>
-              <input id="nome" type="text" pInputText formControlName="nome" required />
-            </div>
-
-            <div class="p-field form-col">
-              <label for="marca">Marca:</label>
-              <input id="marca" type="text" pInputText formControlName="marca" />
-            </div>
+        <!-- Nome e Marca na mesma linha -->
+        <div class="form-row">
+          <div class=" form-col">
+            <label for="nome">Nome:</label>
+            <input id="nome" type="text" pInputText formControlName="nome" required/>
           </div>
 
-          <!-- Descrição na linha abaixo -->
-          <div class="p-field full-width">
-            <label for="descricao">Descrição:</label>
-            <textarea id="descricao" pInputTextarea formControlName="descricao" rows="4"></textarea>
-          </div>
-
-          <!-- Validade, Unidade de Medida e Peso na mesma linha -->
-          <div class="form-row">
-            <div class="p-field form-col">
-              <label for="validade">Validade:</label>
-              <p-calendar id="validade" formControlName="validade" dateFormat="dd/mm/yy"></p-calendar>
-            </div>
-
-            <div class="p-field form-col">
-              <label for="unidadeDeMedida">Unidade de Medida:</label>
-              <input id="unidadeDeMedida" type="text" pInputText formControlName="unidadeDeMedida" />
-            </div>
-
-            <div class="p-field form-col">
-              <label for="peso">Peso:</label>
-              <input id="peso" type="number" pInputText formControlName="peso" />
-            </div>
-          </div>
-
-          <!-- Ingredientes em toda a largura -->
-          <div class="p-field full-width">
-            <label for="ingredientes">Ingredientes:</label>
-            <textarea id="ingredientes" pInputTextarea formControlName="ingredientes" rows="4"></textarea>
-          </div>
-
-          <!-- País de Origem e Categoria na mesma linha -->
-          <div class="form-row-inline">
-            <div class="p-field form-col-inline">
-              <label for="paisOrigem">País de Origem:</label>
-              <input id="paisOrigem" type="text" pInputText formControlName="paisOrigem" />
-            </div>
-
-            <div class="p-field form-col-inline">
-              <label for="categoria">Categoria:</label>
-              <p-dropdown
-                id="categoria"
-                [options]="categorias"
-                optionLabel="name"
-                formControlName="categoria"
-                placeholder="Selecione uma categoria"
-                filter="true"
-              ></p-dropdown>
-            </div>
-          </div>
-
-          <!-- Botões -->
-          <div class="form-buttons">
-            <p-button type="submit" label="Salvar" icon="pi pi-check"></p-button>
-            <p-button type="button" (click)="onCancel()" label="Cancelar" icon="pi pi-times" class="p-button-secondary"></p-button>
+          <div class=" form-col">
+            <label for="marca">Marca:</label>
+            <input id="marca" type="text" pInputText formControlName="marca"/>
           </div>
         </div>
-      </form>
-    </div>
+
+        <!-- Descrição na linha abaixo -->
+        <div>
+          <label for="descricao">Descrição:</label>
+          <textarea id="descricao" pInputTextarea formControlName="descricao" rows="4"></textarea>
+        </div>
+
+        <!-- Validade, Unidade de Medida e Peso na mesma linha -->
+        <div class="form-row">
+          <div class="form-col">
+            <label for="validade">Validade:</label>
+            <p-calendar id="validade" formControlName="validade" dateFormat="dd/mm/yy" [style]="{width:'100%'}"></p-calendar>
+          </div>
+          <div class="form-col">
+            <label for="unidadeDeMedida">Unidade de Medida:</label>
+            <p-dropdown
+              [options]="unidadesDeMedida"
+              filter="false"
+              formControlName="unidadeDeMedida"
+              id="unidadeDeMedida"
+              optionLabel="name"
+              placeholder="Selecione uma unidade de medida"
+              [style]="{width:'100%'}"
+            ></p-dropdown>
+          </div>
+          <div class="form-col">
+            <label for="peso">Peso:</label>
+            <input id="peso" type="number" pInputText formControlName="peso"/>
+          </div>
+        </div>
+
+        <!-- Ingredientes em toda a largura -->
+        <div>
+          <label for="ingredientes">Ingredientes:</label>
+          <textarea id="ingredientes" pInputTextarea formControlName="ingredientes" rows="4"></textarea>
+        </div>
+
+        <!-- País de Origem e Categoria na mesma linha -->
+        <div class="form-row">
+          <div class="form-col">
+            <label for="paisOrigem">País de Origem:</label>
+            <input id="paisOrigem" type="text" pInputText formControlName="paisOrigem"/>
+          </div>
+          <div class="form-col">
+            <label for="categoria">Categoria:</label>
+            <p-dropdown
+              [options]="categorias"
+              filter="true"
+              formControlName="categoria"
+              id="categoria"
+              optionLabel="name"
+              placeholder="Selecione uma categoria"
+              [style]="{width:'100%'}"
+            ></p-dropdown>
+          </div>
+        </div>
+
+        <!-- Botões -->
+        <div class="form-buttons">
+          <p-button [disabled]="produtoForm.invalid" type="submit" label="Salvar" icon="pi pi-check"></p-button>
+          <p-button type="button" (click)="onCancel()" label="Cancelar" icon="pi pi-times" [style]="{background:'gray', color:'white', border:'none'}"></p-button>
+        </div>
+      </div>
+    </form>
   </p-card>
 </div>
