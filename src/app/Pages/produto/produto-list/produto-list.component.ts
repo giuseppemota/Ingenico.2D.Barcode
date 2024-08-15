@@ -48,7 +48,7 @@ import {ProdutoDetailsComponent} from '../produto-details/produto-details.compon
   ],
   templateUrl: './produto-list.component.html',
   styleUrl: './produto-list.component.scss',
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService, MessageService]
 })
 export class ProdutoListComponent implements OnInit {
 
@@ -68,7 +68,7 @@ export class ProdutoListComponent implements OnInit {
     private produtoService: ProdutosService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
   ) {}
 
   ngOnInit(): void {
@@ -166,7 +166,6 @@ export class ProdutoListComponent implements OnInit {
       }
     }
   }
-
 
   // saveProduct(product: Produto): void {
   //   if (this.isEditMode) {

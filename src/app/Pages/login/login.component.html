@@ -1,4 +1,6 @@
 <div class="login-forms">
+  <p-message *ngIf="errorMessage" severity="error" text="{{ errorMessage }}" [style]="{margin:'20px'}"></p-message>
+
   <p-card [style]="{background:'#F8F8F8'}">
     <ng-template pTemplate="header">
       <h1>LOGIN</h1>

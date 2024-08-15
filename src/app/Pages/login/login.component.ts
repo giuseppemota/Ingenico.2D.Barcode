@@ -39,21 +39,16 @@ export class LoginComponent {
 
   onSubmit() {
     this.authService.loginUser(this.loginData.username, this.loginData.password).subscribe({
-      next: (response) => {
-        // Handle successful login
+      next: () => {
         this.errorMessage = '';
-        this.router.navigate(['/produtos']).then(() => {
-          alert('Redirecionado para /produtos com sucesso');
-        });
+        this.router.navigate(['/produtos']);
       },
       error: (error) => {
-        // Handle login error
-        if (error.status === 400) {
-          this.errorMessage = 'Bad Request: Verifique os dados fornecidos.';
+        if (error.status === 400 && error.error) {
+          this.errorMessage = error.error.message || 'Email ou Senha inválidos.';
         } else {
-          this.errorMessage = 'Login failed. Please check your username and password.';
+          this.errorMessage = 'Verifique o email e a senha fornecidos.';
         }
-        alert('Login failed');
       }
     });
   }
