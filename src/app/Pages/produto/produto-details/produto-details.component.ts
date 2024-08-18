@@ -2,11 +2,12 @@ import { Component, Input, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProdutosService } from '../../../Services/Produto/produtos.service';
 import { Produto } from '../../../Models/product.model';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-produto-details',
   standalone: true,
-  imports: [],
+  imports: [CommonModule],
   templateUrl: './produto-details.component.html',
   styleUrl: './produto-details.component.scss'
 })
