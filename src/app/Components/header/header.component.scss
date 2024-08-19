@@ -3,18 +3,24 @@
   padding: 10px 30px 10px 30px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
   position: sticky;
 }
 .logo {
-  width: 7rem;
+  width: 8rem;
+}
+.btn-logout{
+  height: 35px;
+  width: 100px;
 }
 
+
 @media (max-width: 768px) {
-  .conteiner{
-    justify-content:center;
-    padding: 0;
-  }
   .logo {
     width: 6rem;
+  }
+  .btn-logout{
+    height: 35px;
+    width: 90px;
   }
 }

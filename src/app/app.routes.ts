@@ -7,5 +7,5 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'produtos', component: ProdutoListComponent },
   { path: 'produtos/:id', component: ProdutoDetailsComponent },
-  { path: '**', redirectTo: 'produtos' }
+  { path: '**', redirectTo: 'login' }
 ];
