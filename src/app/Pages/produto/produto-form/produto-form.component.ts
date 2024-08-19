@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, SimpleChanges } from '@angular/core';
 import { Produto } from '../../../Models/product.model';
 import { DialogModule } from 'primeng/dialog';
 import { DropdownModule } from 'primeng/dropdown';
@@ -17,6 +17,8 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
+import { MessagesModule } from 'primeng/messages';
+import { MessageModule } from 'primeng/message';
 
 @Component({
   selector: 'app-produto-form',
@@ -42,6 +44,7 @@ import { CalendarModule } from 'primeng/calendar';
     CalendarModule,
     ReactiveFormsModule,
     InputNumberModule,
+    MessageModule
   ],
   templateUrl: './produto-form.component.html',
   styleUrl: './produto-form.component.scss',
@@ -88,11 +91,11 @@ export class ProdutoFormComponent implements OnInit {
   }
 
   // TODO: Implementar a lógica de edição
-  // ngOnChanges(changes: SimpleChanges): void {
-  //   if (changes['product'] && changes['product'].currentValue) {
-  //     this.produtoForm.patchValue(changes['product'].currentValue);
-  //   }
-  // }
+   ngOnChanges(changes: SimpleChanges): void {
+     if (changes['product'] && changes['product'].currentValue) {
+       this.produtoForm.patchValue(changes['product'].currentValue);
+    }
+   }
 
   onSave(): void {
     if (this.produtoForm.valid) {

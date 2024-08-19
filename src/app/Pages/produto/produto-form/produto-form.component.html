@@ -8,11 +8,13 @@
           <div class=" form-col">
             <label for="nome">Nome:</label>
             <input id="nome" type="text" pInputText formControlName="nome" required/>
+            <p-message *ngIf="produtoForm.get('nome')?.touched && produtoForm.get('nome')?.invalid" severity="error" text="O nome é obrigatório e deve ter entre 3 e 50 caracteres"></p-message>
           </div>
 
           <div class=" form-col">
             <label for="marca">Marca:</label>
             <input id="marca" type="text" pInputText formControlName="marca"/>
+            <p-message *ngIf="produtoForm.get('marca')?.touched && produtoForm.get('marca')?.invalid" severity="error" text="A marca é obrigatória e deve ter entre 2 e 30 caracteres"></p-message>
           </div>
         </div>
 
@@ -20,6 +22,7 @@
         <div>
           <label for="descricao">Descrição:</label>
           <textarea id="descricao" pInputTextarea formControlName="descricao" rows="4"></textarea>
+          <p-message *ngIf="produtoForm.get('descricao')?.touched && produtoForm.get('descricao')?.invalid" severity="error" text="A descrição é obrigatória e deve ter entre 10 e 200 caracteres"></p-message>
         </div>
 
         <!-- Validade, Unidade de Medida e Peso na mesma linha -->
@@ -27,6 +30,7 @@
           <div class="form-col">
             <label for="validade">Validade:</label>
             <p-calendar id="validade" formControlName="validade" dateFormat="dd/mm/yy" [style]="{width:'100%'}"></p-calendar>
+            <p-message *ngIf="produtoForm.get('validade')?.touched && produtoForm.get('validade')?.invalid" severity="error" text="A validade deve ser uma data futura"></p-message>
           </div>
           <div class="form-col">
             <label for="unidadeDeMedida">Unidade de Medida:</label>
@@ -39,10 +43,12 @@
               placeholder="Selecione uma unidade de medida"
               [style]="{width:'100%'}"
             ></p-dropdown>
+            <p-message *ngIf="produtoForm.get('unidadeDeMedida')?.touched && produtoForm.get('unidadeDeMedida')?.invalid" severity="error" text="Selecione uma unidade de medida"></p-message>
           </div>
           <div class="form-col">
             <label for="peso">Peso:</label>
             <input id="peso" type="number" pInputText formControlName="peso"/>
+            <p-message *ngIf="produtoForm.get('peso')?.touched && produtoForm.get('peso')?.invalid" severity="error" text="O peso deve estar entre 0.1 e 1000"></p-message>
           </div>
         </div>
 
@@ -50,6 +56,7 @@
         <div>
           <label for="ingredientes">Ingredientes:</label>
           <textarea id="ingredientes" pInputTextarea formControlName="ingredientes" rows="4"></textarea>
+          <p-message *ngIf="produtoForm.get('ingredientes')?.touched && produtoForm.get('ingredientes')?.invalid" severity="error" text="Os ingredientes são obrigatórios e devem ter entre 5 e 100 caracteres"></p-message>
         </div>
 
         <!-- País de Origem e Categoria na mesma linha -->
@@ -57,6 +64,7 @@
           <div class="form-col">
             <label for="paisOrigem">País de Origem:</label>
             <input id="paisOrigem" type="text" pInputText formControlName="paisOrigem"/>
+            <p-message *ngIf="produtoForm.get('paisOrigem')?.touched && produtoForm.get('paisOrigem')?.invalid" severity="error" text="O país de origem é obrigatório e deve ter entre 2 e 50 caracteres"></p-message>
           </div>
           <div class="form-col">
             <label for="categoria">Categoria:</label>
@@ -69,13 +77,14 @@
               placeholder="Selecione uma categoria"
               [style]="{width:'100%'}"
             ></p-dropdown>
+            <p-message *ngIf="produtoForm.get('categoria')?.touched && produtoForm.get('categoria')?.invalid" severity="error" text="Selecione uma categoria"></p-message>
           </div>
         </div>
 
         <!-- Botões -->
         <div class="form-buttons">
-          <p-button [disabled]="produtoForm.invalid" type="submit" label="Salvar" icon="pi pi-check"></p-button>
-          <p-button type="button" (click)="onCancel()" label="Cancelar" icon="pi pi-times" [style]="{background:'gray', color:'white', border:'none'}"></p-button>
+          <p-button [disabled]="produtoForm.invalid" type="submit" label="Salvar" icon="pi pi-check" [style]="{background: ' #0C1E58', border: 'none'}"></p-button>
+          <p-button type="button" (click)="onCancel()" label="Cancelar" icon="pi pi-times" [style]="{background: 'white', 'border-color': '#0C1E58', 'color': '#0C1E58'}"></p-button>
         </div>
       </div>
     </form>

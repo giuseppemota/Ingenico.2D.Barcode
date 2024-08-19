@@ -118,7 +118,7 @@ export class ProdutoListComponent implements OnInit {
       this.selectedProduct = data;
       this.isEditMode = true;
       this.isViewMode = false;
-      this.displayFormDialog = true;
+      this.displayFormDialog = true;  
     });
   }
 
