@@ -219,4 +219,8 @@ export class ProdutosService { // TODO: Serviço de teste
     this.products = this.products.filter((p) => p.id !== id);
     return of();
   }
+
+  getSimilares(currentProductId: number): Produto[] {
+    return this.products.filter(product => product.id !== currentProductId).slice(0, 8);
+  }
 }
