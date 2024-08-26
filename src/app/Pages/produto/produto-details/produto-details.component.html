@@ -1,11 +1,38 @@
-<!--TODO: Criar o template do componente de detalhes do produto-->
-<div class="product-detail-container">
-    <h2>{{ product.nome }}</h2>
-    <p>Descrição: {{ product.descricao }}</p>
-    <p>Marca: {{ product.marca }}</p>
-    <p>Validade: {{ product.validade | date: 'dd/MM/yyyy' }}</p>
-    <p>Unidade de Medida: {{ product.unidadeDeMedida }}</p>
-    <p>Ingredientes: {{ product.ingredientes }}</p>
-    <p>País de Origem: {{ product.paisOrigem }}</p>
-    <p>Categoria: {{ product.categoria }}</p>
-  </div>
+<section>
+  <div class="container">
+    <h1 class="card-title">{{ product.nome || "Nome do Produto" }}</h1>
+
+    <div class="card-content">
+      <div class="card-image">
+        <img alt="Imagem do(a) {{product.nome}}" src="{{ product.image || 'assets/noImage.svg' }}">
+      </div> <!-- fim do card-image -->
+      <div class="card-detalhes">
+        <div class="precos">
+          <p class="preco-anterior">de: <s>{{ product.precoAnterior || "00,00" }}</s></p>
+          <p class="preco-atual">R$ {{ product.preco || "00,00" }}</p>
+        </div> <!-- fim do precos -->
+        <div class="descricao-conjunto">
+          <div class="descricao-ingredientes">
+            <p class="titulo">INGREDIENTES:</p>
+            <p class="conteudo-ingredientes">{{ product.ingredientes || "Ingredientes do Produto" }}</p>
+          </div> <!-- fim do descricao-ingredientes -->
+          <div class="descricao-extra">
+            <p class="titulo">CONTÉM:</p>
+            <p class="titulo">{{ product.alergicos || "ALÉRGICOS DO PRODUTO" }}</p>
+          </div> <!-- fim do descricao-extra -->
+          <div class="descricao-extra">
+            <p class="titulo">VALIDADE:</p>
+            <p class="titulo">{{ product.validade | date: 'dd/MM/yyyy' }}</p>
+          </div> <!-- fim do descricao-extra -->
+        </div> <!-- fim do descricao-conjunto -->
+      </div> <!-- fim do card-detalhes -->
+    </div> <!-- fim do card-content -->
+
+    <div class="historia-produto">
+      <h1>HISTÓRIA DO PRODUTO</h1>
+    </div>
+
+    <app-carrossel-similares></app-carrossel-similares>
+
+  </div> <!-- fim do container -->
+</section>

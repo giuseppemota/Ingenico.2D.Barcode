@@ -1,0 +1,108 @@
+// Reset
+p{
+  margin: 0;
+}
+
+section{
+  background-color: #f8f8f8;
+}
+
+.container{
+  background-color: #f8f8f8;
+  max-width: 1200px;
+}
+
+.card-title{
+  text-transform: uppercase;
+  font-size: 1.7em;
+  color: #0C1E58;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 15px;
+  margin:0;
+}
+
+.card-content{
+  height: auto;
+  display: flex;
+  flex-direction: row;
+  background-color: #ffff;
+}
+
+.card-image{
+  width: 750px;
+
+  img{
+    width: 100%;
+    height: 100%;
+  }
+}
+
+.card-detalhes{
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px;
+  width: 100%;
+}
+
+.precos{
+  color: #19B6DD;
+  font-weight: bold;
+
+  .preco-anterior{
+    font-size: .8rem;
+    margin: 0;
+    line-height: 1;
+  }
+  .preco-atual{
+    font-size: 2.5rem;
+    margin: 0;
+    line-height: 1;
+  }
+}
+
+.descricao-conjunto{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.descricao-ingredientes{
+  display: flex;
+  flex-direction: column;
+}
+
+.conteudo-ingredientes{
+  font-size: .9rem;
+  text-align: justify;
+  line-height: 1.3;
+}
+
+.descricao-extra {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 5px;
+  font-weight: bold;
+}
+
+.titulo{
+  font-size: .9rem;
+  font-weight: bold;
+}
+
+.historia-produto{
+  width: 100%;
+  height: 400px;
+  background-color: #f8f8f8;
+}
+
+@media (min-width: 1024px) {
+  section{
+    display:flex;
+    justify-content: center;
+  }
+}
