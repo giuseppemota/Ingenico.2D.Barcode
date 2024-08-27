@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { User } from '../Models/user';
 import { BehaviorSubject, tap } from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import {Router} from "@angular/router";
+import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 
-interface AuthResponseData{
+interface AuthResponseData {
   token: string;
   expiration: Date;
 }
@@ -49,9 +49,11 @@ export class AuthService {
       .post<AuthResponseData>(this.url_login, {
         email: email,
         password: password,
-      }).pipe(
+      })
+      .pipe(
         tap((resData) => {
           localStorage.setItem('token', resData.token);
+          localStorage.setItem('expiration', resData.expiration.toString());
         })
       );
   }
@@ -60,6 +62,7 @@ export class AuthService {
     this.usuario.next(null);
     if (typeof window !== 'undefined' && window.localStorage) {
       localStorage.removeItem('token');
+      localStorage.removeItem('expiration');
     }
     this.router.navigate(['/login']);
   }
