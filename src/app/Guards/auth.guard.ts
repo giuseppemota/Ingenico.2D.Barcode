@@ -10,9 +10,8 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean | UrlTree {
     if (typeof localStorage !== 'undefined') {
       const expiration = localStorage.getItem('expiration');
-      const isAuth =
-        expiration !== null && parseInt(expiration, 10) > Date.now();
-
+    const isAuth =
+      expiration !== null && parseInt(expiration) <= Date.now() ? true : false;
       if (isAuth) {
         return true;
       }
