@@ -27,12 +27,36 @@
         </div> <!-- fim do descricao-conjunto -->
       </div> <!-- fim do card-detalhes -->
     </div> <!-- fim do card-content -->
-
-    <div class="historia-produto">
-      <h1>HISTÓRIA DO PRODUTO</h1>
+    <div class="detalhes">
+      <h3>DETALHES</h3>
+      <table>
+        <tbody>
+        <tr>
+            <td class="cabecalho">CATEGORIA:</td>
+            <td class="conteudo"> {{ product.categoria }}</td>
+            <td class="cabecalho">MARCA:</td>
+            <td class="conteudo"> {{ product.marca }}</td>
+        </tr>
+        <tr>
+          <td class="cabecalho">PESO ({{ product.unidadeDeMedida }}):</td>
+          <td class="conteudo"> {{ product.peso }}</td>
+          <td class="cabecalho">PAIS DE ORIGEM:</td>
+          <td class="conteudo"> {{ product.paisOrigem }}</td>
+        </tr>
+        </tbody>
+      </table>
     </div>
-
-    <app-carrossel-similares></app-carrossel-similares>
-
+    <div class="historia-produto">
+      <div *ngIf="product.historia">
+        {{ product.historia }}
+      </div>
+      <div *ngIf="product.tabelaNutricional">
+        {{ product.tabelaNutricional }}
+      </div>
+    </div> <!-- fim do historia-produto -->
+    <div class="div-carrossel">
+      <p class="titulo-carrossel">Produtos Semelhantes:</p>
+      <app-carrossel-similares></app-carrossel-similares>
+    </div>
   </div> <!-- fim do container -->
 </section>

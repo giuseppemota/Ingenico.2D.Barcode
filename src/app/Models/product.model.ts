@@ -1,12 +1,15 @@
 export interface Produto {
-    id: number;
-    nome: string;
-    descricao: string;
-    marca: string;
-    validade: Date;
-    peso: number;
-    unidadeDeMedida: string;
-    ingredientes: string;
-    paisOrigem: string;
-    categoria: string;
-  }
+  id: number;
+  nome: string;
+  validade: Date;
+  ingredientes: string;
+  descricao: string;
+  marca: string;
+  peso: number;
+  unidadeDeMedida: string;
+  paisOrigem: string;
+  categoria: string;
+  // alergicos: string;
+  // historiaProduto: string;
+  // tabelaNutricional: string;
+}
