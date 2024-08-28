@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
-import {
-  CanActivate,
-  Router,
-} from '@angular/router';
+import { CanActivate, Router, UrlTree } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -10,13 +7,18 @@ import {
 export class AuthGuard implements CanActivate {
   constructor(private router: Router) {}
 
-  canActivate() {
-        const expiration = localStorage.getItem('expiration');
-        const isAuth = expiration !== null && parseInt(expiration) <= Date.now() ? true : false;
-        if (isAuth) {
-          return true;
-        }
-        alert('Precisa estar logado!');
-        return this.router.createUrlTree(['/login']);
+  canActivate(): boolean | UrlTree {
+    if (typeof localStorage !== 'undefined') {
+      const expiration = localStorage.getItem('expiration');
+      const isAuth =
+        expiration !== null && parseInt(expiration, 10) > Date.now();
+
+      if (isAuth) {
+        return true;
+      }
+    }
+
+    alert('Precisa estar logado!');
+    return this.router.createUrlTree(['/login']);
   }
 }
