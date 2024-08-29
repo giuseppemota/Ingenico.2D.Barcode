@@ -1,26 +1,28 @@
-import {Component, OnInit} from '@angular/core';
-import {Produto} from '../../../Models/product.model';
-import {ProdutosService} from '../../../Services/Produto/produtos.service';
-import {DialogModule} from 'primeng/dialog';
-import {DropdownModule} from 'primeng/dropdown';
-import {TableModule} from 'primeng/table';
-import {FormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {ButtonModule} from 'primeng/button';
-import {PaginatorModule} from 'primeng/paginator';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {ToastModule} from 'primeng/toast';
-import {InputTextModule} from 'primeng/inputtext';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {InputNumberModule} from 'primeng/inputnumber';
-import {CheckboxModule} from 'primeng/checkbox';
-import {InputMaskModule} from 'primeng/inputmask';
-import {CardModule} from 'primeng/card';
-import {TooltipModule} from 'primeng/tooltip';
-import {Router} from '@angular/router';
-import {ProdutoFormComponent} from '../produto-form/produto-form.component';
-import {ProdutoDetailsComponent} from '../produto-details/produto-details.component';
+import { Component, OnInit } from '@angular/core';
+import { Produto } from '../../../Models/product.model';
+import { ProdutosService } from '../../../Services/Produto/produtos.service';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { PaginatorModule } from 'primeng/paginator';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputMaskModule } from 'primeng/inputmask';
+import { CardModule } from 'primeng/card';
+import { TooltipModule } from 'primeng/tooltip';
+import { Router } from '@angular/router';
+import { ProdutoFormComponent } from '../produto-form/produto-form.component';
+import { ProdutoDetailsComponent } from '../produto-details/produto-details.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { info } from 'console';
 
 @Component({
   selector: 'app-produto-list',
@@ -45,19 +47,22 @@ import {ProdutoDetailsComponent} from '../produto-details/produto-details.compon
     TooltipModule,
     ProdutoFormComponent,
     ProdutoDetailsComponent,
+    QRCodeModule,
   ],
   templateUrl: './produto-list.component.html',
   styleUrl: './produto-list.component.scss',
-  providers: [ConfirmationService, MessageService]
+  providers: [ConfirmationService, MessageService],
 })
 export class ProdutoListComponent implements OnInit {
-
   produtos: Produto[] = [];
   selectedProduct!: Produto;
   displayFormDialog: boolean = false;
   displayDetailsDialog: boolean = false;
+  displayQrCodeDialog: boolean = false;
   isEditMode: boolean = false;
   isViewMode: boolean = false;
+  selectedQrCode: string = 'nao vazio';
+  infoQrCode: string = '';
 
   // Variáveis para paginação
   totalRecords: number = 0;
@@ -68,13 +73,12 @@ export class ProdutoListComponent implements OnInit {
     private produtoService: ProdutosService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService,
-    private router: Router,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
     this.loadProducts();
   }
-
 
   loadProducts(): void {
     const page = this.first / this.rows;
@@ -90,12 +94,25 @@ export class ProdutoListComponent implements OnInit {
     this.displayFormDialog = true;
   }
 
+  showQrCodeDialog(produto: Produto): void {
+    this.produtoService.getProductById(produto.id).subscribe((data: any) => {
+      this.infoQrCode = JSON.stringify(data);
+      this.displayQrCodeDialog = true;
+      this.selectLinkProduct();
+
+    });
+  }
+
   closeFormDialog() {
     this.displayFormDialog = false;
   }
 
   closeDetailsDialog() {
     this.displayDetailsDialog = false;
+  }
+
+  closeQrCodeDialog() {
+    this.displayQrCodeDialog = false;
   }
 
   onPageChange(event: any): void {
@@ -118,7 +135,7 @@ export class ProdutoListComponent implements OnInit {
       this.selectedProduct = data;
       this.isEditMode = true;
       this.isViewMode = false;
-      this.displayFormDialog = true;  
+      this.displayFormDialog = true;
     });
   }
 
@@ -166,7 +183,14 @@ export class ProdutoListComponent implements OnInit {
       }
     }
   }
+  selectInfoProduct(): void {
+    this.infoQrCode;
+    this.selectedQrCode = this.infoQrCode;
 
+  }
+  selectLinkProduct(): void {
+    this.selectedQrCode = 'http://localhost:4200/produtos/' + JSON.parse(this.infoQrCode).id;
+  }
   // saveProduct(product: Produto): void {
   //   if (this.isEditMode) {
   //     if (product.id) {

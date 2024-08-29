@@ -28,6 +28,7 @@
                   tooltipPosition="top"></button>
           <button (click)="deleteProduct(produto)" aria-label="Excluir" icon="pi pi-trash" pButton pTooltip="Excluir"
                   tooltipPosition="top"></button>
+          <button (click)="showQrCodeDialog(produto)" aria-label="Code" pButton pTooltip="Qr Code" icon="pi pi-qrcode" tooltipPosition="top" ></button>
         </div>
       </ng-template>
     </p-card>
@@ -51,6 +52,7 @@
                       [product]="selectedProduct"
     ></app-produto-form>
   </p-dialog>
+
   <p-dialog (onHide)="closeDetailsDialog()"
             [(visible)]="displayDetailsDialog"
             [baseZIndex]="10000"
@@ -60,6 +62,28 @@
             [style]="{width: '90vw'}"
             header="Detalhes do Produto">
     <app-produto-details [product]="selectedProduct"></app-produto-details>
+  </p-dialog>
+
+  <p-dialog (onHide)="closeQrCodeDialog()"
+            [(visible)]="displayQrCodeDialog"
+            [baseZIndex]="10000"
+            [closable]="true"
+            [modal]="true"
+            [resizable]="true"
+            [style]="{width: '90vw'}"
+            header="Qr Code do Produto">
+
+            <div class="qr-button">
+            <button (click)="selectLinkProduct()">Link dinamico</button>
+            <button (click)="selectInfoProduct()">Infos Produto</button>
+            </div>
+
+            <qrcode style="display: flex; justify-content: space-around;"
+                    [qrdata]="selectedQrCode"
+                    [margin]="2"
+                    [width] = "350">
+            </qrcode>
+
   </p-dialog>
 </div>
 <p-toast></p-toast>
