@@ -1,0 +1,30 @@
+<div class="card">
+  <p-carousel
+    [value]="produtosSimilares"
+    [numVisible]="4"
+    [numScroll]="2"
+    [circular]="true"
+    [responsiveOptions]="responsiveOptions">
+    <ng-template let-productSimilar pTemplate="item">
+      <div class="border-1 surface-border border-round m-2 p-3 card-similar">
+        <div class="mb-3">
+          <div class="relative mx-auto">
+            <img
+              [alt]="productSimilar.nome"
+              class="w-full border-round img-similar img-similar"
+              src="{{ productSimilar.image || 'assets/noImage.svg' }}"/>
+          </div> <!-- fim div image carrossel -->
+        </div>
+        <div class="mb-3 font-medium" style="height: 80px;">
+          {{ productSimilar.nome }}
+        </div> <!-- fim div nome produto -->
+        <div class="flex justify-content-between align-items-center">
+          <div class="mt-0 font-semibold text-xl"
+               style="text-align: right;color: #0C1E58;font-weight: bold;font-size: 1.2rem;">
+            ${{ productSimilar.preco || '00,00' }}
+          </div> <!-- fim div preco -->
+        </div>
+      </div>
+    </ng-template>
+  </p-carousel>
+</div> <!-- fim div carousel -->
