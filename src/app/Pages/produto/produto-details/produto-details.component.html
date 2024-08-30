@@ -28,18 +28,22 @@
       </div> <!-- fim do card-detalhes -->
     </div> <!-- fim do card-content -->
     <div class="detalhes">
-      <h3>DETALHES</h3>
+      <h3>DESCRIÇÃO</h3>
       <table>
         <tbody>
         <tr>
             <td class="cabecalho">CATEGORIA:</td>
             <td class="conteudo"> {{ product.categoria }}</td>
-            <td class="cabecalho">MARCA:</td>
-            <td class="conteudo"> {{ product.marca }}</td>
+        </tr>
+        <tr>
+          <td class="cabecalho">MARCA:</td>
+          <td class="conteudo"> {{ product.marca }}</td>
         </tr>
         <tr>
           <td class="cabecalho">PESO ({{ product.unidadeDeMedida }}):</td>
           <td class="conteudo"> {{ product.peso }}</td>
+        </tr>
+        <tr>
           <td class="cabecalho">PAIS DE ORIGEM:</td>
           <td class="conteudo"> {{ product.paisOrigem }}</td>
         </tr>
