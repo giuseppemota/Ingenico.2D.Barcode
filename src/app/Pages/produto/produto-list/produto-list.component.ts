@@ -99,7 +99,6 @@ export class ProdutoListComponent implements OnInit {
       this.infoQrCode = JSON.stringify(data);
       this.displayQrCodeDialog = true;
       this.selectLinkProduct();
-
     });
   }
 
@@ -186,11 +185,55 @@ export class ProdutoListComponent implements OnInit {
   selectInfoProduct(): void {
     this.infoQrCode;
     this.selectedQrCode = this.infoQrCode;
-
   }
   selectLinkProduct(): void {
-    this.selectedQrCode = 'http://localhost:4200/produtos/' + JSON.parse(this.infoQrCode).id;
+    this.selectedQrCode =
+      'http://localhost:4200/produtos/' + JSON.parse(this.infoQrCode).id;
   }
+  printQrCode() {
+    const qrElement = document.querySelector(
+      'qrcode canvas'
+    ) as HTMLCanvasElement;
+    if (qrElement) {
+      const dataUrl = qrElement.toDataURL('image/png');
+
+      const printWindow = window.open('', '_blank', 'width=600,height=400');
+      if (printWindow) {
+        printWindow.document.open();
+        printWindow.document.write(`
+        <html>
+          <head>
+            <title>Imprimir QR Code</title>
+            <style>
+              body {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                height: 100vh;
+                margin: 0;
+              }
+              img {
+                width: 350px;
+                height: 350px;
+              }
+            </style>
+          </head>
+          <body>
+            <img src="${dataUrl}" alt="QR Code">
+            <script type="text/javascript">
+              window.onload = function() {
+                window.print();
+                window.close();
+              };
+            </script>
+          </body>
+        </html>
+      `);
+        printWindow.document.close();
+      }
+    }
+  }
+
   // saveProduct(product: Produto): void {
   //   if (this.isEditMode) {
   //     if (product.id) {

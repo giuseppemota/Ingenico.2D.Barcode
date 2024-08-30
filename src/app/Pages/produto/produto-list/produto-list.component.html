@@ -76,6 +76,7 @@
             <div class="qr-button">
             <button (click)="selectLinkProduct()">Link dinamico</button>
             <button (click)="selectInfoProduct()">Infos Produto</button>
+            <button (click)="printQrCode()">Imprimir Qr Code</button>
             </div>
 
             <qrcode style="display: flex; justify-content: space-around;"
@@ -83,6 +84,7 @@
                     [margin]="2"
                     [width] = "350">
             </qrcode>
+
 
   </p-dialog>
 </div>
