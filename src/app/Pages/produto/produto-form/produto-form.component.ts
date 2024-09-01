@@ -19,6 +19,9 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
 import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
+import { ProdutosService } from '../../../Services/Produto/produtos.service';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-produto-form',
@@ -50,7 +53,7 @@ import { MessageModule } from 'primeng/message';
   styleUrl: './produto-form.component.scss',
 })
 export class ProdutoFormComponent implements OnInit {
-  @Input() product: Produto = {} as Produto;
+  @Input() produto: Produto = {} as Produto;
   @Output() save = new EventEmitter<Produto>();
   @Output() cancel = new EventEmitter<void>();
 
@@ -60,7 +63,7 @@ export class ProdutoFormComponent implements OnInit {
     { name: 'Categoria 2', code: 'cat2' },
     { name: 'Categoria 3', code: 'cat3' },
   ];
-  unidadesDeMedida: { name: string; code: string }[] = [
+  unidadeMedida: { name: string; code: string }[] = [
     { name: 'Unidade', code: 'un' },
     { name: 'Quilograma', code: 'kg' },
     { name: 'Litro', code: 'l' },
@@ -70,7 +73,10 @@ export class ProdutoFormComponent implements OnInit {
 
   produtoForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, 
+    private produtoService : ProdutosService,
+    private messageService: MessageService,
+    private router: Router) {}
 
   ngOnInit(): void {
     this.produtoForm = this.fb.group({
@@ -79,30 +85,82 @@ export class ProdutoFormComponent implements OnInit {
       descricao: ['', [Validators.required, Validators.minLength(10), Validators.maxLength(200)]],
       validade: ['', [Validators.required, this.validadeValidator]],
       peso: [0, [Validators.required, Validators.min(0.1), Validators.max(1000)]],
-      unidadeDeMedida: ['', Validators.required],
+      preco: [
+        null, 
+        [
+          Validators.required, 
+          Validators.pattern(/^\d+(\.\d{1,2})?$/) // Permite números decimais com até duas casas
+        ]
+      ],
+      unidadeMedida: ['', Validators.required],
       ingredientes: ['', [Validators.required, Validators.minLength(5), Validators.maxLength(100)]],
       paisOrigem: ['', [Validators.required, Validators.minLength(2), Validators.maxLength(50)]],
       categoria: ['', Validators.required]
     });
 
-    if (this.product) {
-      this.produtoForm.patchValue(this.product);
+    if (this.produto) {
+      this.produtoForm.patchValue(this.produto);
     }
   }
 
   // TODO: Implementar a lógica de edição
    ngOnChanges(changes: SimpleChanges): void {
-     if (changes['product'] && changes['product'].currentValue) {
-       this.produtoForm.patchValue(changes['product'].currentValue);
+     if (changes['produto'] && changes['produto'].currentValue) {
+       this.produtoForm.patchValue(changes['produto'].currentValue);
     }
    }
 
   onSave(): void {
-    if (this.produtoForm.valid) {
-      this.save.emit(this.produtoForm.value);
-    }
-  }
 
+    const novoProduto: Produto = {
+      nome: this.produtoForm.get('nome')?.value,
+      preco: this.produtoForm.get('preco')?.value,
+      peso: this.produtoForm.get('peso')?.value,
+      unidadeMedida: this.produtoForm.get('unidadeMedida')?.value.name,
+      ingredientes: this.produtoForm.get('ingredientes')?.value,
+      marca: this.produtoForm.get('marca')?.value,
+      descricao: this.produtoForm.get('descricao')?.value,
+      paisOrigem: this.produtoForm.get('paisOrigem')?.value,
+      validade: this.produtoForm.get('validade')?.value.toISOString(),
+      categoria: this.produtoForm.get('categoria')?.value.code,
+    }
+
+    console.log(novoProduto);
+
+    if(this.produtoForm.valid) {
+      this.produtoService.postProduct(novoProduto).subscribe((response: any) => { 
+        if (response && response.produtoId) {
+          this.messageService.add({
+            severity: 'success',
+            summary: 'Sucesso',
+            detail: `Produto "${response.nome}" cadastrado com sucesso!`
+          });
+
+          this.save.emit();
+    
+          this.onCancel();
+    
+          setTimeout(() => {
+            this.router.navigate(['produtos']);
+          }, 2000);
+        } else {
+          this.messageService.add({
+            severity: 'error',
+            summary: 'Erro',
+            detail: 'Ocorreu um erro ao cadastrar o produto. Tente novamente.'
+          });
+        }
+      }, (error) => {
+        console.error('Erro ao cadastrar produto:', error);
+        this.messageService.add({
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Ocorreu um erro ao cadastrar o produto. Verifique sua conexão e tente novamente.'
+        });
+      });
+    }
+  }    
+  
   onCancel(): void {
     this.produtoForm.reset();
     this.cancel.emit();
