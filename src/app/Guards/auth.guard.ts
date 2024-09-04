@@ -11,14 +11,17 @@ export class AuthGuard implements CanActivate {
   canActivate(): boolean | UrlTree {
     if (typeof localStorage !== 'undefined') {
       const expiration = localStorage.getItem('expiration');
-      const isAuth =
-        expiration !== null && parseInt(expiration) <= Date.now();
+      const isAuth = expiration !== null && new Date(expiration).getTime() > Date.now();
       if (isAuth) {
         return true;
       }
     }
-
-    this.messageService.messagemErro({detail:"Você precisa estar logado para acessar essa página.", severity:"info ", summary:"Atenção"});
+  
+    this.messageService.messagemErro({
+      detail: "Você precisa estar logado para acessar essa página.",
+      severity: "info",
+      summary: "Atenção"
+    });
     return this.router.createUrlTree(['/login']);
   }
 }

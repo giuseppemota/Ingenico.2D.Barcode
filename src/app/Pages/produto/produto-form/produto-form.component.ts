@@ -233,10 +233,8 @@ export class ProdutoFormComponent implements OnInit {
 
     if (this.produtoForm) {
      
+      if(produto.produtoId){
       const nomeCategorias = produto.categorias.map((categoria: any) => ({ nome: categoria.nome }));
-
-
-
       this.produtoForm.patchValue({
         nome: produto.nome,
         marca: produto.marca,
@@ -250,6 +248,11 @@ export class ProdutoFormComponent implements OnInit {
         categorias: nomeCategorias,
         tags: produto.tags,
       });
+    }
+
+
+
+      
       
       console.log('Formulário atualizado com o produto:', this.produtoForm.value);
     } else {

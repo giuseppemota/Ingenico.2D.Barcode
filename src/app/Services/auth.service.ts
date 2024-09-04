@@ -3,6 +3,7 @@ import { User } from '../Models/user';
 import { BehaviorSubject, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
+import { environment } from '../../environments/environment.development';
 
 interface AuthResponseData {
   token: string;
@@ -14,7 +15,8 @@ interface AuthResponseData {
 })
 export class AuthService {
   // url_signup = 'http://localhost:5013/v1/Auth';
-  url_login = 'http://localhost:5013/v1/Auth/Login';
+  private apiUrl: string = `${environment.apiUrl}/v1/Auth/Login`;
+
   usuario = new BehaviorSubject<User | null>(null);
 
   constructor(private http: HttpClient, private router: Router) {}
@@ -45,8 +47,9 @@ export class AuthService {
   // }
 
   loginUser(email: string, password: string) {
+    console.log(this.apiUrl);
     return this.http
-      .post<AuthResponseData>(this.url_login, {
+      .post<AuthResponseData>(this.apiUrl, {
         email: email,
         password: password,
       })
