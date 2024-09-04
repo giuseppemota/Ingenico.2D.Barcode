@@ -82,14 +82,13 @@
               filter="false"
               formControlName="unidadeMedida"
               id="unidadeMedida"
-              optionLabel="name"
               placeholder="Selecione uma unidade de medida"
               [style]="{ width: '100%' }"
             ></p-dropdown>
             <p-message
               *ngIf="
                 produtoForm.get('unidadeMedida')?.touched &&
-                produtoForm.get('unidadeDeMedida')?.invalid
+                produtoForm.get('unidadeMedida')?.invalid
               "
               severity="error"
               text="Selecione uma unidade de medida"
@@ -166,27 +165,39 @@
             ></p-message>
           </div>
           <div class="form-col">
-            <label for="categoria">Categoria:</label>
-            <p-dropdown
+            <label for="categorias">Categoria:</label>
+            <p-multiSelect
               [options]="categorias"
-              filter="true"
-              formControlName="categoria"
-              id="categoria"
-              optionLabel="name"
-              placeholder="Selecione uma categoria"
+              formControlName="categorias"
+              optionLabel="nome"
+              placeholder="Selecione as categorias"
               [style]="{ width: '100%' }"
-            ></p-dropdown>
+              display="chip"
+              [showToggleAll]="false"
+            ></p-multiSelect>
             <p-message
               *ngIf="
-                produtoForm.get('categoria')?.touched &&
-                produtoForm.get('categoria')?.invalid
+                produtoForm.get('categorias')?.touched &&
+                produtoForm.get('categorias')?.invalid
               "
               severity="error"
-              text="Selecione uma categoria"
+              text="Selecione pelo menos uma categoria"
             ></p-message>
           </div>
         </div>
-
+        <div class="p-fluid">
+          <div class="p-field">
+            <label for="tags">Marcadores:</label>
+            <p-chips
+              id="tags"
+              formControlName="tags"
+              [max]="5"
+              allowDuplicate="false"
+              separator=","
+            >
+            </p-chips>
+          </div>
+        </div>
         <!-- Botões -->
         <div class="form-buttons">
           <p-button

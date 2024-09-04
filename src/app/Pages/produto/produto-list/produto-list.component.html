@@ -26,8 +26,8 @@
         <div class="card-content">
           <p>Marca: {{ produto.marca }}</p>
           <p>Validade: {{ produto.validade | date : "dd/MM/yyyy" }}</p>
-          <p>Peso: {{ produto.peso }} {{ produto.unidadeMedida }}</p>
-          <p>Categoria: {{ produto.categoria }}</p>
+          <p>Especificação: {{ produto.peso }} {{ produto.unidadeMedida | lowercase }}</p>
+         <!-- <p>Categoria: {{ produto.categorias }}</p> -->
         </div>
       </ng-template>
       <ng-template pTemplate="footer">

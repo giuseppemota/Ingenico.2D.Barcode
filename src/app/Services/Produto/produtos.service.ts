@@ -10,7 +10,7 @@ import { HttpClient } from '@angular/common/http';
 export class ProdutosService { // TODO: Serviço de teste
 
   private apiUrl: string = environment.apiUrl;
-  private products: any[] = [];
+  private products: Produto[] = [];
 
   constructor(private http: HttpClient) { }
   
@@ -229,12 +229,10 @@ export class ProdutosService { // TODO: Serviço de teste
         }
 
         this.products = products; // Armazena produtos recebidos
-        console.log('Produtos armazenados:', this.products);
 
         const start = page * size;
         const end = start + size;
         const paginatedProducts = this.products.slice(start, end);
-        console.log(paginatedProducts)
         return { data: paginatedProducts, total: this.products.length };
       })
     );

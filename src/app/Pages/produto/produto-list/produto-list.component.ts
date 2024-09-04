@@ -142,13 +142,19 @@ export class ProdutoListComponent implements OnInit {
 
   editProduct(produto: any) {
     this.produtoService
-      .getProductById(produto.produtoId)
-      .subscribe((data: any) => {
-        this.selectedProduct = data;
-        this.isEditMode = true;
-        this.isViewMode = false;
+    .getProductById(produto.produtoId)
+    .subscribe((data: any) => {
+      this.selectedProduct = data;
+      this.isEditMode = true;
+      this.isViewMode = false;
+      this.displayFormDialog = true;
+
+      // Forçar a atualização do componente de formulário
+      setTimeout(() => {
+        this.displayFormDialog = false;
         this.displayFormDialog = true;
-      });
+      }, 0);
+    });
   }
 
   deleteProduct(produto: Produto): void {
@@ -167,12 +173,12 @@ export class ProdutoListComponent implements OnInit {
           accept: () => {
             this.produtoService.deleteProduct(produto.produtoId!).subscribe({
               next: (response) => {
-                console.log(`Produto ${detalhesProduto.nome} excluído com sucesso`);
                 this.messageService.add({
                   severity: 'info',
                   summary: 'Confirmado',
                   detail: `Produto ${detalhesProduto.nome} excluído com sucesso`,
                 });
+                this.loadProducts();
               },
               error: (error) => {
                 console.error('Erro ao excluir produto:', error);
