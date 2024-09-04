@@ -63,11 +63,12 @@ export class ProdutoListComponent implements OnInit {
   isViewMode: boolean = false;
   selectedQrCode: string = 'nao vazio';
   infoQrCode: string = '';
+  isProductListEmpty: boolean = false;
 
   // Variáveis para paginação
   totalRecords: number = 0;
-  rows: number = 12; // Número de registros por página
-  first: number = 0; // Índice do primeiro registro da página
+  rows: number = 12
+  first: number = 0; 
 
   constructor(
     private produtoService: ProdutosService,
@@ -82,7 +83,7 @@ export class ProdutoListComponent implements OnInit {
 
   loadProducts(): void {
     const page = this.first / this.rows;
-    this.produtoService.getProducts(page, this.rows).subscribe((result) => {
+    this.produtoService.getAllProducts(page, this.rows).subscribe((result) => {
       this.produtos = result.data;
       this.totalRecords = result.total; // Total de registros
     });
@@ -94,12 +95,19 @@ export class ProdutoListComponent implements OnInit {
     this.displayFormDialog = true;
   }
 
+  onSave(): void {
+    this.loadProducts(); // Recarrega a lista de produtos após salvar
+    this.closeFormDialog(); // Fecha o modal do formulário
+  }
+
   showQrCodeDialog(produto: Produto): void {
-    this.produtoService.getProductById(produto.id).subscribe((data: any) => {
-      this.infoQrCode = JSON.stringify(data);
-      this.displayQrCodeDialog = true;
-      this.selectLinkProduct();
-    });
+    this.produtoService
+      .getProductById(produto.produtoId!)
+      .subscribe((data: any) => {
+        this.infoQrCode = JSON.stringify(data);
+        this.displayQrCodeDialog = true;
+        this.selectLinkProduct();
+      });
   }
 
   closeFormDialog() {
@@ -114,6 +122,7 @@ export class ProdutoListComponent implements OnInit {
     this.displayQrCodeDialog = false;
   }
 
+  
   onPageChange(event: any): void {
     this.first = event.first; // Índice do primeiro registro da página
     this.rows = event.rows; // Número de registros por página
@@ -121,67 +130,82 @@ export class ProdutoListComponent implements OnInit {
   }
 
   viewProduct(produto: Produto): void {
-    this.produtoService.getProductById(produto.id).subscribe((data: any) => {
-      this.selectedProduct = data;
-      this.isEditMode = false;
-      this.isViewMode = true;
-      this.displayDetailsDialog = true;
-    });
+    this.produtoService
+      .getProductById(produto.produtoId!)
+      .subscribe((data: any) => {
+        this.selectedProduct = data;
+        this.isEditMode = false;
+        this.isViewMode = true;
+        this.displayDetailsDialog = true;
+      });
   }
 
   editProduct(produto: any) {
-    this.produtoService.getProductById(produto.id).subscribe((data: any) => {
+    this.produtoService
+    .getProductById(produto.produtoId)
+    .subscribe((data: any) => {
       this.selectedProduct = data;
       this.isEditMode = true;
       this.isViewMode = false;
       this.displayFormDialog = true;
+
+      // Forçar a atualização do componente de formulário
+      setTimeout(() => {
+        this.displayFormDialog = false;
+        this.displayFormDialog = true;
+      }, 0);
     });
   }
 
-  deleteProduct(product: Produto): void {
-    this.confirmationService.confirm({
-      message: 'Você tem certeza que deseja excluir este produto?',
-      header: 'Confirmação de Exclusão',
-      icon: 'pi pi-info-circle',
-      acceptButtonStyleClass: 'p-button-danger p-button-text',
-      rejectButtonStyleClass: 'p-button-text p-button-text',
-      acceptLabel: 'Sim',
-      rejectLabel: 'Não',
-      acceptIcon: 'none',
-      rejectIcon: 'none',
-      accept: () => {
-        this.produtoService.deleteProduct(product.id).subscribe(() => {
-          this.produtos = this.produtos.filter((p) => p.id !== product.id);
+  deleteProduct(produto: Produto): void {
+    this.produtoService.getProductById(produto.produtoId!).subscribe({
+      next: (detalhesProduto) => {
+        this.confirmationService.confirm({
+          message: 'Você tem certeza que deseja excluir este produto?',
+          header: 'Confirmação de Exclusão',
+          icon: 'pi pi-info-circle',
+          acceptButtonStyleClass: 'p-button-danger p-button-text',
+          rejectButtonStyleClass: 'p-button-text p-button-text',
+          acceptLabel: 'Sim',
+          rejectLabel: 'Não',
+          acceptIcon: 'none',
+          rejectIcon: 'none',
+          accept: () => {
+            this.produtoService.deleteProduct(produto.produtoId!).subscribe({
+              next: (response) => {
+                this.messageService.add({
+                  severity: 'info',
+                  summary: 'Confirmado',
+                  detail: `Produto ${detalhesProduto.nome} excluído com sucesso`,
+                });
+                this.loadProducts();
+              },
+              error: (error) => {
+                console.error('Erro ao excluir produto:', error);
+                this.messageService.add({
+                  severity: 'error',
+                  summary: 'Erro',
+                  detail: 'Não foi possível excluir o registro.',
+                });
+              }
+            });
+          },
+          reject: () => {
+            // Ação quando o usuário cancela
+          },
         });
+      },
+      error: (error) => {
+        console.error('Erro ao obter detalhes do produto:', error);
         this.messageService.add({
-          severity: 'info',
-          summary: 'Confirmado',
-          detail: 'Registro excluído com sucesso',
-        });
-      },
-      reject: () => {
-        // Ação quando o usuário cancela
-      },
-    });
-  }
-
-  onSave(product: Produto): void {
-    if (this.isEditMode) {
-      if (product.id) {
-        this.produtoService.updateProduct(product.id, product).subscribe(() => {
-          this.loadProducts();
-          this.closeFormDialog();
-          this.router.navigate(['/produtos']);
-        });
-      } else {
-        this.produtoService.createProduct(product).subscribe(() => {
-          this.loadProducts();
-          this.closeFormDialog();
-          this.router.navigate(['/produtos']);
+          severity: 'error',
+          summary: 'Erro',
+          detail: 'Não foi possível obter detalhes do produto.',
         });
       }
-    }
+    });
   }
+
   selectInfoProduct(): void {
     this.infoQrCode;
     this.selectedQrCode = this.infoQrCode;
@@ -201,34 +225,34 @@ export class ProdutoListComponent implements OnInit {
       if (printWindow) {
         printWindow.document.open();
         printWindow.document.write(`
-        <html>
-          <head>
-            <title>Imprimir QR Code</title>
-            <style>
-              body {
-                display: flex;
-                justify-content: center;
-                align-items: center;
-                height: 100vh;
-                margin: 0;
-              }
-              img {
-                width: 350px;
-                height: 350px;
-              }
-            </style>
-          </head>
-          <body>
-            <img src="${dataUrl}" alt="QR Code">
-            <script type="text/javascript">
-              window.onload = function() {
-                window.print();
-                window.close();
-              };
-            </script>
-          </body>
-        </html>
-      `);
+          <html>
+            <head>
+              <title>Imprimir QR Code</title>
+              <style>
+                body {
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                  height: 100vh;
+                  margin: 0;
+                }
+                img {
+                  width: 350px;
+                  height: 350px;
+                }
+              </style>
+            </head>
+            <body>
+              <img src="${dataUrl}" alt="QR Code">
+              <script type="text/javascript">
+                window.onload = function() {
+                  window.print();
+                  window.close();
+                };
+              </script>
+            </body>
+          </html>
+        `);
         printWindow.document.close();
       }
     }
