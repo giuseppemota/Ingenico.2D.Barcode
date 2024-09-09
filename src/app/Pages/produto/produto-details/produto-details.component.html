@@ -4,63 +4,80 @@
 
     <div class="card-content">
       <div class="card-image">
-        <img alt="Imagem do(a) {{product.nome}}" src="{{ product.image || 'assets/noImage.svg' }}">
-      </div> <!-- fim do card-image -->
+        <img alt="Imagem do(a) {{ product.nome }}" src="assets/noImage.svg" />
+      </div>
+      <!-- fim do card-image -->
       <div class="card-detalhes">
         <div class="precos">
-          <p class="preco-anterior">de: <s>{{ product.precoAnterior || "00,00" }}</s></p>
+          <!-- <p class="preco-anterior" *ngIf="product.precoAnterior">de: <s>{{ product.precoAnterior || "00,00" }}</s></p> -->
           <p class="preco-atual">R$ {{ product.preco || "00,00" }}</p>
-        </div> <!-- fim do precos -->
+        </div>
+        <!-- fim do precos -->
         <div class="descricao-conjunto">
           <div class="descricao-ingredientes">
             <p class="titulo">INGREDIENTES:</p>
-            <p class="conteudo-ingredientes">{{ product.ingredientes || "Ingredientes do Produto" }}</p>
-          </div> <!-- fim do descricao-ingredientes -->
-          <div class="descricao-extra">
+            <p class="conteudo-ingredientes">
+              {{ product.ingredientes || "Ingredientes do Produto" }}
+            </p>
+          </div>
+          <!-- fim do descricao-ingredientes -->
+
+          <!-- <div class="descricao-extra">
             <p class="titulo">CONTÉM:</p>
             <p class="titulo">{{ product.alergicos || "ALÉRGICOS DO PRODUTO" }}</p>
-          </div> <!-- fim do descricao-extra -->
+          </div> fim do descricao-extra -->
           <div class="descricao-extra">
             <p class="titulo">VALIDADE:</p>
-            <p class="titulo">{{ product.validade | date: 'dd/MM/yyyy' }}</p>
-          </div> <!-- fim do descricao-extra -->
-        </div> <!-- fim do descricao-conjunto -->
-      </div> <!-- fim do card-detalhes -->
-    </div> <!-- fim do card-content -->
+            <p class="titulo">{{ product.validade | date : "dd/MM/yyyy" }}</p>
+          </div>
+          <!-- fim do descricao-extra -->
+        </div>
+        <!-- fim do descricao-conjunto -->
+      </div>
+      <!-- fim do card-detalhes -->
+    </div>
+    <!-- fim do card-content -->
     <div class="detalhes">
       <h3>DESCRIÇÃO</h3>
       <table>
         <tbody>
-        <tr>
+          <tr>
             <td class="cabecalho">CATEGORIA:</td>
-            <td class="conteudo"> {{ product.categoria }}</td>
-        </tr>
-        <tr>
-          <td class="cabecalho">MARCA:</td>
-          <td class="conteudo"> {{ product.marca }}</td>
-        </tr>
-        <tr>
-          <td class="cabecalho">PESO ({{ product.unidadeDeMedida }}):</td>
-          <td class="conteudo"> {{ product.peso }}</td>
-        </tr>
-        <tr>
-          <td class="cabecalho">PAIS DE ORIGEM:</td>
-          <td class="conteudo"> {{ product.paisOrigem }}</td>
-        </tr>
+            <td class="conteudo">
+              <span *ngFor="let categoria of product.categorias; let i = index">
+                {{ categoria
+                }}<span *ngIf="i < product.categorias.length - 1">, </span>
+              </span>
+            </td>
+          </tr>
+          <tr>
+            <td class="cabecalho">MARCA:</td>
+            <td class="conteudo">{{ product.marca }}</td>
+          </tr>
+          <tr>
+            <td class="cabecalho">PESO ({{ product.unidadeMedida }}):</td>
+            <td class="conteudo">{{ product.peso }}</td>
+          </tr>
+          <tr>
+            <td class="cabecalho">PAIS DE ORIGEM:</td>
+            <td class="conteudo">{{ product.paisOrigem }}</td>
+          </tr>
         </tbody>
       </table>
     </div>
     <div class="historia-produto">
-      <div *ngIf="product.historia">
-        {{ product.historia }}
+      <div *ngIf="product.descricao">
+        {{ product.descricao }}
       </div>
-      <div *ngIf="product.tabelaNutricional">
+      <!-- <div *ngIf="product.tabelaNutricional">
         {{ product.tabelaNutricional }}
-      </div>
-    </div> <!-- fim do historia-produto -->
+      </div> -->
+    </div>
+    <!-- fim do historia-produto -->
     <div class="div-carrossel">
       <p class="titulo-carrossel">Produtos Semelhantes:</p>
       <app-carrossel-similares></app-carrossel-similares>
     </div>
-  </div> <!-- fim do container -->
+  </div>
+  <!-- fim do container -->
 </section>

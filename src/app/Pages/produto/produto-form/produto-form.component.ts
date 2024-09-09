@@ -98,10 +98,9 @@ export class ProdutoFormComponent implements OnInit {
     { nome: 'Mercearia' },
     { nome: 'Utilidades Domésticas' },
     { nome: 'Cuidados com a Casa' },
-    { nome: 'Bebê e Infantil' }
+    { nome: 'Bebê e Infantil' },
   ];
-  
-  
+
   unidadeMedida: string[] = [
     'Unidade',
     'Pacote',
@@ -165,7 +164,7 @@ export class ProdutoFormComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(3),
-          Validators.maxLength(50),
+          Validators.maxLength(200),
         ],
       ],
       marca: [
@@ -173,7 +172,7 @@ export class ProdutoFormComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(2),
-          Validators.maxLength(30),
+          Validators.maxLength(200),
         ],
       ],
       descricao: [
@@ -187,7 +186,7 @@ export class ProdutoFormComponent implements OnInit {
       validade: ['', [Validators.required, this.validadeValidator]],
       peso: [
         0,
-        [Validators.required, Validators.min(0.1), Validators.max(1000)],
+        [Validators.required, Validators.min(0.1), Validators.max(5000)],
       ],
       preco: [
         null,
@@ -230,35 +229,37 @@ export class ProdutoFormComponent implements OnInit {
   }
 
   loadProdutoData(produto: any) {
-
     if (this.produtoForm) {
-     
-      const nomeCategorias = produto.categorias.map((categoria: any) => ({ nome: categoria.nome }));
+      if (produto.produtoId) {
+        const nomeCategorias = produto.categorias.map((categoria: any) => ({
+          nome: categoria.nome,
+        }));
+        // Atualizando o formulário com os valores do produto
+        this.produtoForm.patchValue({
+          nome: produto.nome,
+          marca: produto.marca,
+          descricao: produto.descricao,
+          validade: produto.validade ? new Date(produto.validade) : null,
+          unidadeMedida: produto.unidadeMedida || null,
+          peso: produto.peso,
+          preco: produto.preco,
+          ingredientes: produto.ingredientes,
+          paisOrigem: produto.paisOrigem,
+          categorias: nomeCategorias,
+          tags: produto.tags,
+        });
+      }
 
-
-
-      this.produtoForm.patchValue({
-        nome: produto.nome,
-        marca: produto.marca,
-        descricao: produto.descricao,
-        validade: produto.validade ? new Date(produto.validade) : null,
-        unidadeMedida: produto.unidadeMedida || null, 
-        peso: produto.peso,
-        preco: produto.preco,
-        ingredientes: produto.ingredientes,
-        paisOrigem: produto.paisOrigem,
-        categorias: nomeCategorias,
-        tags: produto.tags,
-      });
-      
-      console.log('Formulário atualizado com o produto:', this.produtoForm.value);
+      console.log(
+        'Formulário atualizado com o produto:',
+        this.produtoForm.value
+      );
     } else {
       console.error('produtoForm não definido');
     }
   }
 
   onSave(): void {
-
     // Construir o objeto novoProduto com as informações do formulário
     const novoProduto: Produto = {
       nome: this.produtoForm.get('nome')?.value,
@@ -274,7 +275,6 @@ export class ProdutoFormComponent implements OnInit {
       tags: this.produtoForm.get('tags')?.value,
     };
 
-
     console.log('Produto cadastrado', novoProduto);
 
     if (this.produto && this.produto.produtoId) {
@@ -288,11 +288,11 @@ export class ProdutoFormComponent implements OnInit {
               summary: 'Sucesso',
               detail: `Produto "${response.nome}" atualizado com sucesso!`,
             });
-  
+
             this.save.emit();
-  
+
             this.onCancel();
-  
+
             setTimeout(() => {
               this.router.navigate(['produtos']);
             }, 2000);
@@ -326,11 +326,11 @@ export class ProdutoFormComponent implements OnInit {
                 summary: 'Sucesso',
                 detail: `Produto "${response.nome}" cadastrado com sucesso!`,
               });
-  
+
               this.save.emit();
-  
+
               this.onCancel();
-  
+
               setTimeout(() => {
                 this.router.navigate(['produtos']);
               }, 2000);

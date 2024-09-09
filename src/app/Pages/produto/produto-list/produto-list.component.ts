@@ -64,11 +64,12 @@ export class ProdutoListComponent implements OnInit {
   selectedQrCode: string = 'nao vazio';
   infoQrCode: string = '';
   isProductListEmpty: boolean = false;
+  qrCodeFormatado: string = '';
 
   // Variáveis para paginação
   totalRecords: number = 0;
-  rows: number = 12
-  first: number = 0; 
+  rows: number = 12;
+  first: number = 0;
 
   constructor(
     private produtoService: ProdutosService,
@@ -104,12 +105,32 @@ export class ProdutoListComponent implements OnInit {
     this.produtoService
       .getProductById(produto.produtoId!)
       .subscribe((data: any) => {
+        // Formatar o texto com os dados do produto
         this.infoQrCode = JSON.stringify(data);
+        this.qrCodeFormatado = this.formatProdutoData(data);
         this.displayQrCodeDialog = true;
         this.selectLinkProduct();
       });
   }
+  formatProdutoData(produto: Produto): string {
+    let formattedData = '';
+    formattedData += `Nome: ${produto.nome}\n`;
 
+    formattedData += `Ingredientes: ${produto.ingredientes}\n`;
+    formattedData += `Descrição: ${produto.descricao}\n`;
+    formattedData += `Marca: ${produto.marca}\n`;
+    formattedData += `Peso: ${produto.peso} ${produto.unidadeMedida}\n`;
+    formattedData += `Preço: ${produto.preco}\n`;
+    formattedData += `País de Origem: ${produto.paisOrigem}\n`;
+    formattedData += `Categorias: ${produto.categorias
+      .map((categoria: any) => categoria.nome)
+      .join(', ')}\n`;
+    // formattedData += `Tags: ${produto.tags
+    //   .map((tag: any) => tag.nome)
+    //   .join(', ')}\n`;
+
+    return formattedData;
+  }
   closeFormDialog() {
     this.displayFormDialog = false;
   }
@@ -122,7 +143,6 @@ export class ProdutoListComponent implements OnInit {
     this.displayQrCodeDialog = false;
   }
 
-  
   onPageChange(event: any): void {
     this.first = event.first; // Índice do primeiro registro da página
     this.rows = event.rows; // Número de registros por página
@@ -133,7 +153,10 @@ export class ProdutoListComponent implements OnInit {
     this.produtoService
       .getProductById(produto.produtoId!)
       .subscribe((data: any) => {
-        this.selectedProduct = data;
+        this.selectedProduct = {
+          ...data,
+          categorias: data.categorias.map((categoria: any) => categoria.nome),
+        };
         this.isEditMode = false;
         this.isViewMode = true;
         this.displayDetailsDialog = true;
@@ -142,19 +165,19 @@ export class ProdutoListComponent implements OnInit {
 
   editProduct(produto: any) {
     this.produtoService
-    .getProductById(produto.produtoId)
-    .subscribe((data: any) => {
-      this.selectedProduct = data;
-      this.isEditMode = true;
-      this.isViewMode = false;
-      this.displayFormDialog = true;
-
-      // Forçar a atualização do componente de formulário
-      setTimeout(() => {
-        this.displayFormDialog = false;
+      .getProductById(produto.produtoId)
+      .subscribe((data: any) => {
+        this.selectedProduct = data;
+        this.isEditMode = true;
+        this.isViewMode = false;
         this.displayFormDialog = true;
-      }, 0);
-    });
+
+        // Forçar a atualização do componente de formulário
+        setTimeout(() => {
+          this.displayFormDialog = false;
+          this.displayFormDialog = true;
+        }, 0);
+      });
   }
 
   deleteProduct(produto: Produto): void {
@@ -187,7 +210,7 @@ export class ProdutoListComponent implements OnInit {
                   summary: 'Erro',
                   detail: 'Não foi possível excluir o registro.',
                 });
-              }
+              },
             });
           },
           reject: () => {
@@ -202,17 +225,16 @@ export class ProdutoListComponent implements OnInit {
           summary: 'Erro',
           detail: 'Não foi possível obter detalhes do produto.',
         });
-      }
+      },
     });
   }
 
   selectInfoProduct(): void {
-    this.infoQrCode;
-    this.selectedQrCode = this.infoQrCode;
+    this.selectedQrCode = this.qrCodeFormatado;
   }
   selectLinkProduct(): void {
     this.selectedQrCode =
-      'http://localhost:4200/produtos/' + JSON.parse(this.infoQrCode).id;
+      'http://localhost:4200/produtos/' + JSON.parse(this.infoQrCode).produtoId;
   }
   printQrCode() {
     const qrElement = document.querySelector(
