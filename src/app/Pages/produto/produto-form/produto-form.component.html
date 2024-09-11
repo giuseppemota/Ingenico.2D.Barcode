@@ -56,8 +56,25 @@
           ></p-message>
         </div>
 
-        <!-- Validade, Unidade de Medida e Peso na mesma linha -->
         <div class="form-row">
+          <div class="form-col">
+            <label for="dataFabricacao">Data de Fabricação:</label>
+            <p-calendar
+              id="dataFabricacao"
+              formControlName="dataFabricacao"
+              dateFormat="dd/mm/yy"
+              [style]="{ width: '100%' }"
+            ></p-calendar>
+            <p-message
+              *ngIf="
+                produtoForm.get('dataFabricacao')?.touched &&
+                produtoForm.get('dataFabricacao')?.invalid
+              "
+              severity="error"
+              text="A data de fabricação não deve ser uma data futura"
+            ></p-message>
+          </div>
+
           <div class="form-col">
             <label for="validade">Validade:</label>
             <p-calendar
@@ -75,6 +92,22 @@
               text="A validade deve ser uma data futura"
             ></p-message>
           </div>
+
+          <div class="form-col">
+            <label for="lote">lote:</label>
+            <input id="lote" type="text" pInputText formControlName="lote" />
+            <p-message
+              *ngIf="
+                produtoForm.get('lote')?.touched &&
+                produtoForm.get('lote')?.invalid
+              "
+              severity="error"
+              text="O lote é obrigatório e deve ter entre 2 e 20 caracteres"
+            ></p-message>
+          </div>
+        </div>
+        <!-- Validade, Unidade de Medida e Peso na mesma linha -->
+        <div class="form-row">
           <div class="form-col">
             <label for="unidadeMedida">Unidade de Medida:</label>
             <p-dropdown
@@ -94,6 +127,7 @@
               text="Selecione uma unidade de medida"
             ></p-message>
           </div>
+
           <div class="form-col">
             <label for="peso">Peso:</label>
             <input id="peso" type="number" pInputText formControlName="peso" />
