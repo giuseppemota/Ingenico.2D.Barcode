@@ -27,8 +27,14 @@
             <p class="titulo">{{ product.alergicos || "ALÉRGICOS DO PRODUTO" }}</p>
           </div> fim do descricao-extra -->
           <div class="descricao-extra">
+            <p class="titulo">FABRICAÇÃO:</p>
+            <p class="titulo">
+              {{ product.dataFabricacao | date : "dd/MM/yyyy" }}
+            </p>
             <p class="titulo">VALIDADE:</p>
             <p class="titulo">{{ product.validade | date : "dd/MM/yyyy" }}</p>
+            <p class="titulo">LOTE:</p>
+            <p class="titulo">{{ product.lote }}</p>
           </div>
           <!-- fim do descricao-extra -->
         </div>

@@ -183,7 +183,16 @@ export class ProdutoFormComponent implements OnInit {
           Validators.maxLength(200),
         ],
       ],
+      dataFabricacao: ['', [Validators.required, this.fabricacaoValidator]],
       validade: ['', [Validators.required, this.validadeValidator]],
+      lote: [
+        '',
+        [
+          Validators.required,
+          Validators.minLength(2),
+          Validators.maxLength(20),
+        ],
+      ],
       peso: [
         0,
         [Validators.required, Validators.min(0.1), Validators.max(5000)],
@@ -241,6 +250,8 @@ export class ProdutoFormComponent implements OnInit {
           descricao: produto.descricao,
           validade: produto.validade ? new Date(produto.validade) : null,
           unidadeMedida: produto.unidadeMedida || null,
+          dataFabricacao: produto.dataFabricacao,
+          lote: produto.lote,
           peso: produto.peso,
           preco: produto.preco,
           ingredientes: produto.ingredientes,
@@ -270,9 +281,25 @@ export class ProdutoFormComponent implements OnInit {
       marca: this.produtoForm.get('marca')?.value,
       descricao: this.produtoForm.get('descricao')?.value,
       paisOrigem: this.produtoForm.get('paisOrigem')?.value,
-      validade: this.produtoForm.get('validade')?.value.toISOString(),
-      categorias: this.produtoForm.get('categorias')?.value,
-      tags: this.produtoForm.get('tags')?.value,
+      validade: this.produtoForm.get('validade')?.value
+        ? this.produtoForm.get('validade')?.value.toISOString()
+        : null, // Verifica se a validade está definida e converte para ISO
+      dataFabricacao: this.produtoForm.get('dataFabricacao')?.value
+        ? this.produtoForm.get('dataFabricacao')?.value.toISOString()
+        : null, // Mesma lógica para dataFabricacao
+      lote: this.produtoForm.get('lote')?.value,
+
+      // Mapeando categorias para o formato [{nome: 'string'}]
+      categorias: this.produtoForm.get('categorias')?.value
+        ? this.produtoForm
+            .get('categorias')
+            ?.value.map((categoria: any) => ({ nome: categoria.nome }))
+        : [],
+
+      // Mapeando tags para o formato [{nome: 'string'}]
+      tags: this.produtoForm.get('tags')?.value
+        ? this.produtoForm.get('tags')?.value.map((tag: any) => ({ nome: tag }))
+        : [],
     };
 
     console.log('Produto cadastrado', novoProduto);
@@ -368,6 +395,17 @@ export class ProdutoFormComponent implements OnInit {
     const validade = new Date(control.value);
     const today = new Date();
     if (validade < today) {
+      return { invalidDate: true };
+    }
+    return null;
+  }
+
+  fabricacaoValidator(
+    control: AbstractControl
+  ): { [key: string]: boolean } | null {
+    const fabricacao = new Date(control.value);
+    const today = new Date();
+    if (fabricacao > today) {
       return { invalidDate: true };
     }
     return null;
