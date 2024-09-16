@@ -10,12 +10,13 @@
       type="button"
     ></button>
   </div>
-  <!-- Mensagem quando não há produtos -->
-  <div *ngIf="produtos.length === 0" class="no-products-message">
-    <p>Sem produtos cadastrados</p>
+
+  <!-- Spinner de carregamento -->
+  <div class="custom-spinner">
+    <p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
   </div>
 
-  <div  *ngIf="produtos.length  > 0" class="card-container">
+  <div *ngIf="!isLoading && produtos.length > 0" class="card-container">
     <p-card *ngFor="let produto of produtos" class="product-card">
       <ng-template pTemplate="header">
         <div class="card-header">
@@ -27,7 +28,7 @@
           <p>Marca: {{ produto.marca }}</p>
           <p>Validade: {{ produto.validade | date : "dd/MM/yyyy" }}</p>
           <p>Especificação: {{ produto.peso }} {{ produto.unidadeMedida | lowercase }}</p>
-         <!-- <p>Categoria: {{ produto.categorias }}</p> -->
+          <!-- <p>Categoria: {{ produto.categorias }}</p> -->
         </div>
       </ng-template>
       <ng-template pTemplate="footer">
@@ -49,7 +50,7 @@
             tooltipPosition="top"
           ></button>
           <button
-          (click)="deleteProduct(produto)"
+            (click)="deleteProduct(produto)"
             aria-label="Excluir"
             icon="pi pi-trash"
             pButton
@@ -68,6 +69,11 @@
       </ng-template>
     </p-card>
   </div>
+
+  <div *ngIf="!isLoading && produtos.length === 0" class="no-products-message">
+    <p>Sem produtos cadastrados</p>
+  </div>
+
   <br><br>
   <p-paginator
     (onPageChange)="onPageChange($event)"
