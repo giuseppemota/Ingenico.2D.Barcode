@@ -18,11 +18,10 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputMaskModule } from 'primeng/inputmask';
 import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';
-import { Router } from '@angular/router';
 import { ProdutoFormComponent } from '../produto-form/produto-form.component';
 import { ProdutoDetailsComponent } from '../produto-details/produto-details.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { info } from 'console';
+import {ProgressSpinnerModule} from "primeng/progressspinner";
 
 @Component({
   selector: 'app-produto-list',
@@ -48,6 +47,7 @@ import { info } from 'console';
     ProdutoFormComponent,
     ProdutoDetailsComponent,
     QRCodeModule,
+    ProgressSpinnerModule,
   ],
   templateUrl: './produto-list.component.html',
   styleUrl: './produto-list.component.scss',
@@ -63,8 +63,8 @@ export class ProdutoListComponent implements OnInit {
   isViewMode: boolean = false;
   selectedQrCode: string = 'nao vazio';
   infoQrCode: string = '';
-  isProductListEmpty: boolean = false;
   qrCodeFormatado: string = '';
+  isLoading = true;
 
   // Variáveis para paginação
   totalRecords: number = 0;
@@ -74,8 +74,7 @@ export class ProdutoListComponent implements OnInit {
   constructor(
     private produtoService: ProdutosService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private router: Router
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -83,11 +82,14 @@ export class ProdutoListComponent implements OnInit {
   }
 
   loadProducts(): void {
-    const page = this.first / this.rows;
-    this.produtoService.getAllProducts(page, this.rows).subscribe((result) => {
-      this.produtos = result.data;
-      this.totalRecords = result.total; // Total de registros
-    });
+    setTimeout(() =>{
+      const page = this.first / this.rows;
+      this.produtoService.getAllProducts(page, this.rows).subscribe((result) => {
+        this.produtos = result.data;
+        this.totalRecords = result.total; // Total de registros
+      });
+      this.isLoading = false;
+    }, 1500);
   }
 
   showFormDialog(): void {

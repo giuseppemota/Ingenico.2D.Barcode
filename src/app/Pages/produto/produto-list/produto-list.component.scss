@@ -3,6 +3,12 @@
   background-color: #f8f8f8;
 }
 
+.custom-spinner {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
 .title {
   margin: 0;
   padding: 0;
@@ -40,6 +46,9 @@
   gap: 20px;
 }
 
+.card-content{
+  padding: 20px;
+}
 
 .product-card {
   width: calc(25% - 20px);
@@ -51,7 +60,6 @@
   position: relative;
   transition: transform 0.3s;
   border: 2px solid #dddd;
-
 }
 
 .product-card:hover {
@@ -93,7 +101,7 @@
 .card-footer {
   display: flex;
   justify-content: space-between;
-
+  padding: 20px;
 }
 
 .qr-button{
