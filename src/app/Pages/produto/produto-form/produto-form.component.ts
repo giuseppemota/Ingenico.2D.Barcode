@@ -233,7 +233,6 @@ export class ProdutoFormComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['produto'] && this.produto) {
       this.loadProdutoData(this.produto);
-      console.log(this.produto);
     }
   }
 
@@ -260,11 +259,6 @@ export class ProdutoFormComponent implements OnInit {
           tags: produto.tags,
         });
       }
-
-      console.log(
-        'Formulário atualizado com o produto:',
-        this.produtoForm.value
-      );
     } else {
       console.error('produtoForm não definido');
     }
@@ -302,7 +296,6 @@ export class ProdutoFormComponent implements OnInit {
         : [],
     };
 
-    console.log('Produto cadastrado', novoProduto);
 
     if (this.produto && this.produto.produtoId) {
       // Atualizar produto existente

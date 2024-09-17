@@ -13,7 +13,7 @@ export const appConfig: ApplicationConfig = {
     provideAnimationsAsync(),
     provideClientHydration(),
     provideHttpClient(withFetch()),
-    MessageService
+    MessageService,
     // TODO: Implementar interceptor
     // { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
   ],

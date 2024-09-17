@@ -79,8 +79,24 @@ export class QrCodeScannerComponent implements OnInit {
     this.hasPermission = has;
   }
 
-  onCodeResult(resultString: string) {
-    console.log('Leitura do QR Code:', resultString);
-    window.open(resultString, '_blank');
+  onCodeResult(result: string) {
+    if (result.startsWith('LINK:')) {
+      const link = result.substring('LINK:'.length);
+      this.handleLink(link);
+    } else if (result.startsWith('DADOS:')) {
+      // Remove o prefixo e processa os dados formatados
+      const formattedData = result.substring('DATA:'.length);
+      this.handleFormattedData(formattedData);
+    } else {
+      console.error('QR code não reconhecido');
+    }
+  }
+
+  handleLink(link: string): void {
+    window.open(link, '_blank');
+  }
+  
+  handleFormattedData(data: string): void {
+    console.log('Dados formatados:', data);
   }
 }
