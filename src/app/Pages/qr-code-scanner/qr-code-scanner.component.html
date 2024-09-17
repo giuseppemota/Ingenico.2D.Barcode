@@ -1,0 +1,43 @@
+<div class="scanner-container">
+  <h1 class="title">LEITURA DE QR CODE</h1>
+  <div *ngIf="hasDevices" class="dropdown-container">
+    <p-dropdown
+      [options]="availableDevices"
+      [(ngModel)]="currentDevice"
+      optionLabel="label"
+      placeholder="Selecione a câmera"
+      (onChange)="onDeviceSelectChange($event)"
+      [showClear]="true"
+    ></p-dropdown>
+  </div>
+
+  <div class="camera-container">
+    <zxing-scanner
+      [device]="currentDevice"
+      (scanSuccess)="onCodeResult($event)"
+      (deviceChange)="onDeviceChange($event)"
+      [formats]="formatsEnabled"
+      (camerasFound)="onCamerasFound($event)"
+      (permissionResponse)="onHasPermission($event)"
+      [tryHarder]="true"
+      class="scanner"
+    ></zxing-scanner>
+  </div>
+
+  <div *ngIf="hasPermission === null">
+    <p-message severity="warn" text="Aguardando acesso a dispositivos"></p-message>
+  </div>
+
+  <div *ngIf="hasDevices === null">
+    <p-message severity="error" text="Não foi possível verificar os dispositivos"></p-message>
+  </div>
+  
+  
+  <div *ngIf="hasPermission === false && hasPermission !== null">
+    <p-message severity="error" text="Você precisa permitir o acesso à câmera para ler o QR Code."></p-message>
+  </div>
+
+  <div *ngIf="!hasDevices && hasPermission !== false">
+    <p-message severity="info" text="Nenhum dispositivo encontrado"></p-message>
+  </div>
+</div>

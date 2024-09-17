@@ -1,0 +1,54 @@
+/* Container principal do scanner */
+.scanner-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  height: calc(100vh - 200px); 
+  width: 100%;
+  max-width: 600px; 
+  margin: 0 auto; 
+  box-sizing: border-box; 
+}
+
+
+.title {
+  font-size: 2rem; 
+  margin-bottom: 1rem; 
+  text-align: center; 
+  color: #0C1E58; 
+}
+
+/* Container para o dropdown */
+.dropdown-container {
+  margin-bottom: 1rem;
+}
+
+/* Container para a câmera */
+.camera-container {
+  margin-bottom: 1rem;
+}
+
+
+.scanner {
+  width: 100%;
+  max-width: 100%; 
+  height: auto; 
+}
+
+/* Responsividade para dispositivos menores */
+@media (max-width: 768px) {
+  .scanner-container {
+    padding: 10px;
+  }
+
+  .title {
+    font-size: 1.5rem; 
+  }
+
+  .scanner {
+    max-width: 100%;
+    height: auto; 
+  }
+}

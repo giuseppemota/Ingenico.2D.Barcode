@@ -41,12 +41,13 @@
 
 .card-container {
   display: flex;
-  justify-content: flex-start; /* Alinha os itens à esquerda */
+  justify-content: flex-start;
+  /* Alinha os itens à esquerda */
   flex-wrap: wrap;
   gap: 20px;
 }
 
-.card-content{
+.card-content {
   padding: 20px;
 }
 
@@ -88,7 +89,8 @@
   display: flex;
   flex-wrap: wrap;
   gap: 20px;
-  justify-content: flex-start; /* Alinha os itens à esquerda */
+  justify-content: flex-start;
+  /* Alinha os itens à esquerda */
 }
 
 
@@ -104,43 +106,79 @@
   padding: 20px;
 }
 
-.qr-button{
+.modal-content {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  margin-bottom: 10px;
-
-    button{
-
-      color: white;
-      flex: 1;
-      margin: 0 4px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      text-align: center;
-      background-color: #0C1E58;
-      border: none;
-      border-radius: 10px;
-
-  }
-    button:hover {
-      background-color: #1d3892;
-    }
-
-    button:active{
-      transform: scale(0.98);
-        /* Scaling button to 0.98 to its original size */
-        box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
-        /* Lowering the shadow */
-    }
-    button:focus{
-      background-color: #1d3892;
-    }
-
+  padding: 20px;
+  /* Adiciona algum espaçamento interno */
 }
 
-.card-footer button { /* Estilo dos botões no card */
+.switch-container {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+}
+
+.p-field {
+  display: flex;
+  align-items: center;
+}
+
+.p-field label {
+  margin-bottom: 5px;
+}
+
+.p-inputSwitch {
+  margin-top: 5px;
+}
+
+
+.qr-code-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 20px;
+  /* Espaço entre o QR code e o rodapé */
+}
+
+.modal-footer {
+  display: flex;
+  justify-content: flex-end;
+  /* Alinha o botão ao lado direito */
+  padding: 5px;
+}
+
+.modal-footer button {
+  background-color: #0C1E58;
+  /* Cor do botão */
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin: 0 4px;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.modal-footer button:hover {
+  background-color: #1d3892;
+}
+
+.modal-footer button:active {
+  transform: scale(0.98);
+  box-shadow: 3px 2px 22px 1px rgba(0, 0, 0, 0.24);
+}
+
+.modal-footer button:focus {
+  background-color: #1d3892;
+}
+
+.card-footer button {
+  /* Estilo dos botões no card */
   flex: 1;
   margin: 0 4px;
   display: flex;
@@ -151,6 +189,8 @@
   background-color: #0C1E58;
   border: none;
 }
+
+
 
 // TODO: Ativar estilo da imagem do produto
 // /* Estilo da imagem do produto */
@@ -191,7 +231,8 @@
   }
 
   .product-card {
-    width: calc(100% - 15px); /* Um card por linha em telas menores */
+    width: calc(100% - 15px);
+    /* Um card por linha em telas menores */
   }
 
   .product-card:hover {
@@ -220,5 +261,30 @@
 
   .card-footer button {
     font-size: 0.7rem;
+  }
+
+  .modal-content {
+    padding: 10px;
+  }
+
+  .qr-code-container {
+    width: 100%;
+  }
+
+  .modal-footer {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1rem;
+  }
+
+  @media (max-width: 480px) {
+    .modal-content {
+      padding: 5px;
+    }
+
+    .modal-footer button {
+      font-size: 0.8rem;
+      padding: 8px 16px;
+    }
   }
 }
