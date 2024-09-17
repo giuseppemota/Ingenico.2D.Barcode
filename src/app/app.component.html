@@ -1,8 +1,8 @@
 <div class="app-container">
-  <app-header></app-header>
+  <app-header  *ngIf="mostrarHeaderFooter"></app-header>
   <div class="content">
     <p-toast></p-toast>
     <router-outlet></router-outlet>
   </div>
-  <app-footer class="footer"></app-footer>
+  <app-footer *ngIf="mostrarHeaderFooter" class="footer"></app-footer>
 </div>
