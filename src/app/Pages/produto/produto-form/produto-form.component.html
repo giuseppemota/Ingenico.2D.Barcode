@@ -234,6 +234,15 @@
         </div>
         <!-- Botões -->
         <div class="form-buttons">
+          <p-fileUpload
+            name="image"
+            (onSelect)="onImageSelect($event)"
+            accept="image/*"
+            mode="basic"
+            auto="false"
+            customUpload="true"
+            chooseLabel="Escolher Imagem"
+          ></p-fileUpload>
           <p-button
             [disabled]="produtoForm.invalid"
             type="submit"

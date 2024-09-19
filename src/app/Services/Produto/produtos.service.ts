@@ -7,13 +7,13 @@ import { HttpClient } from '@angular/common/http';
 @Injectable({
   providedIn: 'root',
 })
-export class ProdutosService { // TODO: Serviço de teste
+export class ProdutosService {
+  // TODO: Serviço de teste
 
   private apiUrl: string = environment.apiUrl;
   private products: Produto[] = [];
 
-  constructor(private http: HttpClient) { }
-  
+  constructor(private http: HttpClient) {}
 
   // private products: Produto[] = [
   //   {
@@ -218,11 +218,15 @@ export class ProdutosService { // TODO: Serviço de teste
   }
 
   // Método para obter produtos paginados
-  getAllProducts(page: number = 0, size: number = 12): Observable<{ data: any[], total: number }> {
+  getAllProducts(
+    page: number = 0,
+    size: number = 12
+  ): Observable<{ data: any[]; total: number }> {
     return this.fetchAllProducts().pipe(
-      map(response => {
-
-        let products: any[] = Array.isArray(response) ? response : response?.produtos || [];
+      map((response) => {
+        let products: any[] = Array.isArray(response)
+          ? response
+          : response?.produtos || [];
 
         if (!Array.isArray(products) || products.length === 0) {
           return { data: [], total: 0 };
@@ -248,14 +252,13 @@ export class ProdutosService { // TODO: Serviço de teste
   getProductById(id: string): Observable<Produto> {
     return this.http.get<Produto>(`${this.apiUrl}/Produto/v1/Produtos/${id}`);
   }
-  
 
   // getProductById(id: number | string): Observable<Produto> {
   //   return this.http.get<Produto>(`${this.apiUrl}/Produto/v1/Produtos/${id}`);
   // }
 
-  postProduct(produto: Produto): Observable<Produto> {
-    return this.http.post<Produto>(`${this.apiUrl}/Produto/v1/Produtos`, produto);
+  postProduct(formData: FormData): Observable<any> {
+    return this.http.post<any>(`${this.apiUrl}/Produto/v1/Produtos`, formData);
   }
 
   updateProduct(produto: Produto): Observable<any> {
@@ -277,7 +280,7 @@ export class ProdutosService { // TODO: Serviço de teste
     });
   }
 
-   getSimilares(currentProductId: number): any {
-  //   return this.products.filter(product => product.id !== currentProductId).slice(0, 8);
-   }
+  getSimilares(currentProductId: number): any {
+    //   return this.products.filter(product => product.id !== currentProductId).slice(0, 8);
+  }
 }
