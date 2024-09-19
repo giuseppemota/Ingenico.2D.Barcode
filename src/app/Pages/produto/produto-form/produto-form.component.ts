@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { Produto } from '../../../Models/product.model';
 import { DialogModule } from 'primeng/dialog';
@@ -14,6 +15,7 @@ import { TableModule } from 'primeng/table';
 import { TooltipModule } from 'primeng/tooltip';
 import { CardModule } from 'primeng/card';
 import { InputMaskModule } from 'primeng/inputmask';
+
 import {
   AbstractControl,
   FormBuilder,
@@ -38,6 +40,8 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ChipsModule } from 'primeng/chips';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { FileUpload, FileUploadModule } from 'primeng/fileupload';
+
 
 @Component({
   selector: 'app-produto-form',
@@ -66,6 +70,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     MessageModule,
     ChipsModule,
     MultiSelectModule,
+    FileUploadModule,
   ],
   templateUrl: './produto-form.component.html',
   styleUrl: './produto-form.component.scss',
@@ -74,6 +79,8 @@ export class ProdutoFormComponent implements OnInit {
   @Input() produto!: Produto;
   @Output() save = new EventEmitter<Produto>();
   @Output() cancel = new EventEmitter<void>();
+  @ViewChild('fileUpload') fileUpload!: FileUpload;
+  selectedImage: File | null = null;
 
   categorias = [
     { nome: 'Alimentos e Bebidas' },
@@ -236,12 +243,16 @@ export class ProdutoFormComponent implements OnInit {
     }
   }
 
-  loadProdutoData(produto: any) {
+  loadProdutoData(produto: Produto) {
     if (this.produtoForm) {
       if (produto.produtoId) {
+        console.log('Carregando dados do produto:', produto);
         const nomeCategorias = produto.categorias.map((categoria: any) => ({
           nome: categoria.nome,
         }));
+        const nomeTags = produto.tags.map((tag: any) => tag.nomeTag);
+
+        console.log('Tags:', nomeTags);
         // Atualizando o formulário com os valores do produto
         this.produtoForm.patchValue({
           nome: produto.nome,
@@ -256,7 +267,7 @@ export class ProdutoFormComponent implements OnInit {
           ingredientes: produto.ingredientes,
           paisOrigem: produto.paisOrigem,
           categorias: nomeCategorias,
-          tags: produto.tags,
+          tags: nomeTags,
         });
       }
     } else {
@@ -276,25 +287,30 @@ export class ProdutoFormComponent implements OnInit {
       descricao: this.produtoForm.get('descricao')?.value,
       paisOrigem: this.produtoForm.get('paisOrigem')?.value,
       validade: this.produtoForm.get('validade')?.value
-        ? this.produtoForm.get('validade')?.value.toISOString()
-        : null, // Verifica se a validade está definida e converte para ISO
+        ? this.produtoForm.get('validade')?.value
+        : null,
       dataFabricacao: this.produtoForm.get('dataFabricacao')?.value
-        ? this.produtoForm.get('dataFabricacao')?.value.toISOString()
-        : null, // Mesma lógica para dataFabricacao
+        ? this.produtoForm.get('dataFabricacao')?.value
+        : null,
       lote: this.produtoForm.get('lote')?.value,
 
-      // Mapeando categorias para o formato [{nome: 'string'}]
+      // Aqui, cada string será mapeada para um objeto com a chave `nome`
       categorias: this.produtoForm.get('categorias')?.value
         ? this.produtoForm
             .get('categorias')
-            ?.value.map((categoria: any) => ({ nome: categoria.nome }))
+            ?.value.map((categoria: string) => ({ nome: categoria }))
         : [],
 
-      // Mapeando tags para o formato [{nome: 'string'}]
+      // Mesma coisa para tags
       tags: this.produtoForm.get('tags')?.value
-        ? this.produtoForm.get('tags')?.value.map((tag: any) => ({ nome: tag }))
+        ? this.produtoForm
+            .get('tags')
+            ?.value.map((tag: string) => ({ nome: tag }))
         : [],
     };
+
+    const formData = this.createFormData(this.produtoForm, this.selectedImage);
+    console.log('Produto cadastrado', novoProduto);
 
 
     if (this.produto && this.produto.produtoId) {
@@ -338,7 +354,7 @@ export class ProdutoFormComponent implements OnInit {
     } else {
       // Criar um novo produto
       if (this.produtoForm.valid) {
-        this.produtoService.postProduct(novoProduto).subscribe(
+        this.produtoService.postProduct(formData).subscribe(
           (response: any) => {
             if (response && response.produtoId) {
               this.messageService.add({
@@ -379,6 +395,8 @@ export class ProdutoFormComponent implements OnInit {
 
   onCancel(): void {
     this.produtoForm.reset();
+    this.fileUpload.clear();
+    this.selectedImage= null;
     this.cancel.emit();
   }
 
@@ -402,5 +420,65 @@ export class ProdutoFormComponent implements OnInit {
       return { invalidDate: true };
     }
     return null;
+  }
+  onImageSelect(event: any) {
+    const file = event.files[0];
+    if (file) {
+      this.selectedImage = file;
+      console.log('Imagem selecionada:', this.selectedImage);
+    }
+  }
+
+  createFormData(produtoForm: any, selectedImage: File | null): FormData {
+    const formData = new FormData();
+
+    formData.append('nome', produtoForm.get('nome')?.value);
+    formData.append('preco', produtoForm.get('preco')?.value);
+    formData.append('peso', produtoForm.get('peso')?.value);
+    formData.append('unidadeMedida', produtoForm.get('unidadeMedida')?.value);
+    formData.append('ingredientes', produtoForm.get('ingredientes')?.value);
+    formData.append('marca', produtoForm.get('marca')?.value);
+    formData.append('descricao', produtoForm.get('descricao')?.value);
+    formData.append('paisOrigem', produtoForm.get('paisOrigem')?.value);
+
+    if (produtoForm.get('validade')?.value) {
+      formData.append(
+        'validade',
+        produtoForm.get('validade')?.value.toISOString()
+      );
+    }
+
+    if (produtoForm.get('dataFabricacao')?.value) {
+      formData.append(
+        'dataFabricacao',
+        produtoForm.get('dataFabricacao')?.value.toISOString()
+      );
+    }
+
+    formData.append('lote', produtoForm.get('lote')?.value);
+
+    // Adicionando categorias com índice no nome
+    const categorias = produtoForm.get('categorias')?.value;
+    categorias.forEach((categoria: any, index: number) => {
+      formData.append(`categorias[${index}].nome`, categoria.nome);
+    });
+
+    // Adicionando tags com índice no nome
+    const tags = produtoForm.get('tags')?.value;
+    tags.forEach((tag: string, index: number) => {
+      formData.append(`tags[${index}].nome`, tag);
+    });
+
+    // Se uma imagem foi selecionada, adiciona ao FormData
+    if (selectedImage) {
+      formData.append('image', selectedImage);
+    }
+
+    // Logando o FormData no console
+    formData.forEach((value, key) => {
+      console.log(`${key}:`, value);
+    });
+
+    return formData;
   }
 }
