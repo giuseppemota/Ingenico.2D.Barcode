@@ -188,6 +188,7 @@
 
   .card-container {
     gap: 15px;
+    justify-content: center;
   }
 
   .product-card {
@@ -207,7 +208,7 @@
   }
 
   .card-content {
-    padding: 0;
+    padding: 20px;
   }
 
   .card-content p {

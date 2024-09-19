@@ -4,7 +4,7 @@
 
     <div class="card-content">
       <div class="card-image">
-        <img alt="Imagem do(a) {{ product.nome }}" src="assets/noImage.svg" />
+        <img alt="Imagem do(a) {{ product.nome }}" src="assets/noImage.svg"/>
       </div>
       <!-- fim do card-image -->
       <div class="card-detalhes">
@@ -27,14 +27,18 @@
             <p class="titulo">{{ product.alergicos || "ALÉRGICOS DO PRODUTO" }}</p>
           </div> fim do descricao-extra -->
           <div class="descricao-extra">
-            <p class="titulo">FABRICAÇÃO:</p>
-            <p class="titulo">
-              {{ product.dataFabricacao | date : "dd/MM/yyyy" }}
-            </p>
-            <p class="titulo">VALIDADE:</p>
-            <p class="titulo">{{ product.validade | date : "dd/MM/yyyy" }}</p>
-            <p class="titulo">LOTE:</p>
-            <p class="titulo">{{ product.lote }}</p>
+            <div style="display:flex;flex-direction:row;">
+              <p class="titulo">FABRICAÇÃO:</p>
+              <p class="titulo">{{ product.dataFabricacao | date : "dd/MM/yyyy" }}</p>
+            </div>
+            <div style="display:flex;flex-direction:row;">
+              <p class="titulo">VALIDADE:</p>
+              <p class="titulo">{{ product.validade | date : "dd/MM/yyyy" }}</p>
+            </div>
+            <div style="display:flex;flex-direction:row;">
+              <p class="titulo">LOTE:</p>
+              <p class="titulo">{{ product.lote }}</p>
+            </div>
           </div>
           <!-- fim do descricao-extra -->
         </div>
@@ -47,27 +51,28 @@
       <h3>DESCRIÇÃO</h3>
       <table>
         <tbody>
-          <tr>
-            <td class="cabecalho">CATEGORIA:</td>
-            <td class="conteudo">
+        <tr>
+          <td class="cabecalho">CATEGORIA:</td>
+          <td class="conteudo">
               <span *ngFor="let categoria of product.categorias; let i = index">
-                {{ categoria
+                {{
+                  categoria
                 }}<span *ngIf="i < product.categorias.length - 1">, </span>
               </span>
-            </td>
-          </tr>
-          <tr>
-            <td class="cabecalho">MARCA:</td>
-            <td class="conteudo">{{ product.marca }}</td>
-          </tr>
-          <tr>
-            <td class="cabecalho">PESO ({{ product.unidadeMedida }}):</td>
-            <td class="conteudo">{{ product.peso }}</td>
-          </tr>
-          <tr>
-            <td class="cabecalho">PAIS DE ORIGEM:</td>
-            <td class="conteudo">{{ product.paisOrigem }}</td>
-          </tr>
+          </td>
+        </tr>
+        <tr>
+          <td class="cabecalho">MARCA:</td>
+          <td class="conteudo">{{ product.marca }}</td>
+        </tr>
+        <tr>
+          <td class="cabecalho">PESO ({{ product.unidadeMedida }}):</td>
+          <td class="conteudo">{{ product.peso }}</td>
+        </tr>
+        <tr>
+          <td class="cabecalho">PAIS DE ORIGEM:</td>
+          <td class="conteudo">{{ product.paisOrigem }}</td>
+        </tr>
         </tbody>
       </table>
     </div>
