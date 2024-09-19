@@ -10,12 +10,13 @@
       type="button"
     ></button>
   </div>
-  <!-- Mensagem quando não há produtos -->
-  <div *ngIf="produtos.length === 0" class="no-products-message">
-    <p>Sem produtos cadastrados</p>
+
+  <!-- Spinner de carregamento -->
+  <div class="custom-spinner">
+    <p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
   </div>
 
-  <div  *ngIf="produtos.length  > 0" class="card-container">
+  <div *ngIf="!isLoading && produtos.length > 0" class="card-container">
     <p-card *ngFor="let produto of produtos" class="product-card">
       <ng-template pTemplate="header">
         <div class="card-header">
@@ -26,8 +27,11 @@
         <div class="card-content">
           <p>Marca: {{ produto.marca }}</p>
           <p>Validade: {{ produto.validade | date : "dd/MM/yyyy" }}</p>
-          <p>Especificação: {{ produto.peso }} {{ produto.unidadeMedida | lowercase }}</p>
-         <!-- <p>Categoria: {{ produto.categorias }}</p> -->
+          <p>
+            Especificação: {{ produto.peso }}
+            {{ produto.unidadeMedida | lowercase }}
+          </p>
+          <!-- <p>Categoria: {{ produto.categorias }}</p> -->
         </div>
       </ng-template>
       <ng-template pTemplate="footer">
@@ -49,7 +53,7 @@
             tooltipPosition="top"
           ></button>
           <button
-          (click)="deleteProduct(produto)"
+            (click)="deleteProduct(produto)"
             aria-label="Excluir"
             icon="pi pi-trash"
             pButton
@@ -68,7 +72,12 @@
       </ng-template>
     </p-card>
   </div>
-  <br><br>
+
+  <div *ngIf="!isLoading && produtos.length === 0" class="no-products-message">
+    <p>Sem produtos cadastrados</p>
+  </div>
+
+  <br /><br />
   <p-paginator
     (onPageChange)="onPageChange($event)"
     [rowsPerPageOptions]="[12, 36, 48]"
@@ -107,28 +116,55 @@
   </p-dialog>
 
   <p-dialog
-    (onHide)="closeQrCodeDialog()"
     [(visible)]="displayQrCodeDialog"
     [baseZIndex]="10000"
-    [closable]="true"
+    [closable]="false"
     [modal]="true"
     [resizable]="true"
     [style]="{ width: '70vw' }"
     header="QR Code do Produto"
   >
-    <div class="qr-button">
-      <button (click)="selectLinkProduct()">Link dinâmico</button>
-      <button (click)="selectInfoProduct()">Inf. do Produto</button>
-      <button (click)="printQrCode()">Imprimir QR Code</button>
+    <div class="modal-content">
+      <div class="p-field switch-container">
+        <label for="toggleQrCode">Exibir QR code com link dinâmico</label>
+        <p-inputSwitch
+          [(ngModel)]="isLinkQrCode"
+          (onChange)="toggleQrCodeType()"
+        ></p-inputSwitch>
+      </div>
+
+      <div class="qr-code-container">
+        <qrcode
+          style="display: flex; justify-content: space-around"
+          [qrdata]="selectedQrCode"
+          [margin]="2"
+          [width]="350"
+        >
+        </qrcode>
+      </div>
     </div>
 
-    <qrcode
-      style="display: flex; justify-content: space-around"
-      [qrdata]="selectedQrCode"
-      [margin]="2"
-      [width]="350"
-    >
-    </qrcode>
+    <div class="modal-footer">
+      <p-button
+        type="button"
+        (click)="printQrCode()"
+        label="Imprimir QR Code"
+        icon="pi pi-print"
+        [style]="{ background: ' #0C1E58', border: 'none' }"
+      ></p-button>
+      <p-button
+        type="button"
+        (click)="closeQrCodeDialog()"
+        label="Cancelar"
+        icon="pi pi-times"
+        [style]="{
+          background: 'white',
+          'border-color': '#0C1E58',
+          color: '#0C1E58',
+          'margin-left': '1rem'
+        }"
+      ></p-button>
+    </div>
   </p-dialog>
 </div>
 <p-toast></p-toast>

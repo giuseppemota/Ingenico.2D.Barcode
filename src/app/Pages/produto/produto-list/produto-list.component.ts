@@ -18,11 +18,12 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { InputMaskModule } from 'primeng/inputmask';
 import { CardModule } from 'primeng/card';
 import { TooltipModule } from 'primeng/tooltip';
-import { Router } from '@angular/router';
 import { ProdutoFormComponent } from '../produto-form/produto-form.component';
 import { ProdutoDetailsComponent } from '../produto-details/produto-details.component';
 import { QRCodeModule } from 'angularx-qrcode';
-import { info } from 'console';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-produto-list',
@@ -48,6 +49,9 @@ import { info } from 'console';
     ProdutoFormComponent,
     ProdutoDetailsComponent,
     QRCodeModule,
+    ProgressSpinnerModule,
+    CardModule,
+    InputSwitchModule,
   ],
   templateUrl: './produto-list.component.html',
   styleUrl: './produto-list.component.scss',
@@ -63,8 +67,10 @@ export class ProdutoListComponent implements OnInit {
   isViewMode: boolean = false;
   selectedQrCode: string = 'nao vazio';
   infoQrCode: string = '';
-  isProductListEmpty: boolean = false;
   qrCodeFormatado: string = '';
+  isLoading = true;
+  isLinkQrCode: boolean = false;
+  baseUrl: string = environment.apiUrl;
 
   // Variáveis para paginação
   totalRecords: number = 0;
@@ -74,8 +80,7 @@ export class ProdutoListComponent implements OnInit {
   constructor(
     private produtoService: ProdutosService,
     private confirmationService: ConfirmationService,
-    private messageService: MessageService,
-    private router: Router
+    private messageService: MessageService
   ) {}
 
   ngOnInit(): void {
@@ -83,11 +88,16 @@ export class ProdutoListComponent implements OnInit {
   }
 
   loadProducts(): void {
-    const page = this.first / this.rows;
-    this.produtoService.getAllProducts(page, this.rows).subscribe((result) => {
-      this.produtos = result.data;
-      this.totalRecords = result.total; // Total de registros
-    });
+    setTimeout(() => {
+      const page = this.first / this.rows;
+      this.produtoService
+        .getAllProducts(page, this.rows)
+        .subscribe((result) => {
+          this.produtos = result.data;
+          this.totalRecords = result.total; // Total de registros
+        });
+      this.isLoading = false;
+    }, 1500);
   }
 
   showFormDialog(): void {
@@ -105,17 +115,20 @@ export class ProdutoListComponent implements OnInit {
     this.produtoService
       .getProductById(produto.produtoId!)
       .subscribe((data: any) => {
-        // Formatar o texto com os dados do produto
+        this.selectedProduct = data;
         this.infoQrCode = JSON.stringify(data);
         this.qrCodeFormatado = this.formatProdutoData(data);
+
+        // Atualiza o QR code com base no estado atual do switch
+        this.updateQrCode();
+
         this.displayQrCodeDialog = true;
-        this.selectLinkProduct();
       });
   }
+
   formatProdutoData(produto: Produto): string {
     let formattedData = '';
     formattedData += `Nome: ${produto.nome}\n`;
-
     formattedData += `Ingredientes: ${produto.ingredientes}\n`;
     formattedData += `Descrição: ${produto.descricao}\n`;
     formattedData += `Marca: ${produto.marca}\n`;
@@ -131,6 +144,24 @@ export class ProdutoListComponent implements OnInit {
 
     return formattedData;
   }
+
+  generateProductLink(produto: any): string {
+    return `http://localhost:4200/produtos/${produto.produtoId}`;
+  }
+
+  updateQrCode(): void {
+    if (this.isLinkQrCode) {
+      const link = this.generateProductLink(this.selectedProduct);
+      this.selectedQrCode = `LINK:${link}`;
+    } else {
+      this.selectedQrCode = `DADOS:${this.qrCodeFormatado}`;
+    }
+  }
+
+  toggleQrCodeType(): void {
+    this.updateQrCode();
+  }
+
   closeFormDialog() {
     this.displayFormDialog = false;
   }
@@ -232,10 +263,7 @@ export class ProdutoListComponent implements OnInit {
   selectInfoProduct(): void {
     this.selectedQrCode = this.qrCodeFormatado;
   }
-  selectLinkProduct(): void {
-    this.selectedQrCode =
-      'http://localhost:4200/produtos/' + JSON.parse(this.infoQrCode).produtoId;
-  }
+
   printQrCode() {
     const qrElement = document.querySelector(
       'qrcode canvas'

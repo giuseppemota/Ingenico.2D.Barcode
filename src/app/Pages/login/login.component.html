@@ -11,9 +11,10 @@
     <form (ngSubmit)="onSubmit()" #loginForm="ngForm">
       <div class="campos">
         <div>
-          <input [(ngModel)]="loginData.username" name="username" pInputText required type="text" placeholder="USUÁRIO" autofocus>
+          <input [(ngModel)]="loginData.username" name="username" pInputText required type="text" placeholder="USUÁRIO"
+                 autofocus>
           <p-message
-            *ngIf="loginForm.controls['username']?.invalid && (loginForm.controls['username'].dirty || !loginForm.controls['username'].untouched)"
+            *ngIf="loginForm.controls['username']?.invalid && (loginForm.controls['username'].dirty)"
             severity="error"
             text="Preencha o campo usuário!"></p-message>
         </div>
@@ -21,7 +22,7 @@
           <input [(ngModel)]="loginData.password" name="password" pInputText placeholder="SENHA" required
                  type="password">
           <p-message
-            *ngIf="loginForm.controls['password']?.invalid && (loginForm.controls['password'].dirty || !loginForm.controls['password'].untouched)"
+            *ngIf="loginForm.controls['password']?.invalid && (loginForm.controls['password'].dirty)"
             severity="error"
             text="Preencha o campo senha!"></p-message>
         </div>

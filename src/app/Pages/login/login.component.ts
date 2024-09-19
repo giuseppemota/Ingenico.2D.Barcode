@@ -17,7 +17,7 @@ import {Router} from "@angular/router";
     MessageModule,
     NgIf,
     InputTextModule,
-    ButtonDirective
+    ButtonDirective,
   ],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
@@ -29,19 +29,13 @@ export class LoginComponent {
   };
   errorMessage = '';
 
-  authService: AuthService;
-  router: Router;
-
-  constructor(authService: AuthService, router: Router) {
-    this.authService = authService;
-    this.router = router;
-  }
+  constructor(private authService: AuthService, private router: Router) {}
 
   onSubmit() {
     this.authService.loginUser(this.loginData.username, this.loginData.password).subscribe({
       next: () => {
         this.errorMessage = '';
-        this.router.navigate(['/produtos']);
+        this.router.navigate(['/produtos']).then();
       },
       error: (error) => {
         if (error.status === 400 && error.error) {
