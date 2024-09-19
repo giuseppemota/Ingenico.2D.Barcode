@@ -5,6 +5,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
+  ViewChild,
 } from '@angular/core';
 import { Produto } from '../../../Models/product.model';
 import { DialogModule } from 'primeng/dialog';
@@ -39,7 +40,8 @@ import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
 import { ChipsModule } from 'primeng/chips';
 import { MultiSelectModule } from 'primeng/multiselect';
-import { FileUploadModule } from 'primeng/fileupload';
+import { FileUpload, FileUploadModule } from 'primeng/fileupload';
+
 
 @Component({
   selector: 'app-produto-form',
@@ -77,6 +79,7 @@ export class ProdutoFormComponent implements OnInit {
   @Input() produto!: Produto;
   @Output() save = new EventEmitter<Produto>();
   @Output() cancel = new EventEmitter<void>();
+  @ViewChild('fileUpload') fileUpload!: FileUpload;
   selectedImage: File | null = null;
 
   categorias = [
@@ -396,6 +399,8 @@ export class ProdutoFormComponent implements OnInit {
 
   onCancel(): void {
     this.produtoForm.reset();
+    this.fileUpload.clear();
+    this.selectedImage= null;
     this.cancel.emit();
   }
 
