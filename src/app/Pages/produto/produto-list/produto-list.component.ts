@@ -128,16 +128,18 @@ export class ProdutoListComponent implements OnInit {
 
   formatProdutoData(produto: Produto): string {
     let formattedData = '';
-    formattedData += `Nome: ${produto.nome}\n`;
-    formattedData += `Ingredientes: ${produto.ingredientes}\n`;
-    formattedData += `Descrição: ${produto.descricao}\n`;
-    formattedData += `Marca: ${produto.marca}\n`;
-    formattedData += `Peso: ${produto.peso} ${produto.unidadeMedida}\n`;
-    formattedData += `Preço: ${produto.preco}\n`;
-    formattedData += `País de Origem: ${produto.paisOrigem}\n`;
-    formattedData += `Categorias: ${produto.categorias
+    formattedData += `<p><strong>Nome:</strong> ${produto.nome}</p>`;
+    formattedData += `<p><strong>Ingredientes:</strong> ${produto.ingredientes}</p>`;
+    formattedData += `<p><strong>Descrição:</strong> ${produto.descricao}</p>`;
+    formattedData += `<p><strong>Marca:</strong> ${produto.marca}</p>`;
+    formattedData += `<p><strong>Peso:</strong> ${produto.peso} ${produto.unidadeMedida}</p>`;
+    formattedData += `<p><strong>Preço:</strong> R$ ${produto.preco.toFixed(
+      2
+    )}</p>`;
+    formattedData += `<p><strong>País de Origem:</strong> ${produto.paisOrigem}</p>`;
+    formattedData += `<p><strong>Categorias:</strong> ${produto.categorias
       .map((categoria: any) => categoria.nome)
-      .join(', ')}\n`;
+      .join(', ')}</p>`;
     // formattedData += `Tags: ${produto.tags
     //   .map((tag: any) => tag.nome)
     //   .join(', ')}\n`;

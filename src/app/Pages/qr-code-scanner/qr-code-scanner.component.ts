@@ -7,6 +7,7 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 import { MessageModule } from 'primeng/message';
 import { BarcodeFormat } from '@zxing/library';
+import { DialogModule } from 'primeng/dialog';
 
 @Component({
   selector: 'app-qr-code-scanner',
@@ -18,6 +19,7 @@ import { BarcodeFormat } from '@zxing/library';
     DropdownModule,
     ToastModule,
     MessageModule,
+    DialogModule,
   ],
   templateUrl: './qr-code-scanner.component.html',
   styleUrls: ['./qr-code-scanner.component.scss'],
@@ -32,16 +34,17 @@ export class QrCodeScannerComponent implements OnInit {
 
   formatsEnabled: BarcodeFormat[] = [BarcodeFormat.QR_CODE];
 
+  formattedData: string = '';
+  displayModal: boolean = false;
+
   constructor(private messageService: MessageService) {}
 
-  ngOnInit(): void {
-
-  }
+  ngOnInit(): void {}
 
   onCamerasFound(devices: MediaDeviceInfo[]): void {
     this.availableDevices = devices;
     this.hasDevices = Boolean(devices && devices.length);
-    console.log(this.hasDevices)
+    console.log(this.hasDevices);
   }
 
   onDeviceSelectChange(event: DropdownChangeEvent) {
@@ -84,19 +87,23 @@ export class QrCodeScannerComponent implements OnInit {
       const link = result.substring('LINK:'.length);
       this.handleLink(link);
     } else if (result.startsWith('DADOS:')) {
-      // Remove o prefixo e processa os dados formatados
-      const formattedData = result.substring('DATA:'.length);
+      const formattedData = result.substring('DADOS:'.length);
       this.handleFormattedData(formattedData);
     } else {
-      console.error('QR code não reconhecido');
+      this.messageService.add({
+        severity: 'error',
+        summary: 'Erro',
+        detail: 'QR code não reconhecido',
+      });
     }
   }
 
   handleLink(link: string): void {
     window.open(link, '_blank');
   }
-  
+
   handleFormattedData(data: string): void {
-    console.log('Dados formatados:', data);
+    this.formattedData = data; 
+    this.displayModal = true;
   }
 }
