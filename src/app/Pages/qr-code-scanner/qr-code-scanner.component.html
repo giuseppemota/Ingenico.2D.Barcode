@@ -40,4 +40,9 @@
   <div *ngIf="!hasDevices && hasPermission !== false">
     <p-message severity="info" text="Nenhum dispositivo encontrado"></p-message>
   </div>
+
+  <p-dialog [(visible)]="displayModal" header="Dados do QR Code" [modal]="true" [closable]="true" [style]="{width: '50vw'}">
+    <div [innerHTML]="formattedData"></div>
+  </p-dialog>
+  <p-toast></p-toast>
 </div>
