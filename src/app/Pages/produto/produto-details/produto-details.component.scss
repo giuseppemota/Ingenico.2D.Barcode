@@ -88,7 +88,6 @@ section {
   align-items: center;
   gap: 5px;
   font-weight: bold;
- 
 }
 
 .titulo {
@@ -109,7 +108,7 @@ section {
   align-items: center;
 }
 
-h3{
+h3 {
   text-align: center;
   margin: 0 0 15px 0;
 }
@@ -119,7 +118,7 @@ table {
   justify-content: center;
 }
 
-tbody{
+tbody {
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -143,27 +142,29 @@ tbody{
   border-bottom: 1px solid #eaeaea;
 }
 
-.div-carrossel{
+.div-carrossel {
   display: flex;
   flex-direction: column;
   gap: 15px;
 }
 
-.titulo-carrossel{
+.titulo-carrossel {
   text-align: left;
   padding: 0 70px 0 70px;
   font-size: 1.2rem;
 }
+
 @media (max-width: 768px) {
-  .card-title{
+  .card-title {
     font-size: 1.4em;
     text-align: center;
   }
-  .card-content{
+  .card-content {
     flex-direction: column;
   }
   .card-image {
     width: 100%;
+
     img {
       width: 100%;
       height: 100%;
@@ -172,7 +173,7 @@ tbody{
   .detalhes {
     width: 100%;
   }
-  .titulo-carrossel{
+  .titulo-carrossel {
     text-align: left;
     padding: 0 70px 0 70px;
     font-size: 1rem;
@@ -181,7 +182,12 @@ tbody{
     width: 140px;
     font-size: 1rem;
   }
+  .descricao-extra{
+    align-items: flex-start;
+    flex-direction: column;
+  }
 }
+
 @media (min-width: 1024px) {
   section {
     display: flex;
