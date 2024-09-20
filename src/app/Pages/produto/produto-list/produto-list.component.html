@@ -92,6 +92,7 @@
     [modal]="true"
     [resizable]="true"
     [style]="{ width: '70vw' }"
+    [breakpoints]="{ '960px': '80vw', '640px': '95vw' }"
     header="{{ isEditMode ? 'Editar Produto' : 'Cadastrar Produto' }}"
   >
     <app-produto-form
@@ -128,6 +129,7 @@
       <div class="p-field switch-container">
         <label for="toggleQrCode">Exibir QR code com link dinâmico</label>
         <p-inputSwitch
+          id="toggleQrCode"
           [(ngModel)]="isLinkQrCode"
           (onChange)="toggleQrCodeType()"
         ></p-inputSwitch>

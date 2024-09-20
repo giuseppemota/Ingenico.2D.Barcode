@@ -103,7 +103,7 @@ export class QrCodeScannerComponent implements OnInit {
   }
 
   handleFormattedData(data: string): void {
-    this.formattedData = data; 
+    this.formattedData = data;
     this.displayModal = true;
   }
 }
