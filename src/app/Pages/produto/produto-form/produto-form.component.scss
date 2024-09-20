@@ -24,17 +24,31 @@ textarea{
   width: 100%;
 }
 
-
 .form-buttons {
   display: flex;
-  justify-content: flex-end; 
+  justify-content: flex-end;
   gap: 1rem;
-  margin-top: 1rem; 
+  margin-top: 1rem;
 }
 
 @media (max-width: 768px) {
   .form-row {
+    width: 100%;
     flex-direction: column;
   }
-  
+  .form-col{
+    display: flex;
+    flex-direction: column;
+  }
+  input[type="text"],
+  input[type="number"],
+  textarea{
+    width: 90%;
+  }
+
+  .form-buttons {
+    width: 90%;
+    justify-content: center;
+    gap: .5rem;
+  }
 }

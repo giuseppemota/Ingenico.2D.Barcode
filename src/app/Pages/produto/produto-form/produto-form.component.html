@@ -63,7 +63,7 @@
               id="dataFabricacao"
               formControlName="dataFabricacao"
               dateFormat="dd/mm/yy"
-              [style]="{ width: '100%' }"
+              [style]="{ width: '90%' }"
             ></p-calendar>
             <p-message
               *ngIf="
@@ -81,7 +81,7 @@
               id="validade"
               formControlName="validade"
               dateFormat="dd/mm/yy"
-              [style]="{ width: '100%' }"
+              [style]="{ width: '90%' }"
             ></p-calendar>
             <p-message
               *ngIf="
@@ -94,7 +94,7 @@
           </div>
 
           <div class="form-col">
-            <label for="lote">lote:</label>
+            <label for="lote">Lote:</label>
             <input id="lote" type="text" pInputText formControlName="lote" />
             <p-message
               *ngIf="
@@ -116,7 +116,6 @@
               formControlName="unidadeMedida"
               id="unidadeMedida"
               placeholder="Selecione uma unidade de medida"
-              [style]="{ width: '100%' }"
             ></p-dropdown>
             <p-message
               *ngIf="
@@ -201,11 +200,12 @@
           <div class="form-col">
             <label for="categorias">Categoria:</label>
             <p-multiSelect
+              id="categorias"
               [options]="categorias"
               formControlName="categorias"
               optionLabel="nome"
               placeholder="Selecione as categorias"
-              [style]="{ width: '100%' }"
+              [style]="{ width: '90%'}"
               display="chip"
               [showToggleAll]="false"
             ></p-multiSelect>
@@ -221,14 +221,14 @@
         </div>
         <div class="p-fluid">
           <div class="p-field">
-            <label for="tags">Marcadores:</label>
+            <label for="tags">Tag:</label>
             <p-chips
               id="tags"
               formControlName="tags"
               [max]="5"
               allowDuplicate="false"
-              separator=","
-            >
+              [style]="{width: '90%'}"
+              separator=",">
             </p-chips>
           </div>
         </div>
@@ -243,6 +243,7 @@
             auto="false"
             customUpload="true"
             chooseLabel="Escolher Imagem"
+            [style]="{height: '3rem'}"
           ></p-fileUpload>
 
           <p-button
