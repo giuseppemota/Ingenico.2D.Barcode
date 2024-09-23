@@ -15,204 +15,6 @@ export class ProdutosService {
 
   constructor(private http: HttpClient) {}
 
-  // private products: Produto[] = [
-  //   {
-  //     id: 1,
-  //     nome: 'Lidando com o nome de um produto muito grande',
-  //     descricao: 'Descrição do Produto 1',
-  //     marca: 'Marca 1',
-  //     validade: new Date(),
-  //     peso: 100,
-  //     unidadeMedida: 'g',
-  //     ingredientes: 'Ingrediente 1, Ingrediente 2',
-  //     paisOrigem: 'Brasil',
-  //     categoria: 'Alimentos',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 2,
-  //     nome: 'Produto 2',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 3,
-  //     nome: 'Produto 3',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 4,
-  //     nome: 'Produto 4',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 5,
-  //     nome: 'Produto 5',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 6,
-  //     nome: 'Produto 6',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 7,
-  //     nome: 'Produto 7',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 8,
-  //     nome: 'Produto 8',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 9,
-  //     nome: 'Produto 9',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 10,
-  //     nome: 'Produto 10',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 11,
-  //     nome: 'Produto 11',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 12,
-  //     nome: 'Produto 12',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 13,
-  //     nome: 'Produto 13',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 14,
-  //     nome: 'Produto 14',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  //   {
-  //     id: 15,
-  //     nome: 'Produto 15',
-  //     descricao: 'Descrição do Produto 2',
-  //     marca: 'Marca 2',
-  //     validade: new Date(),
-  //     peso: 200,
-  //     unidadeMedida: 'ml',
-  //     ingredientes: 'Ingrediente A, Ingrediente B',
-  //     paisOrigem: 'EUA',
-  //     categoria: 'Bebidas',
-  //     preco: 56.00
-  //   },
-  // ];
-
   private fetchAllProducts(): Observable<any> {
     return this.http.get<any>(`${this.apiUrl}/Produto/v1/Produtos`);
   }
@@ -265,6 +67,9 @@ export class ProdutosService {
     return this.http.put<any>(`${this.apiUrl}/Produto/v1/Produtos`, produto);
   }
 
+  getProdutosSimilares(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/Produto/v1/Produtos/${id}/Similares`);
+  }
   // updateProduct(id: number, product: Produto): Observable<Produto> {
   //   const index = this.products.findIndex((p) => p.id === id);
   //   if (index !== -1) {
@@ -280,7 +85,5 @@ export class ProdutosService {
     });
   }
 
-  getSimilares(currentProductId: number): any {
-    //   return this.products.filter(product => product.id !== currentProductId).slice(0, 8);
-  }
+
 }
