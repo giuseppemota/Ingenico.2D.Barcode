@@ -260,7 +260,7 @@ export class ProdutoFormComponent implements OnInit {
           descricao: produto.descricao,
           validade: produto.validade ? new Date(produto.validade) : null,
           unidadeMedida: produto.unidadeMedida || null,
-          dataFabricacao: produto.dataFabricacao,
+          dataFabricacao: produto.dataFabricacao ? new Date(produto.dataFabricacao) : null,
           lote: produto.lote,
           peso: produto.peso,
           preco: produto.preco,

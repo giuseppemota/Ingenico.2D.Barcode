@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Produto } from '../../Models/product.model';
-import { map, Observable, of } from 'rxjs';
+import {catchError, map, Observable, throwError} from 'rxjs';
 import { environment } from '../../../environments/environment.development';
 import { HttpClient } from '@angular/common/http';
 
@@ -67,9 +67,19 @@ export class ProdutosService {
     return this.http.put<any>(`${this.apiUrl}/Produto/v1/Produtos`, produto);
   }
 
+  // getProdutosSimilares(id: string): Observable<any> {
+  //   return this.http.get<any>(`${this.apiUrl}/Produto/v1/Produtos/${id}/Similares`);
+  // }
+
   getProdutosSimilares(id: string): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/Produto/v1/Produtos/${id}/Similares`);
+    return this.http.get<any>(`${this.apiUrl}/Produto/v1/Produtos/${id}/Similares`).pipe(
+      catchError(error => {
+        console.error('Erro ao obter produtos similares:', error);
+        return throwError(() => new Error('Erro ao obter produtos similares. Por favor, tente novamente mais tarde.'));
+      })
+    );
   }
+
   // updateProduct(id: number, product: Produto): Observable<Produto> {
   //   const index = this.products.findIndex((p) => p.id === id);
   //   if (index !== -1) {
