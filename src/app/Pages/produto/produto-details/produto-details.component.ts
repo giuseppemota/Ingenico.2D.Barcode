@@ -26,7 +26,7 @@ import { CarrosselSimilaresComponent } from '../../../Components/carrossel-simil
 export class ProdutoDetailsComponent implements OnInit {
   @Input() product: any = {};
   produtosSimilares: Produto[] = [];
-
+  imagemProduto: number[] = [];
   constructor(
     private route: ActivatedRoute,
     private productService: ProdutosService
@@ -39,18 +39,24 @@ export class ProdutoDetailsComponent implements OnInit {
     const idString = this.route.snapshot.paramMap.get('id');
     if (idString) {
       //const id = +idString;
+
       this.productService.getProductById(idString).subscribe((data: any) => {
         this.product = {
           ...data,
           categorias: data.categorias.map((categoria: any) => categoria.nome),
         };
       });
-      this.productService.getProdutosSimilares(idString).subscribe((data: any) => {
-        this.produtosSimilares = data;
+
+      this.productService
+        .getProdutosSimilares(idString)
+        .subscribe((data: any) => {
+          this.produtosSimilares = data;
+        });
+
+      this.productService.getImagemProduto(idString).subscribe((data: any) => {
+        this.imagemProduto = data.imageData;
       });
-
     }
-
 
     // TODO: Implementar a busca de produtos similares
     // this.productService.getSimilares().subscribe((data: any) => {

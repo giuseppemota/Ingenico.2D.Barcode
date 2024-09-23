@@ -13,6 +13,7 @@ import { ProdutosService } from '../../Services/Produto/produtos.service';
 })
 export class CarrosselSimilaresComponent implements OnInit {
   @Input() produtosSimilares: Produto[] = [];
+  productImages: { [id: string]: string } = {};
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
@@ -30,15 +31,26 @@ export class CarrosselSimilaresComponent implements OnInit {
       numScroll: 1,
     },
   ];
-
+  imageForCarousel(id: string) {
+    this.productService.getImagemProduto(id).subscribe((data: any) => {
+      this.productImages[id] = data.imageData; // Armazena a imagem base64
+    });
+  }
+  loadImagesForProducts(produtosSimilares: any[]) {
+    produtosSimilares.forEach((product) => {
+      this.imageForCarousel(product.produtoId);
+    });
+  }
   constructor(
     private route: ActivatedRoute,
     private productService: ProdutosService
   ) {}
 
-  ngOnInit() {
+  async ngOnInit() {
     const produtoId = this.route.snapshot.params['id'];
-    this.loadSimilares(produtoId);
+    await this.loadSimilares(produtoId);
+    await this.loadImagesForProducts(this.produtosSimilares);
+    console.log(this.produtosSimilares);
   }
 
   loadSimilares(id: string) {
@@ -46,7 +58,4 @@ export class CarrosselSimilaresComponent implements OnInit {
       this.produtosSimilares = data;
     });
   }
-
 }
-
-
