@@ -11,8 +11,8 @@
           <div class="relative mx-auto">
             <img
               [alt]="productSimilar.nome"
-              class="w-full border-round img-similar img-similar"
-              src="{{ productSimilar.image || 'assets/noImage.svg' }}"/>
+              class="w-full border-round img-similar"
+              [src]="productImages[productSimilar.produtoId] ? 'data:image/png;base64,' + productImages[productSimilar.produtoId] : 'assets/noImage.svg'"/>
           </div> <!-- fim div image carrossel -->
         </div>
         <div class="mb-3 font-medium" style="height: 80px;">

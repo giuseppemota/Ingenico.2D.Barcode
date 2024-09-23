@@ -4,7 +4,10 @@
 
     <div class="card-content">
       <div class="card-image">
-        <img alt="Imagem do(a) {{ product.nome }}" src="assets/noImage.svg"/>
+       <img
+    [alt]="'Imagem do(a) ' + product.nome"
+    [src]="imagemProduto ? 'data:image/png;base64,' + imagemProduto : 'assets/noImage.svg'"
+/>
       </div>
       <!-- fim do card-image -->
       <div class="card-detalhes">

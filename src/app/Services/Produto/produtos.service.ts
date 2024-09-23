@@ -85,5 +85,7 @@ export class ProdutosService {
     });
   }
 
-
+  getImagemProduto(id: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/Produto/v1/Produtos/${id}/imagem`);
+  }
 }
