@@ -11,12 +11,7 @@
     ></button>
   </div>
 
-  <!-- Spinner de carregamento -->
-  <div class="custom-spinner">
-    <p-progressSpinner *ngIf="isLoading"></p-progressSpinner>
-  </div>
-
-  <div *ngIf="!isLoading && produtos.length > 0" class="card-container">
+  <div *ngIf="produtos.length > 0" class="card-container">
     <p-card *ngFor="let produto of produtos" class="product-card">
       <ng-template pTemplate="header">
         <div class="card-header">
@@ -73,7 +68,7 @@
     </p-card>
   </div>
 
-  <div *ngIf="!isLoading && produtos.length === 0" class="no-products-message">
+  <div *ngIf="produtos.length === 0" class="no-products-message">
     <p>Sem produtos cadastrados</p>
   </div>
 
@@ -113,7 +108,65 @@
     [style]="{ width: '70vw' }"
     header="Detalhes do Produto"
   >
-    <app-produto-details [product]="selectedProduct"></app-produto-details>
+    <section class="produto-detalhes" *ngIf="selectedProduct">
+      <div class="container">
+        <table>
+          <tr>
+            <th>Id</th>
+            <td>{{ selectedProduct.produtoId }}</td>
+          </tr>
+          <tr>
+            <th>Nome</th>
+            <td>{{ selectedProduct.nome }}</td>
+          </tr>
+          <tr>
+            <th>Validade</th>
+            <td>{{ selectedProduct.validade | date }}</td>
+          </tr>
+          <tr>
+            <th>Data de Fabricação</th>
+            <td>{{ selectedProduct.dataFabricacao | date }}</td>
+          </tr>
+          <tr>
+            <th>Lote</th>
+            <td>{{ selectedProduct.lote }}</td>
+          </tr>
+          <tr>
+            <th>Ingredientes</th>
+            <td>{{ selectedProduct.ingredientes }}</td>
+          </tr>
+          <tr>
+            <th>Descrição</th>
+            <td>{{ selectedProduct.descricao }}</td>
+          </tr>
+          <tr>
+            <th>Marca</th>
+            <td>{{ selectedProduct.marca }}</td>
+          </tr>
+          <tr>
+            <th>Peso</th>
+            <td>{{ selectedProduct.peso }} {{ selectedProduct.unidadeMedida }}</td>
+          </tr>
+          <tr>
+            <th>Preço</th>
+            <td>{{ selectedProduct.preco | currency }}</td>
+          </tr>
+          <tr>
+            <th>País de Origem</th>
+            <td>{{ selectedProduct.paisOrigem }}</td>
+          </tr>
+          <tr>
+            <th>Tags</th>
+            <td>{{ selectedProduct.tags }}</td>
+          </tr>
+          <tr>
+            <th>Categorias</th>
+            <td>{{ selectedProduct.categorias }}</td>
+          </tr>
+        </table>
+      </div>
+    </section>
+    <!--    <app-produto-details [product]="selectedProduct"></app-produto-details>-->
   </p-dialog>
 
   <p-dialog

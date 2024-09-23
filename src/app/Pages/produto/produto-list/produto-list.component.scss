@@ -31,7 +31,6 @@
   font-size: 1.2em;
 }
 
-
 .new-product-button {
   display: flex;
   align-items: center;
@@ -93,7 +92,6 @@
   /* Alinha os itens à esquerda */
 }
 
-
 .card-content p {
   font-size: 1rem;
   margin: 0;
@@ -134,7 +132,6 @@
 .p-inputSwitch {
   margin-top: 5px;
 }
-
 
 .qr-code-container {
   display: flex;
@@ -190,8 +187,6 @@
   border: none;
 }
 
-
-
 // TODO: Ativar estilo da imagem do produto
 // /* Estilo da imagem do produto */
 // .product-card img {
@@ -199,6 +194,56 @@
 //   height: auto; /* Mantém a proporção da imagem */
 //   object-fit: cover; /* Cobre o card com a imagem */
 // }
+
+.produto-detalhes {
+  background-color: #f8f8f8;
+  padding: 20px;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  background-color: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+  text-align: center;
+  color: #0C1E58;
+  margin-bottom: 20px;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+th, td {
+  padding: 10px;
+  text-align: left;
+  border-bottom: 1px solid #ddd;
+}
+
+th {
+  background-color: #f0f0f0;
+  color: #0C1E58;
+}
+
+td {
+  color: #333;
+}
+
+@media (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  th, td {
+    padding: 8px;
+  }
+}
 
 @media (max-width: 1200px) and (min-width: 769px) {
   .product-card {
