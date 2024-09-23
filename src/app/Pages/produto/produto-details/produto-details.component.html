@@ -85,7 +85,7 @@
       </div> -->
     </div>
     <!-- fim do historia-produto -->
-    <div class="div-carrossel">
+    <div class="div-carrossel" *ngIf="produtosSimilares.length > 0">
       <p class="titulo-carrossel">Produtos Semelhantes:</p>
       <carrossel-similares [produtosSimilares]="produtosSimilares"></carrossel-similares>
     </div>
