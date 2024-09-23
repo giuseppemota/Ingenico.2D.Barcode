@@ -63,8 +63,8 @@ export class ProdutosService {
     return this.http.post<any>(`${this.apiUrl}/Produto/v1/Produtos`, formData);
   }
 
-  updateProduct(produto: Produto): Observable<any> {
-    return this.http.put<any>(`${this.apiUrl}/Produto/v1/Produtos`, produto);
+  updateProduct(formData: FormData): Observable<any> {
+    return this.http.put<any>(`${this.apiUrl}/Produto/v1/Produtos`, formData);
   }
 
   // getProdutosSimilares(id: string): Observable<any> {
