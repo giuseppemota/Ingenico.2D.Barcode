@@ -33,7 +33,6 @@ import { InputTextareaModule } from 'primeng/inputtextarea';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { CheckboxModule } from 'primeng/checkbox';
 import { CalendarModule } from 'primeng/calendar';
-import { MessagesModule } from 'primeng/messages';
 import { MessageModule } from 'primeng/message';
 import { ProdutosService } from '../../../Services/Produto/produtos.service';
 import { MessageService } from 'primeng/api';
@@ -245,13 +244,15 @@ export class ProdutoFormComponent implements OnInit {
   loadProdutoData(produto: Produto) {
     if (this.produtoForm) {
       if (produto.produtoId) {
-        console.log('Carregando dados do produto:', produto);
-        const nomeCategorias = produto.categorias.map((categoria: any) => ({
-          nome: categoria.nome,
-        }));
-        const nomeTags = produto.tags.map((tag: any) => tag.nome);
+        
+        const nomeCategorias = Array.isArray(produto.categorias)
+          ? produto.categorias.map((categoria: any) => ({ nome: categoria.nome }))
+          : [];
+        const nomeTags = Array.isArray(produto.tags)
+          ? produto.tags.map((tag: any) => tag.nomeTag)
+          : [];
 
-        console.log('Tags:', nomeTags);
+
         // Atualizando o formulário com os valores do produto
         this.produtoForm.patchValue({
           nome: produto.nome,
