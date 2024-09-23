@@ -244,12 +244,12 @@ export class ProdutoFormComponent implements OnInit {
   loadProdutoData(produto: Produto) {
     if (this.produtoForm) {
       if (produto.produtoId) {
-        
+
         const nomeCategorias = Array.isArray(produto.categorias)
           ? produto.categorias.map((categoria: any) => ({ nome: categoria.nome }))
           : [];
         const nomeTags = Array.isArray(produto.tags)
-          ? produto.tags.map((tag: any) => tag.nomeTag)
+          ? produto.tags.map((tag: any) => tag.nome)
           : [];
 
 
