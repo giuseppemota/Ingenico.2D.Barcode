@@ -41,7 +41,6 @@ import { ChipsModule } from 'primeng/chips';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FileUpload, FileUploadModule } from 'primeng/fileupload';
 
-
 @Component({
   selector: 'app-produto-form',
   standalone: true,
@@ -245,12 +244,14 @@ export class ProdutoFormComponent implements OnInit {
   loadProdutoData(produto: Produto) {
     if (this.produtoForm) {
       if (produto.produtoId) {
+        
         const nomeCategorias = Array.isArray(produto.categorias)
           ? produto.categorias.map((categoria: any) => ({ nome: categoria.nome }))
           : [];
         const nomeTags = Array.isArray(produto.tags)
           ? produto.tags.map((tag: any) => tag.nomeTag)
           : [];
+
 
         // Atualizando o formulário com os valores do produto
         this.produtoForm.patchValue({
@@ -259,7 +260,9 @@ export class ProdutoFormComponent implements OnInit {
           descricao: produto.descricao,
           validade: produto.validade ? new Date(produto.validade) : null,
           unidadeMedida: produto.unidadeMedida || null,
-          dataFabricacao: produto.dataFabricacao ? new Date(produto.dataFabricacao) : null,
+          dataFabricacao: produto.dataFabricacao
+            ? new Date(produto.dataFabricacao)
+            : null,
           lote: produto.lote,
           peso: produto.peso,
           preco: produto.preco,
@@ -311,11 +314,10 @@ export class ProdutoFormComponent implements OnInit {
     const formData = this.createFormData(this.produtoForm, this.selectedImage);
     console.log('Produto cadastrado', novoProduto);
 
-
     if (this.produto && this.produto.produtoId) {
       // Atualizar produto existente
-      novoProduto.produtoId = this.produto.produtoId;
-      this.produtoService.updateProduct(novoProduto).subscribe(
+      formData.append('produtoId', this.produto.produtoId);
+      this.produtoService.updateProduct(formData).subscribe(
         (response: any) => {
           if (response && response.produtoId) {
             this.messageService.add({
@@ -395,7 +397,7 @@ export class ProdutoFormComponent implements OnInit {
   onCancel(): void {
     this.produtoForm.reset();
     this.fileUpload.clear();
-    this.selectedImage= null;
+    this.selectedImage = null;
     this.cancel.emit();
   }
 
@@ -464,7 +466,7 @@ export class ProdutoFormComponent implements OnInit {
 
     // Adicionando tags com índice no nome
     const tags = produtoForm.get('tags')?.value;
-    tags.forEach((tag: string, index: number) => {
+    tags.forEach((tag: any, index: number) => {
       formData.append(`tags[${index}].nome`, tag);
     });
 
