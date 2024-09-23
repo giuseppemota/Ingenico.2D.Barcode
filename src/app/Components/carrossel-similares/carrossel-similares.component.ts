@@ -1,50 +1,52 @@
-import {Component, OnInit} from '@angular/core';
-import {CarouselModule} from "primeng/carousel";
-import {Produto} from "../../Models/product.model";
-import {ActivatedRoute} from "@angular/router";
-import {ProdutosService} from "../../Services/Produto/produtos.service";
+import { Component, Input, OnInit } from '@angular/core';
+import { CarouselModule } from 'primeng/carousel';
+import { Produto } from '../../Models/product.model';
+import { ActivatedRoute } from '@angular/router';
+import { ProdutosService } from '../../Services/Produto/produtos.service';
 
 @Component({
-  selector: 'app-carrossel-similares',
+  selector: 'carrossel-similares',
   standalone: true,
-  imports: [
-    CarouselModule
-  ],
+  imports: [CarouselModule],
   templateUrl: './carrossel-similares.component.html',
-  styleUrl: './carrossel-similares.component.scss'
+  styleUrl: './carrossel-similares.component.scss',
 })
-export class CarrosselSimilaresComponent implements OnInit{
-  produtosSimilares: Produto[] = [];
+export class CarrosselSimilaresComponent implements OnInit {
+  @Input() produtosSimilares: Produto[] = [];
   responsiveOptions: any[] = [
     {
       breakpoint: '1024px',
       numVisible: 3,
-      numScroll: 1
+      numScroll: 1,
     },
     {
       breakpoint: '768px',
       numVisible: 2,
-      numScroll: 1
+      numScroll: 1,
     },
     {
       breakpoint: '560px',
       numVisible: 2,
-      numScroll: 1
-    }
+      numScroll: 1,
+    },
   ];
 
-  constructor(private route: ActivatedRoute, private productService: ProdutosService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private productService: ProdutosService
+  ) {}
 
   ngOnInit() {
-    const idString = this.route.snapshot.paramMap.get('id');
-    if (idString) {
-      const id = +idString;
-      this.loadSimilares(id);
-    }
+    const produtoId = this.route.snapshot.params['id'];
+    this.loadSimilares(produtoId);
   }
 
-  // TODO: Função temporária de similares (1).
-  loadSimilares(currentProductId: number) {
-    this.produtosSimilares = this.productService.getSimilares(currentProductId);
+  loadSimilares(id: string) {
+    this.productService.getProdutosSimilares(id).subscribe((data: any) => {
+      this.produtosSimilares = data;
+    });
   }
+
 }
+
+
