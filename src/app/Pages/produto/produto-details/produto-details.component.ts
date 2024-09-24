@@ -38,8 +38,6 @@ export class ProdutoDetailsComponent implements OnInit {
     }
     const idString = this.route.snapshot.paramMap.get('id');
     if (idString) {
-      //const id = +idString;
-
       this.productService.getProductById(idString).subscribe((data: any) => {
         this.product = {
           ...data,
@@ -57,10 +55,5 @@ export class ProdutoDetailsComponent implements OnInit {
         this.imagemProduto = data.imageData;
       });
     }
-
-    // TODO: Implementar a busca de produtos similares
-    // this.productService.getSimilares().subscribe((data: any) => {
-    //   this.produtosSimilares = data;
-    // });
   }
 }
