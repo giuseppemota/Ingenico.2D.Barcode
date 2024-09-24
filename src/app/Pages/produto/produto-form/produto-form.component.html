@@ -1,61 +1,85 @@
 <div class="form-container">
-  <p-card>
+  <p-card [style]="{'box-shadow': 'none'}">
     <form (ngSubmit)="onSave()" [formGroup]="produtoForm">
       <div class="form-grid">
-        <!-- Nome e Marca na mesma linha -->
+        <!-- Nome, Marca e Lote-->
         <div class="form-row">
           <div class="form-col">
             <label for="nome">Nome:</label>
-            <input
-              id="nome"
-              type="text"
-              pInputText
-              formControlName="nome"
-              required
-            />
+            <input id="nome" type="text" pInputText formControlName="nome" required/>
             <p-message
-              *ngIf="
-                produtoForm.get('nome')?.touched &&
-                produtoForm.get('nome')?.invalid
-              "
+              *ngIf="produtoForm.get('nome')?.touched &&produtoForm.get('nome')?.invalid"
               severity="error"
-              text="O nome é obrigatório e deve ter entre 3 e 50 caracteres"
+              text="O nome é obrigatório e deve ter entre 3 e 50 caracteres."
+              [style]="{width: '100%', height: '100%', 'max-height': '3.2rem'}">
             ></p-message>
           </div>
-
           <div class="form-col">
             <label for="marca">Marca:</label>
-            <input id="marca" type="text" pInputText formControlName="marca" />
+            <input id="marca" type="text" pInputText formControlName="marca"/>
+            <p-message
+              *ngIf="produtoForm.get('marca')?.touched &&produtoForm.get('marca')?.invalid"
+              severity="error"
+              text="A marca é obrigatória e deve ter entre 2 e 30 caracteres."
+              [style]="{width: '100%', height: '100%', 'max-height': '3.2rem'}">
+            ></p-message>
+          </div>
+          <div class="form-col">
+            <label for="lote">Lote:</label>
+            <input id="lote" type="text" pInputText formControlName="lote"/>
             <p-message
               *ngIf="
-                produtoForm.get('marca')?.touched &&
-                produtoForm.get('marca')?.invalid
+                produtoForm.get('lote')?.touched &&
+                produtoForm.get('lote')?.invalid
               "
               severity="error"
-              text="A marca é obrigatória e deve ter entre 2 e 30 caracteres"
+              text="O lote é obrigatório e deve ter entre 2 e 20 caracteres"
+              [style]="{width: '100%', height: '100%', 'max-height': '3.2rem'}">
             ></p-message>
           </div>
         </div>
 
-        <!-- Descrição na linha abaixo -->
-        <div>
-          <label for="descricao">Descrição:</label>
-          <textarea
-            id="descricao"
-            pInputTextarea
-            formControlName="descricao"
-            rows="4"
-          ></textarea>
-          <p-message
-            *ngIf="
+        <!-- Descrição e Ingredientes -->
+        <div class="form-row">
+          <div class="form-col">
+            <label for="descricao">Descrição:</label>
+            <textarea
+              id="descricao"
+              pInputTextarea
+              formControlName="descricao"
+              rows="3"
+            ></textarea>
+            <p-message
+              *ngIf="
               produtoForm.get('descricao')?.touched &&
               produtoForm.get('descricao')?.invalid
             "
-            severity="error"
-            text="A descrição é obrigatória e deve ter entre 10 e 200 caracteres"
-          ></p-message>
+              severity="error"
+              text="A descrição é obrigatória e deve ter entre 10 e 200 caracteres."
+              [style]="{width: '100%', height: '100%', 'max-height': '3rem'}">
+            ></p-message>
+          </div>
+          <div class="form-col">
+            <label for="ingredientes">Ingredientes:</label>
+            <textarea
+              id="ingredientes"
+              pInputTextarea
+              formControlName="ingredientes"
+              rows="2"
+            ></textarea>
+            <p-message
+              *ngIf="
+              produtoForm.get('ingredientes')?.touched &&
+              produtoForm.get('ingredientes')?.invalid
+            "
+              severity="error"
+              text="Os ingredientes são obrigatórios e devem ter entre 5 e 100 caracteres."
+              [style]="{width: '100%', height: '100%', 'max-height': '3.5rem'}">
+            ></p-message>
+          </div>
         </div>
 
+        <!-- Data de Fabricação, Validade e Pais de Origem -->
         <div class="form-row">
           <div class="form-col">
             <label for="dataFabricacao">Data de Fabricação:</label>
@@ -63,7 +87,7 @@
               id="dataFabricacao"
               formControlName="dataFabricacao"
               dateFormat="dd/mm/yy"
-              [style]="{ width: '90%' }"
+              [style]="{ width: '100%' }"
             ></p-calendar>
             <p-message
               *ngIf="
@@ -71,17 +95,17 @@
                 produtoForm.get('dataFabricacao')?.invalid
               "
               severity="error"
-              text="A data de fabricação não deve ser uma data futura"
+              text="A data de fabricação não deve ser uma data futura."
+              [style]="{width: '100%', height: '100%'}">
             ></p-message>
           </div>
-
           <div class="form-col">
             <label for="validade">Validade:</label>
             <p-calendar
               id="validade"
               formControlName="validade"
               dateFormat="dd/mm/yy"
-              [style]="{ width: '90%' }"
+              [style]="{ width: '100%' }"
             ></p-calendar>
             <p-message
               *ngIf="
@@ -90,96 +114,9 @@
               "
               severity="error"
               text="A validade deve ser uma data futura"
+              [style]="{width: '100%', height: '100%'}">
             ></p-message>
           </div>
-
-          <div class="form-col">
-            <label for="lote">Lote:</label>
-            <input id="lote" type="text" pInputText formControlName="lote" />
-            <p-message
-              *ngIf="
-                produtoForm.get('lote')?.touched &&
-                produtoForm.get('lote')?.invalid
-              "
-              severity="error"
-              text="O lote é obrigatório e deve ter entre 2 e 20 caracteres"
-            ></p-message>
-          </div>
-        </div>
-        <!-- Validade, Unidade de Medida e Peso na mesma linha -->
-        <div class="form-row">
-          <div class="form-col">
-            <label for="unidadeMedida">Unidade de Medida:</label>
-            <p-dropdown
-              [options]="unidadeMedida"
-              filter="false"
-              formControlName="unidadeMedida"
-              id="unidadeMedida"
-              placeholder="Selecione uma unidade de medida"
-            ></p-dropdown>
-            <p-message
-              *ngIf="
-                produtoForm.get('unidadeMedida')?.touched &&
-                produtoForm.get('unidadeMedida')?.invalid
-              "
-              severity="error"
-              text="Selecione uma unidade de medida"
-            ></p-message>
-          </div>
-
-          <div class="form-col">
-            <label for="peso">Peso:</label>
-            <input id="peso" type="number" pInputText formControlName="peso" />
-            <p-message
-              *ngIf="
-                produtoForm.get('peso')?.touched &&
-                produtoForm.get('peso')?.invalid
-              "
-              severity="error"
-              text="O peso deve estar entre 0.1 e 1000"
-            ></p-message>
-          </div>
-          <div class="form-col">
-            <label for="preco">Preço:</label>
-            <input
-              id="preco"
-              type="number"
-              pInputText
-              formControlName="preco"
-            />
-            <p-message
-              *ngIf="
-                produtoForm.get('preco')?.touched &&
-                produtoForm.get('preco')?.invalid
-              "
-              severity="error"
-              text="O preço é obrigatório e deve ser um número válido com até duas casas decimais."
-            >
-            </p-message>
-          </div>
-        </div>
-
-        <!-- Ingredientes em toda a largura -->
-        <div>
-          <label for="ingredientes">Ingredientes:</label>
-          <textarea
-            id="ingredientes"
-            pInputTextarea
-            formControlName="ingredientes"
-            rows="4"
-          ></textarea>
-          <p-message
-            *ngIf="
-              produtoForm.get('ingredientes')?.touched &&
-              produtoForm.get('ingredientes')?.invalid
-            "
-            severity="error"
-            text="Os ingredientes são obrigatórios e devem ter entre 5 e 100 caracteres"
-          ></p-message>
-        </div>
-
-        <!-- País de Origem e Categoria na mesma linha -->
-        <div class="form-row">
           <div class="form-col">
             <label for="paisOrigem">País de Origem:</label>
             <input
@@ -194,9 +131,64 @@
                 produtoForm.get('paisOrigem')?.invalid
               "
               severity="error"
-              text="O país de origem é obrigatório e deve ter entre 2 e 50 caracteres"
+              text="O país de origem é obrigatório e deve ter entre 2 e 50 caracteres."
+              [style]="{width: '100%', height: '100%'}">
             ></p-message>
           </div>
+        </div>
+
+        <!-- Unidade de Medida, Peso e Preco -->
+        <div class="form-row">
+          <div class="form-col">
+            <label for="unidadeMedida">Unidade de Medida:</label>
+            <p-dropdown
+              [options]="unidadeMedida"
+              filter="false"
+              formControlName="unidadeMedida"
+              id="unidadeMedida"
+              placeholder="Selecione uma unidade de medida"
+              [style]="{ width: '100%' }"
+            ></p-dropdown>
+            <p-message
+              *ngIf="produtoForm.get('unidadeMedida')?.touched && produtoForm.get('unidadeMedida')?.invalid"
+              severity="error"
+              text="Selecione uma unidade de medida."
+              [style]="{width: '100%', height: '100%'}">
+            ></p-message>
+          </div>
+          <div class="form-col">
+            <label for="peso">Peso:</label>
+            <input id="peso" type="number" pInputText formControlName="peso"/>
+            <p-message
+              *ngIf="
+                produtoForm.get('peso')?.touched &&
+                produtoForm.get('peso')?.invalid
+              "
+              severity="error"
+              text="O peso deve estar entre 0.1 e 1000."
+              [style]="{width: '100%', height: '100%'}">
+            ></p-message>
+          </div>
+          <div class="form-col">
+            <label for="preco">Preço:</label>
+            <input
+              id="preco"
+              type="number"
+              pInputText
+              formControlName="preco"
+            />
+            <p-message
+              *ngIf="
+                produtoForm.get('preco')?.touched && produtoForm.get('preco')?.invalid"
+              severity="error"
+              text="O preço é obrigatório e deve ser um número válido com até duas casas decimais."
+              [style]="{width: '100%', height: '100%'}">
+            </p-message>
+          </div>
+        </div>
+
+        <!-- Categoria e Tags -->
+        <div class="form-row">
           <div class="form-col">
             <label for="categorias">Categoria:</label>
             <p-multiSelect
@@ -205,7 +197,7 @@
               formControlName="categorias"
               optionLabel="nome"
               placeholder="Selecione as categorias"
-              [style]="{ width: '90%'}"
+              [style]="{ width: '100%'}"
               display="chip"
               [showToggleAll]="false"
             ></p-multiSelect>
@@ -215,55 +207,52 @@
                 produtoForm.get('categorias')?.invalid
               "
               severity="error"
-              text="Selecione pelo menos uma categoria"
+              text="Selecione pelo menos uma categoria."
+              [style]="{width: '100%', height: '100%'}">
             ></p-message>
           </div>
-        </div>
-        <div class="p-fluid">
-          <div class="p-field">
+          <div class="form-col">
             <label for="tags">Tag:</label>
             <p-chips
               id="tags"
               formControlName="tags"
               [max]="5"
               allowDuplicate="false"
-              [style]="{width: '90%'}"
+              [style]="{width: '100%'}"
               separator=",">
             </p-chips>
           </div>
         </div>
-        <!-- Botões -->
-        <div class="form-buttons">
-          <p-fileUpload
-            #fileUpload
-            name="image"
-            (onSelect)="onImageSelect($event)"
-            accept="image/*"
-            mode="basic"
-            auto="false"
-            customUpload="true"
-            chooseLabel="Escolher Imagem"
-            [style]="{height: '3rem'}"
-          ></p-fileUpload>
 
+        <!-- Botões de Imagem, Salvar e Cancelar -->
+        <div class="form-buttons">
+          <div>
+            <p-fileUpload
+              #fileUpload
+              name="image"
+              (onSelect)="onImageSelect($event)"
+              accept="image/*"
+              mode="basic"
+              auto="false"
+              customUpload="true"
+              chooseLabel="Escolher Imagem"
+              [style]="{height: '3rem', width: '100%'}"
+            ></p-fileUpload>
+          </div>
           <p-button
             [disabled]="produtoForm.invalid"
             type="submit"
             label="Salvar"
             icon="pi pi-check"
-            [style]="{ background: ' #0C1E58', border: 'none' }"
+            [style]="{ background: ' #0C1E58', border: 'none', width: '100%' }"
           ></p-button>
-
           <p-button
             type="button"
             (click)="onCancel()"
             label="Cancelar"
             icon="pi pi-times"
             [style]="{
-              background: 'white',
-              'border-color': '#0C1E58',
-              color: '#0C1E58'
-            }"
+              background: 'white', 'border-color': '#0C1E58', color: '#0C1E58', width: '100%'}"
           ></p-button>
         </div>
       </div>

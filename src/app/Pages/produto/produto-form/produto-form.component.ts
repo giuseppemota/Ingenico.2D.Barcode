@@ -5,7 +5,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { Produto } from '../../../Models/product.model';
 import { DialogModule } from 'primeng/dialog';
@@ -229,7 +229,6 @@ export class ProdutoFormComponent implements OnInit {
       categorias: [[], Validators.required],
       tags: [[]],
     });
-
     if (this.produto) {
       this.produtoForm.patchValue(this.produto);
     }

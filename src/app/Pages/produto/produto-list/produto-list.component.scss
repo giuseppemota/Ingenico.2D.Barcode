@@ -24,7 +24,7 @@
   margin: 0;
 }
 
-.no-products-message {
+#semProdutos {
   text-align: center;
   padding: 20px;
   color: #888;
@@ -146,8 +146,8 @@
   justify-content: flex-end;
   /* Alinha o botão ao lado direito */
   padding: 5px;
-}
 
+}
 .modal-footer button {
   background-color: #0C1E58;
   /* Cor do botão */
@@ -175,7 +175,6 @@
 }
 
 .card-footer button {
-  /* Estilo dos botões no card */
   flex: 1;
   margin: 0 4px;
   display: flex;
@@ -186,14 +185,6 @@
   background-color: #0C1E58;
   border: none;
 }
-
-// TODO: Ativar estilo da imagem do produto
-// /* Estilo da imagem do produto */
-// .product-card img {
-//   width: 100%; /* Ajusta a imagem para ocupar toda a largura do card */
-//   height: auto; /* Mantém a proporção da imagem */
-//   object-fit: cover; /* Cobre o card com a imagem */
-// }
 
 .produto-detalhes {
   background-color: #f8f8f8;
@@ -239,9 +230,17 @@
   .container {
     padding: 10px;
   }
-
   th, td {
     padding: 8px;
+  }
+
+  .produto-detalhes {
+    padding: 0;
+  }
+  .container-descricao {
+    width: 100%;
+    min-width: 300px;
+    padding: 0;
   }
 }
 
