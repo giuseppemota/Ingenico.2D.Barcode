@@ -187,7 +187,7 @@ export class ProdutoListComponent implements OnInit {
         this.selectedProduct = {
           ...data,
           categorias: data.categorias.map((categoria: any) => categoria.nome).join(', '),
-          tags: data.tags.map((tag: any) => tag.nomeTag).join(', '),
+          tags: data.tags.map((tag: any) => tag.nome).join(', '),
         };
         this.isEditMode = false;
         this.isViewMode = true;
