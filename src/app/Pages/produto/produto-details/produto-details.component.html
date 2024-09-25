@@ -4,10 +4,10 @@
 
     <div class="card-content">
       <div class="card-image">
-       <img
-    [alt]="'Imagem do(a) ' + product.nome"
-    [src]="imagemProduto ? 'data:image/png;base64,' + imagemProduto : 'assets/noImage.svg'"
-/>
+        <img
+          [alt]="'Imagem do(a) ' + product.nome"
+          [src]="imagemProduto ? 'data:image/png;base64,' + imagemProduto : 'assets/noImage.svg'"
+        />
       </div>
       <!-- fim do card-image -->
       <div class="card-detalhes">
@@ -25,20 +25,17 @@
           </div>
           <!-- fim do descricao-ingredientes -->
 
-          <!-- <div class="descricao-extra">
-            <p class="titulo">CONTÉM:</p>
-            <p class="titulo">{{ product.alergicos || "ALÉRGICOS DO PRODUTO" }}</p>
-          </div> fim do descricao-extra -->
+          <!-- fim do descricao-extra -->
           <div class="descricao-extra">
-            <div style="display:flex;flex-direction:row;">
+            <div style="display:flex;flex-direction:row;gap:5px;">
               <p class="titulo">FABRICAÇÃO:</p>
               <p class="titulo">{{ product.dataFabricacao | date : "dd/MM/yyyy" }}</p>
             </div>
-            <div style="display:flex;flex-direction:row;">
+            <div style="display:flex;flex-direction:row;gap:5px;">
               <p class="titulo">VALIDADE:</p>
               <p class="titulo">{{ product.validade | date : "dd/MM/yyyy" }}</p>
             </div>
-            <div style="display:flex;flex-direction:row;">
+            <div style="display:flex;flex-direction:row;gap:5px;">
               <p class="titulo">LOTE:</p>
               <p class="titulo">{{ product.lote }}</p>
             </div>
