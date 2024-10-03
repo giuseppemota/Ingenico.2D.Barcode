@@ -106,6 +106,48 @@ export class ProdutoFormComponent implements OnInit {
     { nome: 'Bebê e Infantil' },
   ];
 
+  tags = [
+    { nome: 'grão' },
+    { nome: 'cereal' },
+    { nome: 'legume' },
+    { nome: 'fruta' },
+    { nome: 'verdura' },
+    { nome: 'laticínio' },
+    { nome: 'carne' },
+    { nome: 'ave' },
+    { nome: 'peixe' },
+    { nome: 'marisco' },
+    { nome: 'bebidas' },
+    { nome: 'doce' },
+    { nome: 'sobremesa' },
+    { nome: 'massa' },
+    { nome: 'pizza' },
+    { nome: 'snack' },
+    { nome: 'tempero' },
+    { nome: 'óleo' },
+    { nome: 'congelado' },
+    { nome: 'padaria' },
+    { nome: 'confeitaria' },
+    { nome: 'bebida alcoólica' },
+    { nome: 'limpeza' },
+    { nome: 'higiene' },
+    { nome: 'beleza' },
+    { nome: 'papelaria' },
+    { nome: 'pet shop' },
+    { nome: 'saudável' },
+    { nome: 'especial' },
+    { nome: 'mercearia' },
+    { nome: 'utilidade doméstica' },
+    { nome: 'casa' },
+    { nome: 'bebê' },
+    { nome: 'infantil' },
+    { nome: 'plástico' },
+    { nome: 'metal' },
+    { nome: 'vidro' },
+    { nome: 'madeira' },
+    { nome: 'papelão' },
+  ];
+
   unidadeMedida: string[] = [
     'Unidade',
     'Pacote',
@@ -227,7 +269,7 @@ export class ProdutoFormComponent implements OnInit {
         ],
       ],
       categorias: [[], Validators.required],
-      tags: [[]],
+      tags: [[], Validators.required],
     });
     if (this.produto) {
       this.produtoForm.patchValue(this.produto);

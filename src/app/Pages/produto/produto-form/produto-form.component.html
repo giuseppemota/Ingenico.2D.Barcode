@@ -213,14 +213,25 @@
           </div>
           <div class="form-col">
             <label for="tags">Tag:</label>
-            <p-chips
+            <p-multiSelect
               id="tags"
+              [options]="tags"
               formControlName="tags"
-              [max]="5"
-              allowDuplicate="false"
-              [style]="{width: '100%'}"
-              separator=",">
-            </p-chips>
+              optionLabel="nome"
+              placeholder="Selecione ao menos duas"
+              [style]="{ width: '100%'}"
+              display="chip"
+              [showToggleAll]="false"
+            ></p-multiSelect>
+            <p-message
+              *ngIf="
+                produtoForm.get('tags')?.touched &&
+                produtoForm.get('tags')?.invalid
+              "
+              severity="error"
+              text="Selecione pelo menos duas tags."
+              [style]="{width: '100%', height: '100%'}">
+              ></p-message>
           </div>
         </div>
 
