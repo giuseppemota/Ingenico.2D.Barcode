@@ -4,6 +4,7 @@
       <div class="form-grid">
         <!-- Nome, Marca e Lote-->
         <div class="form-row">
+          <!-- Nome -->
           <div class="form-col">
             <label for="nome">Nome:</label>
             <input
@@ -29,6 +30,7 @@
               ></p-message
             >
           </div>
+          <!-- Marca -->
           <div class="form-col">
             <label for="marca">Marca:</label>
             <input id="marca" type="text" pInputText formControlName="marca" />
@@ -48,6 +50,7 @@
               ></p-message
             >
           </div>
+          <!-- Lote -->
           <div class="form-col">
             <label for="lote">Lote:</label>
             <input id="lote" type="text" pInputText formControlName="lote" />
@@ -70,7 +73,7 @@
         </div>
 
         <!-- Descrição e Ingredientes -->
-        <div class="form-row-editor">
+        <div class="form-row">
           <div class="form-col">
             <label for="descricao">Descrição:</label>
 
@@ -93,9 +96,6 @@
               ></p-message
             >
           </div>
-        </div>
-
-        <div class="form-row-editor">
           <div class="form-col">
             <label for="ingredientes">Ingredientes:</label>
             <textarea
@@ -123,6 +123,7 @@
         </div>
         <!-- Data de Fabricação, Validade e Pais de Origem -->
         <div class="form-row">
+          <!-- Data de Fabricação -->
           <div class="form-col">
             <label for="dataFabricacao">Data de Fabricação:</label>
             <p-calendar
@@ -143,6 +144,7 @@
               ></p-message
             >
           </div>
+          <!-- Validade -->
           <div class="form-col">
             <label for="validade">Validade:</label>
             <p-calendar
@@ -163,6 +165,7 @@
               ></p-message
             >
           </div>
+          <!-- Pais de Origem -->
           <div class="form-col">
             <label for="paisOrigem">País de Origem:</label>
             <input
@@ -187,6 +190,21 @@
 
         <!-- Unidade de Medida, Peso e Preco -->
         <div class="form-row">
+          <!-- Peso -->
+          <div class="form-col">
+            <label for="peso">Peso:</label>
+            <input id="peso" type="number" pInputText formControlName="peso"/>
+            <p-message
+              *ngIf="
+                produtoForm.get('peso')?.touched &&
+                produtoForm.get('peso')?.invalid
+              "
+              severity="error"
+              text="O peso deve estar entre 0.1 e 1000."
+              [style]="{width: '100%', height: '100%'}">
+            ></p-message>
+          </div>
+          <!-- Unidade de Medida -->
           <div class="form-col">
             <label for="unidadeMedida">Unidade de Medida:</label>
             <p-dropdown
@@ -204,26 +222,10 @@
               "
               severity="error"
               text="Selecione uma unidade de medida."
-              [style]="{ width: '100%', height: '100%' }"
-            >
-              ></p-message
-            >
+              [style]="{width: '100%', height: '100%'}">
+              ></p-message>
           </div>
-          <div class="form-col">
-            <label for="peso">Peso:</label>
-            <input id="peso" type="number" pInputText formControlName="peso" />
-            <p-message
-              *ngIf="
-                produtoForm.get('peso')?.touched &&
-                produtoForm.get('peso')?.invalid
-              "
-              severity="error"
-              text="O peso deve estar entre 0.1 e 1000."
-              [style]="{ width: '100%', height: '100%' }"
-            >
-              ></p-message
-            >
-          </div>
+          <!-- Preço -->
           <div class="form-col">
             <label for="preco">Preço:</label>
             <input
@@ -247,6 +249,7 @@
 
         <!-- Categoria e Tags -->
         <div class="form-row">
+          <!-- Categoria -->
           <div class="form-col">
             <label for="categorias">Categoria:</label>
             <p-multiSelect
@@ -271,22 +274,34 @@
               ></p-message
             >
           </div>
+          <!-- Tags -->
           <div class="form-col">
-            <label for="tags">Tag:</label>
-            <p-chips
+            <label for="tags">Tags:</label>
+            <p-multiSelect
               id="tags"
+              [options]="tags"
               formControlName="tags"
-              [max]="5"
-              allowDuplicate="false"
-              [style]="{ width: '100%' }"
-              separator=","
-            >
-            </p-chips>
+              optionLabel="nome"
+              placeholder="Selecione ao menos duas tags"
+              [style]="{ width: '100%'}"
+              display="chip"
+              [showToggleAll]="false"
+            ></p-multiSelect>
+            <p-message
+              *ngIf="
+                produtoForm.get('tags')?.touched &&
+                produtoForm.get('tags')?.invalid
+              "
+              severity="error"
+              text="Selecione pelo menos duas tags."
+              [style]="{width: '100%', height: '100%'}">
+              ></p-message>
           </div>
         </div>
 
         <!-- Botões de Imagem, Salvar e Cancelar -->
         <div class="form-buttons">
+          <!-- Adicionar Imagem -->
           <div>
             <p-fileUpload
               #fileUpload
@@ -300,6 +315,7 @@
               [style]="{ height: '3rem', width: '100%' }"
             ></p-fileUpload>
           </div>
+          <!-- Salvar -->
           <p-button
             [disabled]="produtoForm.invalid"
             type="submit"
@@ -307,6 +323,7 @@
             icon="pi pi-check"
             [style]="{ background: ' #0C1E58', border: 'none', width: '100%' }"
           ></p-button>
+          <!-- Cancelar -->
           <p-button
             type="button"
             (click)="onCancel()"
