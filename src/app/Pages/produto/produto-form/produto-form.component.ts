@@ -5,7 +5,7 @@ import {
   OnInit,
   Output,
   SimpleChanges,
-  ViewChild
+  ViewChild,
 } from '@angular/core';
 import { Produto } from '../../../Models/product.model';
 import { DialogModule } from 'primeng/dialog';
@@ -40,6 +40,7 @@ import { Router } from '@angular/router';
 import { ChipsModule } from 'primeng/chips';
 import { MultiSelectModule } from 'primeng/multiselect';
 import { FileUpload, FileUploadModule } from 'primeng/fileupload';
+import { EditorModule } from 'primeng/editor';
 
 @Component({
   selector: 'app-produto-form',
@@ -69,6 +70,7 @@ import { FileUpload, FileUploadModule } from 'primeng/fileupload';
     ChipsModule,
     MultiSelectModule,
     FileUploadModule,
+    EditorModule,
   ],
   templateUrl: './produto-form.component.html',
   styleUrl: './produto-form.component.scss',
@@ -180,14 +182,7 @@ export class ProdutoFormComponent implements OnInit {
           Validators.maxLength(200),
         ],
       ],
-      descricao: [
-        '',
-        [
-          Validators.required,
-          Validators.minLength(10),
-          Validators.maxLength(200),
-        ],
-      ],
+      descricao: ['', [Validators.required, Validators.minLength(10)]],
       dataFabricacao: ['', [Validators.required, this.fabricacaoValidator]],
       validade: ['', [Validators.required, this.validadeValidator]],
       lote: [
@@ -243,14 +238,14 @@ export class ProdutoFormComponent implements OnInit {
   loadProdutoData(produto: Produto) {
     if (this.produtoForm) {
       if (produto.produtoId) {
-
         const nomeCategorias = Array.isArray(produto.categorias)
-          ? produto.categorias.map((categoria: any) => ({ nome: categoria.nome }))
+          ? produto.categorias.map((categoria: any) => ({
+              nome: categoria.nome,
+            }))
           : [];
         const nomeTags = Array.isArray(produto.tags)
           ? produto.tags.map((tag: any) => tag.nome)
           : [];
-
 
         // Atualizando o formulário com os valores do produto
         this.produtoForm.patchValue({
@@ -271,6 +266,7 @@ export class ProdutoFormComponent implements OnInit {
           tags: nomeTags,
         });
       }
+
     } else {
       console.error('produtoForm não definido');
     }

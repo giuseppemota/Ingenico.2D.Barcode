@@ -78,7 +78,7 @@
     </div>
     <div class="historia-produto">
       <div *ngIf="product.descricao">
-        {{ product.descricao }}
+        <div [innerHTML]="product.descricao"></div>
       </div>
       <!-- <div *ngIf="product.tabelaNutricional">
         {{ product.tabelaNutricional }}

@@ -28,6 +28,13 @@ form-grid {
   flex-grow: 3;
 }
 
+.form-row-editor {
+  display: flex;
+  flex-direction: row;
+  gap: 1rem;
+  margin-bottom: 15px;
+}
+
 input[type="text"], input[type="number"], textarea {
   width: 100%;
 }

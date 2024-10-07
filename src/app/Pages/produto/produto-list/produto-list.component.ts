@@ -1,29 +1,29 @@
-import {Component, OnInit} from '@angular/core';
-import {Produto} from '../../../Models/product.model';
-import {ProdutosService} from '../../../Services/Produto/produtos.service';
-import {DialogModule} from 'primeng/dialog';
-import {DropdownModule} from 'primeng/dropdown';
-import {TableModule} from 'primeng/table';
-import {FormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
-import {ButtonModule} from 'primeng/button';
-import {PaginatorModule} from 'primeng/paginator';
-import {ConfirmationService, MessageService} from 'primeng/api';
-import {ConfirmDialogModule} from 'primeng/confirmdialog';
-import {ToastModule} from 'primeng/toast';
-import {InputTextModule} from 'primeng/inputtext';
-import {InputTextareaModule} from 'primeng/inputtextarea';
-import {InputNumberModule} from 'primeng/inputnumber';
-import {CheckboxModule} from 'primeng/checkbox';
-import {InputMaskModule} from 'primeng/inputmask';
-import {CardModule} from 'primeng/card';
-import {TooltipModule} from 'primeng/tooltip';
-import {ProdutoFormComponent} from '../produto-form/produto-form.component';
-import {ProdutoDetailsComponent} from '../produto-details/produto-details.component';
-import {QRCodeModule} from 'angularx-qrcode';
-import {ProgressSpinnerModule} from 'primeng/progressspinner';
-import {InputSwitchModule} from 'primeng/inputswitch';
-import {environment} from '../../../../environments/environment.development';
+import { Component, OnInit } from '@angular/core';
+import { Produto } from '../../../Models/product.model';
+import { ProdutosService } from '../../../Services/Produto/produtos.service';
+import { DialogModule } from 'primeng/dialog';
+import { DropdownModule } from 'primeng/dropdown';
+import { TableModule } from 'primeng/table';
+import { FormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
+import { ButtonModule } from 'primeng/button';
+import { PaginatorModule } from 'primeng/paginator';
+import { ConfirmationService, MessageService } from 'primeng/api';
+import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { ToastModule } from 'primeng/toast';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputTextareaModule } from 'primeng/inputtextarea';
+import { InputNumberModule } from 'primeng/inputnumber';
+import { CheckboxModule } from 'primeng/checkbox';
+import { InputMaskModule } from 'primeng/inputmask';
+import { CardModule } from 'primeng/card';
+import { TooltipModule } from 'primeng/tooltip';
+import { ProdutoFormComponent } from '../produto-form/produto-form.component';
+import { ProdutoDetailsComponent } from '../produto-details/produto-details.component';
+import { QRCodeModule } from 'angularx-qrcode';
+import { ProgressSpinnerModule } from 'primeng/progressspinner';
+import { InputSwitchModule } from 'primeng/inputswitch';
+import { environment } from '../../../../environments/environment.development';
 
 @Component({
   selector: 'app-produto-list',
@@ -80,8 +80,7 @@ export class ProdutoListComponent implements OnInit {
     private produtoService: ProdutosService,
     private confirmationService: ConfirmationService,
     private messageService: MessageService
-  ) {
-  }
+  ) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -89,12 +88,10 @@ export class ProdutoListComponent implements OnInit {
 
   loadProducts(): void {
     const page = this.first / this.rows;
-    this.produtoService
-      .getAllProducts(page, this.rows)
-      .subscribe((result) => {
-        this.produtos = result.data;
-        this.totalRecords = result.total; // Total de registros
-      });
+    this.produtoService.getAllProducts(page, this.rows).subscribe((result) => {
+      this.produtos = result.data;
+      this.totalRecords = result.total; // Total de registros
+    });
   }
 
   showFormDialog(): void {
@@ -113,6 +110,7 @@ export class ProdutoListComponent implements OnInit {
       .getProductById(produto.produtoId!)
       .subscribe((data: any) => {
         this.selectedProduct = data;
+        this.selectedProduct.descricao = richTextToPlainText(data.descricao);
         this.infoQrCode = JSON.stringify(data);
         this.qrCodeFormatado = this.formatProdutoData(data);
 
@@ -186,8 +184,11 @@ export class ProdutoListComponent implements OnInit {
       .subscribe((data: any) => {
         this.selectedProduct = {
           ...data,
-          categorias: data.categorias.map((categoria: any) => categoria.nome).join(', '),
+          categorias: data.categorias
+            .map((categoria: any) => categoria.nome)
+            .join(', '),
           tags: data.tags.map((tag: any) => tag.nome).join(', '),
+          descricao: richTextToPlainText(data.descricao),
         };
         this.isEditMode = false;
         this.isViewMode = true;
@@ -323,4 +324,10 @@ export class ProdutoListComponent implements OnInit {
   //   }
   //   this.displayFormDialog = false;
   // }
+}
+
+function richTextToPlainText(richText: string): string {
+  const tempElement = document.createElement('div'); // Cria um elemento temporário
+  tempElement.innerHTML = richText; // Insere o rich text (HTML) nele
+  return tempElement.textContent || tempElement.innerText || ''; // Extrai o texto simples
 }
