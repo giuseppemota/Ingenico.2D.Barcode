@@ -1,27 +1,14 @@
 <div class="scanner-container">
   <h1 class="title">LEITURA DE QR CODE</h1>
   <div *ngIf="hasDevices" class="dropdown-container">
-    <p-dropdown
-      [options]="availableDevices"
-      [(ngModel)]="currentDevice"
-      optionLabel="label"
-      placeholder="Selecione a câmera"
-      (onChange)="onDeviceSelectChange($event)"
-      [showClear]="true"
-    ></p-dropdown>
+    <p-dropdown [options]="availableDevices" [(ngModel)]="currentDevice" optionLabel="label"
+      placeholder="Selecione a câmera" (onChange)="onDeviceSelectChange($event)" [showClear]="true"></p-dropdown>
   </div>
 
   <div class="camera-container">
-    <zxing-scanner
-      [device]="currentDevice"
-      (scanSuccess)="onCodeResult($event)"
-      (deviceChange)="onDeviceChange($event)"
-      [formats]="formatsEnabled"
-      (camerasFound)="onCamerasFound($event)"
-      (permissionResponse)="onHasPermission($event)"
-      [tryHarder]="true"
-      class="scanner"
-    ></zxing-scanner>
+    <zxing-scanner [device]="currentDevice" (scanSuccess)="onCodeResult($event)" (deviceChange)="onDeviceChange($event)"
+      [formats]="formatsEnabled" (camerasFound)="onCamerasFound($event)" (permissionResponse)="onHasPermission($event)"
+      [tryHarder]="true" class="scanner"></zxing-scanner>
   </div>
 
   <div *ngIf="hasPermission === null">
@@ -41,8 +28,34 @@
     <p-message severity="info" text="Nenhum dispositivo encontrado"></p-message>
   </div>
 
-  <p-dialog [(visible)]="displayModal" header="Dados do QR Code" [modal]="true" [closable]="true" [style]="{width: '50vw'}">
-    <div [innerHTML]="formattedData"></div>
+  <p-dialog [(visible)]="displayModal" header="Dados do QR Code" [modal]="true" [closable]="true"
+    [style]="{width: '50vw'}">
+    <div *ngIf="dadosProduto">
+      <p><strong>Nome:</strong> {{ dadosProduto.nome }}</p>
+      <p><strong>Descrição:</strong> {{ dadosProduto.descricao }}</p>
+      <p><strong>Marca:</strong> {{ dadosProduto.marca }}</p>
+      <p><strong>Peso:</strong> {{ dadosProduto.peso }} {{ dadosProduto.unidadeMedida }}</p>
+      <p><strong>Preço:</strong> R$ {{ dadosProduto.preco | number:'1.2-2' }}</p>
+      <p><strong>Ingredientes:</strong> {{ dadosProduto.ingredientes }}</p>
+      <p><strong>País de Origem:</strong> {{ dadosProduto.paisOrigem }}</p>
+      <p><strong>Validade:</strong> {{ dadosProduto.validade | date:'dd/MM/yyyy' }}</p>
+      <p><strong>Data de Fabricação:</strong> {{ dadosProduto.dataFabricacao | date:'dd/MM/yyyy' }}</p>
+      <p><strong>Lote:</strong> {{ dadosProduto.lote }}</p>
+
+      <p><strong>Categorias:</strong>
+        <span *ngFor="let categoria of dadosProduto.categorias; let isLast = last">
+          {{ categoria.nome }}<span *ngIf="!isLast">, </span>
+        </span>
+      </p>
+      <p><strong>Tags:</strong>
+        <span *ngFor="let tag of dadosProduto.tags; let isLast = last">
+          {{ tag.nome }}<span *ngIf="!isLast">, </span>
+        </span>
+      </p>
+    </div>
+    <div *ngIf="!dadosProduto">
+      <p>Dados do produto não disponíveis.</p>
+    </div>
+    <p-toast></p-toast>
   </p-dialog>
-  <p-toast></p-toast>
 </div>

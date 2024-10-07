@@ -8,6 +8,7 @@ import { MessageService } from 'primeng/api';
 import { MessageModule } from 'primeng/message';
 import { BarcodeFormat } from '@zxing/library';
 import { DialogModule } from 'primeng/dialog';
+import { Produto } from '../../Models/product.model';
 
 @Component({
   selector: 'app-qr-code-scanner',
@@ -34,7 +35,7 @@ export class QrCodeScannerComponent implements OnInit {
 
   formatsEnabled: BarcodeFormat[] = [BarcodeFormat.QR_CODE];
 
-  formattedData: string = '';
+  dadosProduto!: any
   displayModal: boolean = false;
 
   constructor(private messageService: MessageService) {}
@@ -103,7 +104,8 @@ export class QrCodeScannerComponent implements OnInit {
   }
 
   handleFormattedData(data: string): void {
-    this.formattedData = data;
+    this.dadosProduto = JSON.parse(data)
+    console.log(this.dadosProduto)
     this.displayModal = true;
   }
 }
