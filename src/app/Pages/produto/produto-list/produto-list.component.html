@@ -1,5 +1,6 @@
 <div class="container">
   <h1 class="title">LISTAGEM DE PRODUTOS</h1>
+  <!-- BOTAO NOVO PRODUTO -->
   <div class="header">
     <button
       (click)="showFormDialog()"
@@ -11,6 +12,7 @@
     ></button>
   </div>
 
+  <!--  LISTA DE PRODUTOS-->
   <div *ngIf="produtos.length > 0 else semProdutos" class="card-container">
     <p-card *ngFor="let produto of produtos" class="product-card">
       <ng-template pTemplate="header">
@@ -68,17 +70,20 @@
     </p-card>
   </div>
 
+  <!-- TEXTO SEM PRODUTOS -->
   <ng-template #semProdutos>
     <p id="semProdutos">Sem produtos cadastrados</p>
   </ng-template>
 
-  <br/><br/>
+  <!-- BOTOES PAGINACAO -->
   <p-paginator
     (onPageChange)="onPageChange($event)"
     [rowsPerPageOptions]="[12, 36, 48]"
     [rows]="rows"
     [totalRecords]="totalRecords"
   ></p-paginator>
+
+  <!-- MODAL FORMULARIO PRODUTO -->
   <p-dialog
     (onHide)="closeFormDialog()"
     [(visible)]="displayFormDialog"
@@ -98,6 +103,7 @@
     </app-produto-form>
   </p-dialog>
 
+  <!-- MODAL DETALHES DO PRODUTO -->
   <p-dialog
     (onHide)="closeDetailsDialog()"
     [(visible)]="displayDetailsDialog"
@@ -110,54 +116,67 @@
     <section class="produto-detalhes" *ngIf="selectedProduct">
       <div class="container-descricao">
         <table>
+          <!-- ID -->
           <tr>
             <th>Id</th>
             <td>{{ selectedProduct.produtoId }}</td>
           </tr>
+          <!-- NOME -->
           <tr>
             <th>Nome</th>
             <td>{{ selectedProduct.nome }}</td>
           </tr>
-          <tr>
-            <th>Validade</th>
-            <td>{{ selectedProduct.validade | date }}</td>
-          </tr>
+          <!-- DATA DE FABRICAÇÃO -->
           <tr>
             <th>Data de Fabricação</th>
-            <td>{{ selectedProduct.dataFabricacao | date }}</td>
+            <td>{{ selectedProduct.dataFabricacao | date : "dd/MM/yyyy" }}</td>
           </tr>
+          <!-- VALIDADE -->
+          <tr>
+            <th>Validade</th>
+            <td>{{ selectedProduct.validade | date : "dd/MM/yyyy" }}</td>
+          </tr>
+          <!-- LOTE -->
           <tr>
             <th>Lote</th>
             <td>{{ selectedProduct.lote }}</td>
           </tr>
+          <!-- INGREDIENTES -->
           <tr>
             <th>Ingredientes</th>
             <td>{{ selectedProduct.ingredientes }}</td>
           </tr>
+          <!-- DESCRICAO -->
           <tr>
             <th>Descrição</th>
             <td>{{ selectedProduct.descricao }}</td>
           </tr>
+          <!-- MARCA -->
           <tr>
             <th>Marca</th>
             <td>{{ selectedProduct.marca }}</td>
           </tr>
+          <!-- PESO -->
           <tr>
             <th>Peso</th>
             <td>{{ selectedProduct.peso }} {{ selectedProduct.unidadeMedida }}</td>
           </tr>
+          <!-- PRECO -->
           <tr>
             <th>Preço</th>
-            <td>{{ selectedProduct.preco | currency }}</td>
+            <td>{{ selectedProduct.preco | currency: 'BRL':'symbol':'1.2-2':'pt-BR' }}</td>
           </tr>
+          <!-- PAIS DE ORIGEM -->
           <tr>
             <th>País de Origem</th>
             <td>{{ selectedProduct.paisOrigem }}</td>
           </tr>
+          <!-- TAGS -->
           <tr>
             <th>Tags</th>
             <td>{{ selectedProduct.tags }}</td>
           </tr>
+          <!-- CATEGORIAS -->
           <tr>
             <th>Categorias</th>
             <td>{{ selectedProduct.categorias }}</td>
@@ -167,6 +186,7 @@
     </section>
   </p-dialog>
 
+  <!-- MODAL QR CODE -->
   <p-dialog
     [(visible)]="displayQrCodeDialog"
     [baseZIndex]="10000"
@@ -220,5 +240,7 @@
     </div>
   </p-dialog>
 </div>
+
 <p-toast></p-toast>
+
 <p-confirmDialog></p-confirmDialog>

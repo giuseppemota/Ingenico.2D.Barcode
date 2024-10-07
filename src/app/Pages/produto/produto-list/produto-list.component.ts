@@ -1,11 +1,11 @@
-import {Component, OnInit} from '@angular/core';
+import {Component, LOCALE_ID, OnInit} from '@angular/core';
 import {Produto} from '../../../Models/product.model';
 import {ProdutosService} from '../../../Services/Produto/produtos.service';
 import {DialogModule} from 'primeng/dialog';
 import {DropdownModule} from 'primeng/dropdown';
 import {TableModule} from 'primeng/table';
 import {FormsModule} from '@angular/forms';
-import {CommonModule} from '@angular/common';
+import {CommonModule, registerLocaleData} from '@angular/common';
 import {ButtonModule} from 'primeng/button';
 import {PaginatorModule} from 'primeng/paginator';
 import {ConfirmationService, MessageService} from 'primeng/api';
@@ -23,7 +23,9 @@ import {ProdutoDetailsComponent} from '../produto-details/produto-details.compon
 import {QRCodeModule} from 'angularx-qrcode';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {InputSwitchModule} from 'primeng/inputswitch';
-import {environment} from '../../../../environments/environment.development';
+import localePt from '@angular/common/locales/pt';
+
+registerLocaleData(localePt, 'pt-BR');
 
 @Component({
   selector: 'app-produto-list',
@@ -55,7 +57,7 @@ import {environment} from '../../../../environments/environment.development';
   ],
   templateUrl: './produto-list.component.html',
   styleUrl: './produto-list.component.scss',
-  providers: [ConfirmationService, MessageService],
+  providers: [ConfirmationService, MessageService, { provide: LOCALE_ID, useValue: 'pt-BR' }],
 })
 export class ProdutoListComponent implements OnInit {
   produtos: Produto[] = [];
@@ -69,7 +71,7 @@ export class ProdutoListComponent implements OnInit {
   infoQrCode: string = '';
   qrCodeFormatado: string = '';
   isLinkQrCode: boolean = false;
-  baseUrl: string = environment.apiUrl;
+  // baseUrl: string = environment.apiUrl;
 
   // Variáveis para paginação
   totalRecords: number = 0;
