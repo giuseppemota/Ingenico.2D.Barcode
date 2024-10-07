@@ -4,6 +4,7 @@
       <div class="form-grid">
         <!-- Nome, Marca e Lote-->
         <div class="form-row">
+          <!-- Nome -->
           <div class="form-col">
             <label for="nome">Nome:</label>
             <input id="nome" type="text" pInputText formControlName="nome" required/>
@@ -14,6 +15,7 @@
               [style]="{width: '100%', height: '100%', 'max-height': '3.2rem'}">
             ></p-message>
           </div>
+          <!-- Marca -->
           <div class="form-col">
             <label for="marca">Marca:</label>
             <input id="marca" type="text" pInputText formControlName="marca"/>
@@ -24,6 +26,7 @@
               [style]="{width: '100%', height: '100%', 'max-height': '3.2rem'}">
             ></p-message>
           </div>
+          <!-- Lote -->
           <div class="form-col">
             <label for="lote">Lote:</label>
             <input id="lote" type="text" pInputText formControlName="lote"/>
@@ -41,6 +44,7 @@
 
         <!-- Descrição e Ingredientes -->
         <div class="form-row">
+          <!-- Descrição -->
           <div class="form-col">
             <label for="descricao">Descrição:</label>
             <textarea
@@ -59,6 +63,7 @@
               [style]="{width: '100%', height: '100%', 'max-height': '3rem'}">
             ></p-message>
           </div>
+          <!-- Ingredientes -->
           <div class="form-col">
             <label for="ingredientes">Ingredientes:</label>
             <textarea
@@ -81,6 +86,7 @@
 
         <!-- Data de Fabricação, Validade e Pais de Origem -->
         <div class="form-row">
+          <!-- Data de Fabricação -->
           <div class="form-col">
             <label for="dataFabricacao">Data de Fabricação:</label>
             <p-calendar
@@ -99,6 +105,7 @@
               [style]="{width: '100%', height: '100%'}">
             ></p-message>
           </div>
+          <!-- Validade -->
           <div class="form-col">
             <label for="validade">Validade:</label>
             <p-calendar
@@ -117,6 +124,7 @@
               [style]="{width: '100%', height: '100%'}">
             ></p-message>
           </div>
+          <!-- Pais de Origem -->
           <div class="form-col">
             <label for="paisOrigem">País de Origem:</label>
             <input
@@ -139,6 +147,21 @@
 
         <!-- Unidade de Medida, Peso e Preco -->
         <div class="form-row">
+          <!-- Peso -->
+          <div class="form-col">
+            <label for="peso">Peso:</label>
+            <input id="peso" type="number" pInputText formControlName="peso"/>
+            <p-message
+              *ngIf="
+                produtoForm.get('peso')?.touched &&
+                produtoForm.get('peso')?.invalid
+              "
+              severity="error"
+              text="O peso deve estar entre 0.1 e 1000."
+              [style]="{width: '100%', height: '100%'}">
+            ></p-message>
+          </div>
+          <!-- Unidade de Medida -->
           <div class="form-col">
             <label for="unidadeMedida">Unidade de Medida:</label>
             <p-dropdown
@@ -154,21 +177,9 @@
               severity="error"
               text="Selecione uma unidade de medida."
               [style]="{width: '100%', height: '100%'}">
-            ></p-message>
+              ></p-message>
           </div>
-          <div class="form-col">
-            <label for="peso">Peso:</label>
-            <input id="peso" type="number" pInputText formControlName="peso"/>
-            <p-message
-              *ngIf="
-                produtoForm.get('peso')?.touched &&
-                produtoForm.get('peso')?.invalid
-              "
-              severity="error"
-              text="O peso deve estar entre 0.1 e 1000."
-              [style]="{width: '100%', height: '100%'}">
-            ></p-message>
-          </div>
+          <!-- Preço -->
           <div class="form-col">
             <label for="preco">Preço:</label>
             <input
@@ -189,6 +200,7 @@
 
         <!-- Categoria e Tags -->
         <div class="form-row">
+          <!-- Categoria -->
           <div class="form-col">
             <label for="categorias">Categoria:</label>
             <p-multiSelect
@@ -211,6 +223,7 @@
               [style]="{width: '100%', height: '100%'}">
             ></p-message>
           </div>
+          <!-- Tags -->
           <div class="form-col">
             <label for="tags">Tags:</label>
             <p-multiSelect
@@ -237,6 +250,7 @@
 
         <!-- Botões de Imagem, Salvar e Cancelar -->
         <div class="form-buttons">
+          <!-- Adicionar Imagem -->
           <div>
             <p-fileUpload
               #fileUpload
@@ -250,6 +264,7 @@
               [style]="{height: '3rem', width: '100%'}"
             ></p-fileUpload>
           </div>
+          <!-- Salvar -->
           <p-button
             [disabled]="produtoForm.invalid"
             type="submit"
@@ -257,6 +272,7 @@
             icon="pi pi-check"
             [style]="{ background: ' #0C1E58', border: 'none', width: '100%' }"
           ></p-button>
+          <!-- Cancelar -->
           <p-button
             type="button"
             (click)="onCancel()"

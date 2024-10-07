@@ -1,7 +1,7 @@
 <section>
   <div class="container">
     <h1 class="card-title">{{ product.nome || "Nome do Produto" }}</h1>
-
+    <!-- CONTAINER IMAGEM E DETALHES -->
     <div class="card-content">
       <div class="card-image">
         <img
@@ -9,13 +9,11 @@
           [src]="imagemProduto ? 'data:image/png;base64,' + imagemProduto : 'assets/noImage.svg'"
         />
       </div>
-      <!-- fim do card-image -->
       <div class="card-detalhes">
         <div class="precos">
           <!-- <p class="preco-anterior" *ngIf="product.precoAnterior">de: <s>{{ product.precoAnterior || "00,00" }}</s></p> -->
-          <p class="preco-atual">R$ {{ product.preco || "00,00" }}</p>
+          <p class="preco-atual">{{ product.preco | currency: 'BRL':'symbol':'1.2-2':'pt-BR' || "00,00" }}</p>
         </div>
-        <!-- fim do precos -->
         <div class="descricao-conjunto">
           <div class="descricao-ingredientes">
             <p class="titulo">INGREDIENTES:</p>
@@ -23,9 +21,6 @@
               {{ product.ingredientes || "Ingredientes do Produto" }}
             </p>
           </div>
-          <!-- fim do descricao-ingredientes -->
-
-          <!-- fim do descricao-extra -->
           <div class="descricao-extra">
             <div style="display:flex;flex-direction:row;gap:5px;">
               <p class="titulo">FABRICAÇÃO:</p>
@@ -40,13 +35,10 @@
               <p class="titulo">{{ product.lote }}</p>
             </div>
           </div>
-          <!-- fim do descricao-extra -->
         </div>
-        <!-- fim do descricao-conjunto -->
       </div>
-      <!-- fim do card-detalhes -->
     </div>
-    <!-- fim do card-content -->
+    <!-- CONTAINER DESCRICAO DO PRODUTO -->
     <div class="detalhes">
       <h3>DESCRIÇÃO</h3>
       <table>
@@ -66,8 +58,8 @@
           <td class="conteudo">{{ product.marca }}</td>
         </tr>
         <tr>
-          <td class="cabecalho">PESO ({{ product.unidadeMedida }}):</td>
-          <td class="conteudo">{{ product.peso }}</td>
+          <td class="cabecalho">PESO:</td>
+          <td class="conteudo">{{ product.peso }} {{ product.unidadeMedida }}</td>
         </tr>
         <tr>
           <td class="cabecalho">PAIS DE ORIGEM:</td>
@@ -76,19 +68,16 @@
         </tbody>
       </table>
     </div>
+    <!-- CONTAINER HISTORIA DO PRODUTO -->
     <div class="historia-produto">
       <div *ngIf="product.descricao">
         {{ product.descricao }}
       </div>
-      <!-- <div *ngIf="product.tabelaNutricional">
-        {{ product.tabelaNutricional }}
-      </div> -->
     </div>
-    <!-- fim do historia-produto -->
+    <!-- CONTAINER CARROSSEL PRODUTOS SIMILARES -->
     <div class="div-carrossel" *ngIf="produtosSimilares.length > 0">
       <p class="titulo-carrossel">Produtos Semelhantes:</p>
       <carrossel-similares [produtosSimilares]="produtosSimilares"></carrossel-similares>
     </div>
   </div>
-  <!-- fim do container -->
 </section>
