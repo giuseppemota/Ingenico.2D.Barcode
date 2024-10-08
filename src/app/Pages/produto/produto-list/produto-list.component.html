@@ -193,12 +193,12 @@
     [closable]="false"
     [modal]="true"
     [resizable]="true"
-    [style]="{ width: '70vw' }"
+    [style]="{ width: '90vw', maxWidth: '600px' }"
     header="QR Code do Produto"
   >
     <div class="modal-content">
       <div class="p-field switch-container">
-        <label for="toggleQrCode">Exibir QR code com link dinâmico</label>
+        <label for="toggleQrCode" class="switch-label">Exibir QR code com link dinâmico</label>
         <p-inputSwitch
           id="toggleQrCode"
           [(ngModel)]="isLinkQrCode"

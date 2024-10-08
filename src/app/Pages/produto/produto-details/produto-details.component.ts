@@ -1,13 +1,14 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProdutosService } from '../../../Services/Produto/produtos.service';
 import { Produto } from '../../../Models/product.model';
 import { CommonModule } from '@angular/common';
 import { CardModule } from 'primeng/card';
 import { CarouselModule } from 'primeng/carousel';
 import { TagModule } from 'primeng/tag';
-import { Button } from 'primeng/button';
+import { Button, ButtonModule } from 'primeng/button';
 import { CarrosselSimilaresComponent } from '../../../Components/carrossel-similares/carrossel-similares.component';
+import { RippleModule } from 'primeng/ripple';
 
 @Component({
   selector: 'app-produto-details',
@@ -19,6 +20,8 @@ import { CarrosselSimilaresComponent } from '../../../Components/carrossel-simil
     TagModule,
     Button,
     CarrosselSimilaresComponent,
+    ButtonModule,
+    RippleModule
   ],
   templateUrl: './produto-details.component.html',
   styleUrl: './produto-details.component.scss',
@@ -29,7 +32,8 @@ export class ProdutoDetailsComponent implements OnInit {
   imagemProduto: number[] = [];
   constructor(
     private route: ActivatedRoute,
-    private productService: ProdutosService
+    private productService: ProdutosService,
+    private router: Router
   ) {}
 
   ngOnInit() {
@@ -56,5 +60,9 @@ export class ProdutoDetailsComponent implements OnInit {
         this.imagemProduto = data.imageData;
       });
     }
+  }
+
+  voltarParaLeituraQR() {
+    this.router.navigate(['/leitor-qrcode']);
   }
 }
