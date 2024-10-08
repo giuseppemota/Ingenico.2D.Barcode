@@ -100,12 +100,11 @@ export class QrCodeScannerComponent implements OnInit {
   }
 
   handleLink(link: string): void {
-    window.open(link, '_blank');
+    window.location.href = link;
   }
 
   handleFormattedData(data: string): void {
     this.dadosProduto = JSON.parse(data)
-    console.log(this.dadosProduto)
     this.displayModal = true;
   }
 }
