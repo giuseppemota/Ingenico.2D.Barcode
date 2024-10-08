@@ -116,34 +116,10 @@ export class ProdutoListComponent implements OnInit {
       .subscribe((data: any) => {
         this.selectedProduct = data;
         this.infoQrCode = JSON.stringify(data);
-        this.qrCodeFormatado = this.formatProdutoData(data);
-
         // Atualiza o QR code com base no estado atual do switch
         this.updateQrCode();
-
         this.displayQrCodeDialog = true;
       });
-  }
-
-  formatProdutoData(produto: Produto): string {
-    let formattedData = '';
-    formattedData += `<p><strong>Nome:</strong> ${produto.nome}</p>`;
-    formattedData += `<p><strong>Ingredientes:</strong> ${produto.ingredientes}</p>`;
-    formattedData += `<p><strong>Descrição:</strong> ${produto.descricao}</p>`;
-    formattedData += `<p><strong>Marca:</strong> ${produto.marca}</p>`;
-    formattedData += `<p><strong>Peso:</strong> ${produto.peso} ${produto.unidadeMedida}</p>`;
-    formattedData += `<p><strong>Preço:</strong> R$ ${produto.preco.toFixed(
-      2
-    )}</p>`;
-    formattedData += `<p><strong>País de Origem:</strong> ${produto.paisOrigem}</p>`;
-    formattedData += `<p><strong>Categorias:</strong> ${produto.categorias
-      .map((categoria: any) => categoria.nome)
-      .join(', ')}</p>`;
-    // formattedData += `Tags: ${produto.tags
-    //   .map((tag: any) => tag.nome)
-    //   .join(', ')}\n`;
-
-    return formattedData;
   }
 
   generateProductLink(produto: any): string {
@@ -155,7 +131,8 @@ export class ProdutoListComponent implements OnInit {
       const link = this.generateProductLink(this.selectedProduct);
       this.selectedQrCode = `LINK:${link}`;
     } else {
-      this.selectedQrCode = `DADOS:${this.qrCodeFormatado}`;
+      const productDataJson = JSON.stringify(this.selectedProduct);
+      this.selectedQrCode = `DADOS:${productDataJson}`;
     }
   }
 
@@ -261,10 +238,6 @@ export class ProdutoListComponent implements OnInit {
         });
       },
     });
-  }
-
-  selectInfoProduct(): void {
-    this.selectedQrCode = this.qrCodeFormatado;
   }
 
   printQrCode() {
