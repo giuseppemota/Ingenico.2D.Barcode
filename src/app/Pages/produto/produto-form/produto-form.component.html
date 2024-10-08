@@ -73,17 +73,14 @@
         </div>
 
         <!-- Descrição e Ingredientes -->
-        <div class="form-row">
+        <div class="form-row-editor">
           <div class="form-col">
             <label for="descricao">Descrição:</label>
-
             <p-editor
               id="descricao"
               formControlName="descricao"
               [style]="{ 'min-height': '200px' }"
-
             ></p-editor>
-
             <p-message
               *ngIf="
                 produtoForm.get('descricao')?.touched &&
@@ -96,13 +93,15 @@
               ></p-message
             >
           </div>
+        </div>
+        <div class="form-row">
           <div class="form-col">
             <label for="ingredientes">Ingredientes:</label>
             <textarea
               id="ingredientes"
               pInputTextarea
               formControlName="ingredientes"
-              rows="2"
+              rows="4"
             ></textarea>
             <p-message
               *ngIf="
@@ -193,7 +192,7 @@
           <!-- Peso -->
           <div class="form-col">
             <label for="peso">Peso:</label>
-            <input id="peso" type="number" pInputText formControlName="peso"/>
+            <input id="peso" type="number" pInputText formControlName="peso" />
             <p-message
               *ngIf="
                 produtoForm.get('peso')?.touched &&
@@ -201,8 +200,10 @@
               "
               severity="error"
               text="O peso deve estar entre 0.1 e 1000."
-              [style]="{width: '100%', height: '100%'}">
-            ></p-message>
+              [style]="{ width: '100%', height: '100%' }"
+            >
+              ></p-message
+            >
           </div>
           <!-- Unidade de Medida -->
           <div class="form-col">
@@ -222,8 +223,10 @@
               "
               severity="error"
               text="Selecione uma unidade de medida."
-              [style]="{width: '100%', height: '100%'}">
-              ></p-message>
+              [style]="{ width: '100%', height: '100%' }"
+            >
+              ></p-message
+            >
           </div>
           <!-- Preço -->
           <div class="form-col">
@@ -283,7 +286,7 @@
               formControlName="tags"
               optionLabel="nome"
               placeholder="Selecione ao menos duas tags"
-              [style]="{ width: '100%'}"
+              [style]="{ width: '100%' }"
               display="chip"
               [showToggleAll]="false"
             ></p-multiSelect>
@@ -294,8 +297,10 @@
               "
               severity="error"
               text="Selecione pelo menos duas tags."
-              [style]="{width: '100%', height: '100%'}">
-              ></p-message>
+              [style]="{ width: '100%', height: '100%' }"
+            >
+              ></p-message
+            >
           </div>
         </div>
 
