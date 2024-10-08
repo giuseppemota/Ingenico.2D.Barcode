@@ -71,7 +71,7 @@
     <!-- CONTAINER HISTORIA DO PRODUTO -->
     <div class="historia-produto">
       <div *ngIf="product.descricao">
-        {{ product.descricao }}
+        <div [innerHTML]="product.descricao"></div>
       </div>
     </div>
     <!-- CONTAINER CARROSSEL PRODUTOS SIMILARES -->

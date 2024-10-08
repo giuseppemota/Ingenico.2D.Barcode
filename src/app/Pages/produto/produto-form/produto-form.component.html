@@ -1,5 +1,5 @@
 <div class="form-container">
-  <p-card [style]="{'box-shadow': 'none'}">
+  <p-card [style]="{ 'box-shadow': 'none' }">
     <form (ngSubmit)="onSave()" [formGroup]="produtoForm">
       <div class="form-grid">
         <!-- Nome, Marca e Lote-->
@@ -7,29 +7,53 @@
           <!-- Nome -->
           <div class="form-col">
             <label for="nome">Nome:</label>
-            <input id="nome" type="text" pInputText formControlName="nome" required/>
+            <input
+              id="nome"
+              type="text"
+              pInputText
+              formControlName="nome"
+              required
+            />
             <p-message
-              *ngIf="produtoForm.get('nome')?.touched &&produtoForm.get('nome')?.invalid"
+              *ngIf="
+                produtoForm.get('nome')?.touched &&
+                produtoForm.get('nome')?.invalid
+              "
               severity="error"
               text="O nome é obrigatório e deve ter entre 3 e 50 caracteres."
-              [style]="{width: '100%', height: '100%', 'max-height': '3.2rem'}">
-            ></p-message>
+              [style]="{
+                width: '100%',
+                height: '100%',
+                'max-height': '3.2rem'
+              }"
+            >
+              ></p-message
+            >
           </div>
           <!-- Marca -->
           <div class="form-col">
             <label for="marca">Marca:</label>
-            <input id="marca" type="text" pInputText formControlName="marca"/>
+            <input id="marca" type="text" pInputText formControlName="marca" />
             <p-message
-              *ngIf="produtoForm.get('marca')?.touched &&produtoForm.get('marca')?.invalid"
+              *ngIf="
+                produtoForm.get('marca')?.touched &&
+                produtoForm.get('marca')?.invalid
+              "
               severity="error"
               text="A marca é obrigatória e deve ter entre 2 e 30 caracteres."
-              [style]="{width: '100%', height: '100%', 'max-height': '3.2rem'}">
-            ></p-message>
+              [style]="{
+                width: '100%',
+                height: '100%',
+                'max-height': '3.2rem'
+              }"
+            >
+              ></p-message
+            >
           </div>
           <!-- Lote -->
           <div class="form-col">
             <label for="lote">Lote:</label>
-            <input id="lote" type="text" pInputText formControlName="lote"/>
+            <input id="lote" type="text" pInputText formControlName="lote" />
             <p-message
               *ngIf="
                 produtoForm.get('lote')?.touched &&
@@ -37,33 +61,41 @@
               "
               severity="error"
               text="O lote é obrigatório e deve ter entre 2 e 20 caracteres"
-              [style]="{width: '100%', height: '100%', 'max-height': '3.2rem'}">
-            ></p-message>
+              [style]="{
+                width: '100%',
+                height: '100%',
+                'max-height': '3.2rem'
+              }"
+            >
+              ></p-message
+            >
           </div>
         </div>
 
         <!-- Descrição e Ingredientes -->
         <div class="form-row">
-          <!-- Descrição -->
           <div class="form-col">
             <label for="descricao">Descrição:</label>
-            <textarea
+
+            <p-editor
               id="descricao"
-              pInputTextarea
               formControlName="descricao"
-              rows="3"
-            ></textarea>
+              [style]="{ 'min-height': '200px' }"
+
+            ></p-editor>
+
             <p-message
               *ngIf="
-              produtoForm.get('descricao')?.touched &&
-              produtoForm.get('descricao')?.invalid
-            "
+                produtoForm.get('descricao')?.touched &&
+                produtoForm.get('descricao')?.invalid
+              "
               severity="error"
               text="A descrição é obrigatória e deve ter entre 10 e 200 caracteres."
-              [style]="{width: '100%', height: '100%', 'max-height': '3rem'}">
-            ></p-message>
+              [style]="{ width: '100%', height: '100%', 'max-height': '3rem' }"
+            >
+              ></p-message
+            >
           </div>
-          <!-- Ingredientes -->
           <div class="form-col">
             <label for="ingredientes">Ingredientes:</label>
             <textarea
@@ -74,16 +106,21 @@
             ></textarea>
             <p-message
               *ngIf="
-              produtoForm.get('ingredientes')?.touched &&
-              produtoForm.get('ingredientes')?.invalid
-            "
+                produtoForm.get('ingredientes')?.touched &&
+                produtoForm.get('ingredientes')?.invalid
+              "
               severity="error"
               text="Os ingredientes são obrigatórios e devem ter entre 5 e 100 caracteres."
-              [style]="{width: '100%', height: '100%', 'max-height': '3.5rem'}">
-            ></p-message>
+              [style]="{
+                width: '100%',
+                height: '100%',
+                'max-height': '3.5rem'
+              }"
+            >
+              ></p-message
+            >
           </div>
         </div>
-
         <!-- Data de Fabricação, Validade e Pais de Origem -->
         <div class="form-row">
           <!-- Data de Fabricação -->
@@ -102,8 +139,10 @@
               "
               severity="error"
               text="A data de fabricação não deve ser uma data futura."
-              [style]="{width: '100%', height: '100%'}">
-            ></p-message>
+              [style]="{ width: '100%', height: '100%' }"
+            >
+              ></p-message
+            >
           </div>
           <!-- Validade -->
           <div class="form-col">
@@ -121,8 +160,10 @@
               "
               severity="error"
               text="A validade deve ser uma data futura"
-              [style]="{width: '100%', height: '100%'}">
-            ></p-message>
+              [style]="{ width: '100%', height: '100%' }"
+            >
+              ></p-message
+            >
           </div>
           <!-- Pais de Origem -->
           <div class="form-col">
@@ -140,8 +181,10 @@
               "
               severity="error"
               text="O país de origem é obrigatório e deve ter entre 2 e 50 caracteres."
-              [style]="{width: '100%', height: '100%'}">
-            ></p-message>
+              [style]="{ width: '100%', height: '100%' }"
+            >
+              ></p-message
+            >
           </div>
         </div>
 
@@ -173,7 +216,10 @@
               [style]="{ width: '100%' }"
             ></p-dropdown>
             <p-message
-              *ngIf="produtoForm.get('unidadeMedida')?.touched && produtoForm.get('unidadeMedida')?.invalid"
+              *ngIf="
+                produtoForm.get('unidadeMedida')?.touched &&
+                produtoForm.get('unidadeMedida')?.invalid
+              "
               severity="error"
               text="Selecione uma unidade de medida."
               [style]="{width: '100%', height: '100%'}">
@@ -190,10 +236,13 @@
             />
             <p-message
               *ngIf="
-                produtoForm.get('preco')?.touched && produtoForm.get('preco')?.invalid"
+                produtoForm.get('preco')?.touched &&
+                produtoForm.get('preco')?.invalid
+              "
               severity="error"
               text="O preço é obrigatório e deve ser um número válido com até duas casas decimais."
-              [style]="{width: '100%', height: '100%'}">
+              [style]="{ width: '100%', height: '100%' }"
+            >
             </p-message>
           </div>
         </div>
@@ -209,7 +258,7 @@
               formControlName="categorias"
               optionLabel="nome"
               placeholder="Selecione as categorias"
-              [style]="{ width: '100%'}"
+              [style]="{ width: '100%' }"
               display="chip"
               [showToggleAll]="false"
             ></p-multiSelect>
@@ -220,8 +269,10 @@
               "
               severity="error"
               text="Selecione pelo menos uma categoria."
-              [style]="{width: '100%', height: '100%'}">
-            ></p-message>
+              [style]="{ width: '100%', height: '100%' }"
+            >
+              ></p-message
+            >
           </div>
           <!-- Tags -->
           <div class="form-col">
@@ -261,7 +312,7 @@
               auto="false"
               customUpload="true"
               chooseLabel="Escolher Imagem"
-              [style]="{height: '3rem', width: '100%'}"
+              [style]="{ height: '3rem', width: '100%' }"
             ></p-fileUpload>
           </div>
           <!-- Salvar -->
@@ -279,7 +330,11 @@
             label="Cancelar"
             icon="pi pi-times"
             [style]="{
-              background: 'white', 'border-color': '#0C1E58', color: '#0C1E58', width: '100%'}"
+              background: 'white',
+              'border-color': '#0C1E58',
+              color: '#0C1E58',
+              width: '100%'
+            }"
           ></p-button>
         </div>
       </div>

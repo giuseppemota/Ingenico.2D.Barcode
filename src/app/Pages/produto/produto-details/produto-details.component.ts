@@ -43,6 +43,7 @@ export class ProdutoDetailsComponent implements OnInit {
           ...data,
           categorias: data.categorias.map((categoria: any) => categoria.nome),
         };
+
       });
 
       this.productService
