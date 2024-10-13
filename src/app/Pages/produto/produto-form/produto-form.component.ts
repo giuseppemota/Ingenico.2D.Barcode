@@ -1,4 +1,5 @@
 import {
+  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
@@ -203,7 +204,8 @@ export class ProdutoFormComponent implements OnInit {
     private fb: FormBuilder,
     private produtoService: ProdutosService,
     private messageService: MessageService,
-    private router: Router
+    private router: Router,
+    private changeDetectorRef: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -274,8 +276,14 @@ export class ProdutoFormComponent implements OnInit {
   ngOnChanges(changes: SimpleChanges): void {
     if (changes['produto'] && this.produto) {
       this.loadProdutoData(this.produto);
+      setTimeout(() => {
+        const descricaoControl = this.produtoForm.get('descricao');
+        descricaoControl?.setValue(this.produto.descricao);
+        this.changeDetectorRef.detectChanges();
+      }, 0);
     }
   }
+
 
   loadProdutoData(produto: Produto) {
     if (this.produtoForm) {
@@ -308,7 +316,6 @@ export class ProdutoFormComponent implements OnInit {
           tags: nomeTags,
         });
       }
-
     } else {
       console.error('produtoForm não definido');
     }
