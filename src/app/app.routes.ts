@@ -9,6 +9,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent},
   { path: 'produtos', component: ProdutoListComponent, canActivate: [AuthGuard] },
   { path: 'produtos/:id', component: ProdutoDetailsComponent },
-  { path: 'leitor-qrcode', component: QrCodeScannerComponent, canActivate: [AuthGuard] },
+  { path: 'leitor-qrcode', component: QrCodeScannerComponent},
   { path: '**', redirectTo: 'produtos' },
 ];

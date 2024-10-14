@@ -162,29 +162,29 @@ tbody {
 }
 
 .button-container button {
-  background-color: #0C1E58; 
-  color: #fff; 
-  font-size: 0.8rem; 
+  background-color: #0C1E58;
+  color: #fff;
+  font-size: 0.8rem;
   padding: 10px 20px;
-  margin-left: 10px; 
-  border: none; 
+  margin-left: 10px;
+  border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease;
 }
 
 .button-container button:hover {
-  background-color: #19B6DD; 
-  color: #ffffff; 
+  background-color: #19B6DD;
+  color: #ffffff;
 }
 
 .button-container button:active {
-  background-color: #0A173D; 
+  background-color: #0A173D;
 }
 
 .button-container button .pi {
-  margin-right: 10px; 
-} 
+  margin-right: 10px;
+}
 
 
 @media (max-width: 768px) {
@@ -223,9 +223,6 @@ tbody {
     flex-direction: column;
   }
 
-  .button-container {
-    justify-content: center; 
-  }
 }
 
 @media (min-width: 1024px) {
