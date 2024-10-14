@@ -8,14 +8,14 @@ import {
   SimpleChanges,
   ViewChild,
 } from '@angular/core';
-import { Produto } from '../../../Models/product.model';
-import { DialogModule } from 'primeng/dialog';
-import { DropdownModule } from 'primeng/dropdown';
-import { ToastModule } from 'primeng/toast';
-import { TableModule } from 'primeng/table';
-import { TooltipModule } from 'primeng/tooltip';
-import { CardModule } from 'primeng/card';
-import { InputMaskModule } from 'primeng/inputmask';
+import {Produto} from '../../../Models/product.model';
+import {DialogModule} from 'primeng/dialog';
+import {DropdownModule} from 'primeng/dropdown';
+import {ToastModule} from 'primeng/toast';
+import {TableModule} from 'primeng/table';
+import {TooltipModule} from 'primeng/tooltip';
+import {CardModule} from 'primeng/card';
+import {InputMaskModule} from 'primeng/inputmask';
 
 import {
   AbstractControl,
@@ -25,23 +25,23 @@ import {
   ReactiveFormsModule,
   Validators,
 } from '@angular/forms';
-import { PaginatorModule } from 'primeng/paginator';
-import { ButtonModule } from 'primeng/button';
-import { CommonModule } from '@angular/common';
-import { ConfirmDialogModule } from 'primeng/confirmdialog';
-import { InputTextModule } from 'primeng/inputtext';
-import { InputTextareaModule } from 'primeng/inputtextarea';
-import { InputNumberModule } from 'primeng/inputnumber';
-import { CheckboxModule } from 'primeng/checkbox';
-import { CalendarModule } from 'primeng/calendar';
-import { MessageModule } from 'primeng/message';
-import { ProdutosService } from '../../../Services/Produto/produtos.service';
-import { MessageService } from 'primeng/api';
-import { Router } from '@angular/router';
-import { ChipsModule } from 'primeng/chips';
-import { MultiSelectModule } from 'primeng/multiselect';
-import { FileUpload, FileUploadModule } from 'primeng/fileupload';
-import { EditorModule } from 'primeng/editor';
+import {PaginatorModule} from 'primeng/paginator';
+import {ButtonModule} from 'primeng/button';
+import {CommonModule} from '@angular/common';
+import {ConfirmDialogModule} from 'primeng/confirmdialog';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputTextareaModule} from 'primeng/inputtextarea';
+import {InputNumberModule} from 'primeng/inputnumber';
+import {CheckboxModule} from 'primeng/checkbox';
+import {CalendarModule} from 'primeng/calendar';
+import {MessageModule} from 'primeng/message';
+import {ProdutosService} from '../../../Services/Produto/produtos.service';
+import {MessageService} from 'primeng/api';
+import {Router} from '@angular/router';
+import {ChipsModule} from 'primeng/chips';
+import {MultiSelectModule} from 'primeng/multiselect';
+import {FileUpload, FileUploadModule} from 'primeng/fileupload';
+import {EditorModule} from 'primeng/editor';
 
 @Component({
   selector: 'app-produto-form',
@@ -84,71 +84,71 @@ export class ProdutoFormComponent implements OnInit {
   selectedImage: File | null = null;
 
   categorias = [
-    { nome: 'Alimentos e Bebidas' },
-    { nome: 'Carnes e Aves' },
-    { nome: 'Frutas, Verduras e Legumes' },
-    { nome: 'Laticínios e Ovos' },
-    { nome: 'Padaria e Confeitaria' },
-    { nome: 'Bebidas' },
-    { nome: 'Limpeza' },
-    { nome: 'Higiene e Beleza' },
-    { nome: 'Papelaria' },
-    { nome: 'Pet Shop' },
-    { nome: 'Congelados' },
-    { nome: 'Bebidas Alcoólicas' },
-    { nome: 'Massas e Pizzas' },
-    { nome: 'Doces e Sobremesas' },
-    { nome: 'Cereais e Grãos' },
-    { nome: 'Óleos e Temperos' },
-    { nome: 'Petiscos e Snacks' },
-    { nome: 'Saudáveis e Especiais' },
-    { nome: 'Pescados e Frutos do Mar' },
-    { nome: 'Mercearia' },
-    { nome: 'Utilidades Domésticas' },
-    { nome: 'Cuidados com a Casa' },
-    { nome: 'Bebê e Infantil' },
+    {nome: 'Alimentos e Bebidas'},
+    {nome: 'Carnes e Aves'},
+    {nome: 'Frutas, Verduras e Legumes'},
+    {nome: 'Laticínios e Ovos'},
+    {nome: 'Padaria e Confeitaria'},
+    {nome: 'Bebidas'},
+    {nome: 'Limpeza'},
+    {nome: 'Higiene e Beleza'},
+    {nome: 'Papelaria'},
+    {nome: 'Pet Shop'},
+    {nome: 'Congelados'},
+    {nome: 'Bebidas Alcoólicas'},
+    {nome: 'Massas e Pizzas'},
+    {nome: 'Doces e Sobremesas'},
+    {nome: 'Cereais e Grãos'},
+    {nome: 'Óleos e Temperos'},
+    {nome: 'Petiscos e Snacks'},
+    {nome: 'Saudáveis e Especiais'},
+    {nome: 'Pescados e Frutos do Mar'},
+    {nome: 'Mercearia'},
+    {nome: 'Utilidades Domésticas'},
+    {nome: 'Cuidados com a Casa'},
+    {nome: 'Bebê e Infantil'},
   ];
 
   tags = [
-    { nome: '🌾 grão' },
-    { nome: '🌽 cereal' },
-    { nome: '🥕 legume' },
-    { nome: '🍎 fruta' },
-    { nome: '🥬 verdura' },
-    { nome: '🥛 laticínio' },
-    { nome: '🥩 carne' },
-    { nome: '🍗 ave' },
-    { nome: '🐟 peixe' },
-    { nome: '🦐 marisco' },
-    { nome: '🥤 bebidas' },
-    { nome: '🍬 doce' },
-    { nome: '🍰 sobremesa' },
-    { nome: '🍝 massa' },
-    { nome: '🍕 pizza' },
-    { nome: '🍿 lanche' },
-    { nome: '🧂 tempero' },
-    { nome: '🫒 óleo' },
-    { nome: '❄️ congelado' },
-    { nome: '🥖 padaria' },
-    { nome: '🍩 confeitaria' },
-    { nome: '🍺 bebida alcoólica' },
-    { nome: '🧴 limpeza' },
-    { nome: '🧼 higiene' },
-    { nome: '💄 beleza' },
-    { nome: '📄 papelaria' },
-    { nome: '🐶 pet shop' },
-    { nome: '🥗 saudável' },
-    { nome: '⭐ especial' },
-    { nome: '🛒 mercearia' },
-    { nome: '🏠 utilidade doméstica' },
-    { nome: '🏡 casa' },
-    { nome: '👶 bebê' },
-    { nome: '🧸 infantil' },
-    { nome: '♻️ plástico' },
-    { nome: '🔩 metal' },
-    { nome: '🍾 vidro' },
-    { nome: '🪵 madeira' },
-    { nome: '📦 papelão' },
+    {nome: '🌾 grão'},
+    {nome: '🌽 cereal'},
+    {nome: '🥕 legume'},
+    {nome: '🍎 fruta'},
+    {nome: '🥬 verdura'},
+    {nome: '🥛 laticínio'},
+    {nome: '🥩 carne'},
+    {nome: '🍗 ave'},
+    {nome: '🐟 peixe'},
+    {nome: '🦐 marisco'},
+    {nome: '🥤 bebidas'},
+    {nome: '🍬 doce'},
+    {nome: '🍰 sobremesa'},
+    {nome: '🍝 massa'},
+    {nome: '🍕 pizza'},
+    {nome: '🍿 lanche'},
+    {nome: '🧂 tempero'},
+    {nome: '🫒 óleo'},
+    {nome: '❄️ congelado'},
+    {nome: '🥖 padaria'},
+    {nome: '🍩 confeitaria'},
+    {nome: '🍺 bebida alcoólica'},
+    {nome: '🧴 limpeza'},
+    {nome: '🧼 higiene'},
+    {nome: '💄 beleza'},
+    {nome: '📄 papelaria'},
+    {nome: '🐶 pet shop'},
+    {nome: '🥗 saudável'},
+    {nome: '⭐ especial'},
+    {nome: '🛒 mercearia'},
+    {nome: '🏠 utilidade doméstica'},
+    {nome: '🏡 casa'},
+    {nome: '👶 bebê'},
+    {nome: '🧸 infantil'},
+    {nome: '♻️ plástico'},
+    {nome: '🔩 metal'},
+    {nome: '🍾 vidro'},
+    {nome: '🪵 madeira'},
+    {nome: '📦 papelão'},
   ];
 
   unidadeMedida: string[] = [
@@ -206,7 +206,8 @@ export class ProdutoFormComponent implements OnInit {
     private messageService: MessageService,
     private router: Router,
     private changeDetectorRef: ChangeDetectorRef
-  ) {}
+  ) {
+  }
 
   ngOnInit(): void {
     this.produtoForm = this.fb.group({
@@ -290,12 +291,16 @@ export class ProdutoFormComponent implements OnInit {
       if (produto.produtoId) {
         const nomeCategorias = Array.isArray(produto.categorias)
           ? produto.categorias.map((categoria: any) => ({
-              nome: categoria.nome,
-            }))
+            nome: categoria.nome,
+          }))
           : [];
+
         const nomeTags = Array.isArray(produto.tags)
-          ? produto.tags.map((tag: any) => tag.nome)
+          ? produto.tags.map((tag: any) => ({
+            nome: tag.nome,
+          }))
           : [];
+
 
         // Atualizando o formulário com os valores do produto
         this.produtoForm.patchValue({
@@ -343,17 +348,19 @@ export class ProdutoFormComponent implements OnInit {
       // Aqui, cada string será mapeada para um objeto com a chave `nome`
       categorias: this.produtoForm.get('categorias')?.value
         ? this.produtoForm
-            .get('categorias')
-            ?.value.map((categoria: string) => ({ nome: categoria }))
+          .get('categorias')
+          ?.value.map((categoria: string) => ({nome: categoria}))
         : [],
 
       // Mesma coisa para tags
       tags: this.produtoForm.get('tags')?.value
         ? this.produtoForm
-            .get('tags')
-            ?.value.map((tag: string) => ({ nome: tag }))
-        : [],
+          .get('tags')
+          ?.value.map((tag: string) => ({nome: tag}))
+        : []
     };
+
+    console.log(novoProduto.tags);
 
     const formData = this.createFormData(this.produtoForm, this.selectedImage);
     console.log('Produto cadastrado', novoProduto);
@@ -451,7 +458,7 @@ export class ProdutoFormComponent implements OnInit {
     const validade = new Date(control.value);
     const today = new Date();
     if (validade < today) {
-      return { invalidDate: true };
+      return {invalidDate: true};
     }
     return null;
   }
@@ -462,10 +469,11 @@ export class ProdutoFormComponent implements OnInit {
     const fabricacao = new Date(control.value);
     const today = new Date();
     if (fabricacao > today) {
-      return { invalidDate: true };
+      return {invalidDate: true};
     }
     return null;
   }
+
   onImageSelect(event: any) {
     const file = event.files[0];
     if (file) {
@@ -511,7 +519,7 @@ export class ProdutoFormComponent implements OnInit {
     // Adicionando tags com índice no nome
     const tags = produtoForm.get('tags')?.value;
     tags.forEach((tag: any, index: number) => {
-      formData.append(`tags[${index}].nome`, tag);
+      formData.append(`tags[${index}].nome`, tag.nome);
     });
 
     // Se uma imagem foi selecionada, adiciona ao FormData
