@@ -127,13 +127,31 @@ export class ProdutoListComponent implements OnInit {
   updateQrCode(): void {
     if (this.isLinkQrCode) {
       const link = this.generateProductLink(this.selectedProduct);
-      this.selectedQrCode = `LINK:${link}`;
+      this.selectedQrCode = `LINK - ${link}`;
     } else {
-      const productDataJson = JSON.stringify(this.selectedProduct);
-      this.selectedQrCode = `DADOS:${productDataJson}`;
+      const productDataJson = this.formatProdutoData(this.selectedProduct);
+
+      this.selectedQrCode = `${productDataJson}`;
     }
   }
+  formatProdutoData(produto: Produto): string {
+    let formattedData = '';
+    formattedData += `Nome - ${produto.nome}\n`;
+    formattedData += `Ingredientes - ${produto.ingredientes}\n`;
+    formattedData += `Descrição - ${produto.descricao}\n`;
+    formattedData += `Marca - ${produto.marca}\n`;
+    formattedData += `Peso - ${produto.peso} ${produto.unidadeMedida}\n`;
+    formattedData += `Preço - ${produto.preco}\n`;
+    formattedData += `País de Origem - ${produto.paisOrigem}\n`;
+    formattedData += `Categorias - ${produto.categorias
+      .map((categoria: any) => categoria.nome)
+      .join(', ')}\n`;
+    formattedData += `Tags: ${produto.tags
+      .map((tag: any) => tag.nome)
+      .join(', ')}\n`;
 
+    return formattedData;
+  }
   toggleQrCodeType(): void {
     this.updateQrCode();
   }
