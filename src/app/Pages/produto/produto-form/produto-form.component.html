@@ -27,13 +27,14 @@
                 'max-height': '3.2rem'
               }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
           <!-- Marca -->
           <div class="form-col">
             <label for="marca">Marca:</label>
-            <input id="marca" type="text" pInputText formControlName="marca" />
+            <input id="marca" type="text" pInputText formControlName="marca"/>
             <p-message
               *ngIf="
                 produtoForm.get('marca')?.touched &&
@@ -47,13 +48,14 @@
                 'max-height': '3.2rem'
               }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
           <!-- Lote -->
           <div class="form-col">
             <label for="lote">Lote:</label>
-            <input id="lote" type="text" pInputText formControlName="lote" />
+            <input id="lote" type="text" pInputText formControlName="lote"/>
             <p-message
               *ngIf="
                 produtoForm.get('lote')?.touched &&
@@ -67,7 +69,8 @@
                 'max-height': '3.2rem'
               }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
         </div>
@@ -90,7 +93,8 @@
               text="A descrição é obrigatória e deve ter entre 10 e 200 caracteres."
               [style]="{ width: '100%', height: '100%', 'max-height': '3rem' }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
         </div>
@@ -116,7 +120,8 @@
                 'max-height': '3.5rem'
               }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
         </div>
@@ -140,7 +145,8 @@
               text="A data de fabricação não deve ser uma data futura."
               [style]="{ width: '100%', height: '100%' }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
           <!-- Validade -->
@@ -161,7 +167,8 @@
               text="A validade deve ser uma data futura"
               [style]="{ width: '100%', height: '100%' }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
           <!-- Pais de Origem -->
@@ -182,7 +189,8 @@
               text="O país de origem é obrigatório e deve ter entre 2 e 50 caracteres."
               [style]="{ width: '100%', height: '100%' }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
         </div>
@@ -192,7 +200,7 @@
           <!-- Peso -->
           <div class="form-col">
             <label for="peso">Peso:</label>
-            <input id="peso" type="number" pInputText formControlName="peso" />
+            <input id="peso" type="number" pInputText formControlName="peso"/>
             <p-message
               *ngIf="
                 produtoForm.get('peso')?.touched &&
@@ -202,7 +210,8 @@
               text="O peso deve estar entre 0.1 e 1000."
               [style]="{ width: '100%', height: '100%' }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
           <!-- Unidade de Medida -->
@@ -225,7 +234,8 @@
               text="Selecione uma unidade de medida."
               [style]="{ width: '100%', height: '100%' }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
           <!-- Preço -->
@@ -236,6 +246,7 @@
               type="number"
               pInputText
               formControlName="preco"
+              step="0.01"
             />
             <p-message
               *ngIf="
@@ -274,7 +285,8 @@
               text="Selecione pelo menos uma categoria."
               [style]="{ width: '100%', height: '100%' }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
           <!-- Tags -->
@@ -299,7 +311,8 @@
               text="Selecione pelo menos duas tags."
               [style]="{ width: '100%', height: '100%' }"
             >
-              ></p-message
+              >
+            </p-message
             >
           </div>
         </div>
