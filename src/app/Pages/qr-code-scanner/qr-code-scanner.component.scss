@@ -5,19 +5,19 @@
   align-items: center;
   justify-content: center;
   padding: 20px;
-  height: calc(100vh - 200px); 
+  height: calc(100vh - 200px);
   width: 100%;
-  max-width: 600px; 
-  margin: 0 auto; 
-  box-sizing: border-box; 
+  max-width: 600px;
+  margin: 0 auto;
+  box-sizing: border-box;
 }
 
 
 .title {
-  font-size: 2rem; 
-  margin-bottom: 1rem; 
-  text-align: center; 
-  color: #0C1E58; 
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  text-align: center;
+  color: #0C1E58;
 }
 
 /* Container para o dropdown */
@@ -30,11 +30,15 @@
   margin-bottom: 1rem;
 }
 
+.blur{
+  filter: blur(8px);
+  pointer-events: none;
+}
 
 .scanner {
   width: 100%;
-  max-width: 100%; 
-  height: auto; 
+  max-width: 100%;
+  height: auto;
 }
 
 /* Responsividade para dispositivos menores */
@@ -44,11 +48,11 @@
   }
 
   .title {
-    font-size: 1.5rem; 
+    font-size: 1.5rem;
   }
 
   .scanner {
     max-width: 100%;
-    height: auto; 
+    height: auto;
   }
 }

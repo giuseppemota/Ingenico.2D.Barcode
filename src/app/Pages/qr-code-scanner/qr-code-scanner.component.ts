@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,6 @@ import { MessageService } from 'primeng/api';
 import { MessageModule } from 'primeng/message';
 import { BarcodeFormat } from '@zxing/library';
 import { DialogModule } from 'primeng/dialog';
-import { Produto } from '../../Models/product.model';
 
 @Component({
   selector: 'app-qr-code-scanner',
@@ -26,7 +25,7 @@ import { Produto } from '../../Models/product.model';
   styleUrls: ['./qr-code-scanner.component.scss'],
   providers: [],
 })
-export class QrCodeScannerComponent implements OnInit {
+export class QrCodeScannerComponent implements OnInit{
   availableDevices: MediaDeviceInfo[] = [];
   currentDevice: MediaDeviceInfo | undefined;
   hasDevices: boolean | undefined;
@@ -38,9 +37,33 @@ export class QrCodeScannerComponent implements OnInit {
   dadosProduto!: any
   displayModal: boolean = false;
 
+  timeout : any;
+
   constructor(private messageService: MessageService) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.startTimer();
+  }
+
+  startTimer() {
+    clearTimeout(this.timeout);
+    this.timeout = setTimeout(() => this.aplicarBlur(), 5000);
+  }
+
+  aplicarBlur(){
+    const camera = document.querySelector('.camera-container');
+    if(camera){
+      camera.classList.add('blur');
+    }
+  }
+
+  removerBlur() {
+    const camera = document.querySelector('.camera-container');
+    if(camera){
+      camera.classList.remove('blur');
+      this.startTimer();
+    }
+  }
 
   onCamerasFound(devices: MediaDeviceInfo[]): void {
     this.availableDevices = devices;

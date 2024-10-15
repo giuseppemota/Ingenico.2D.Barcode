@@ -1,4 +1,5 @@
 <div class="scanner-container">
+  <button (click)="removerBlur()">INICIAR LEITURA</button>
   <h1 class="title">LEITURA DE QR CODE</h1>
   <div *ngIf="hasDevices" class="dropdown-container">
     <p-dropdown [options]="availableDevices" [(ngModel)]="currentDevice" optionLabel="label"
