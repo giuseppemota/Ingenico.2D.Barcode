@@ -1,11 +1,9 @@
 import {
-  ChangeDetectorRef,
   Component,
   EventEmitter,
   Input,
   OnInit,
   Output,
-  SimpleChanges,
   ViewChild,
 } from '@angular/core';
 import {Produto} from '../../../Models/product.model';
@@ -205,7 +203,6 @@ export class ProdutoFormComponent implements OnInit {
     private produtoService: ProdutosService,
     private messageService: MessageService,
     private router: Router,
-    private changeDetectorRef: ChangeDetectorRef
   ) {
   }
 
@@ -274,96 +271,93 @@ export class ProdutoFormComponent implements OnInit {
     }
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    if (changes['produto'] && this.produto) {
-      this.loadProdutoData(this.produto);
-      setTimeout(() => {
-        const descricaoControl = this.produtoForm.get('descricao');
-        descricaoControl?.setValue(this.produto.descricao);
-        this.changeDetectorRef.detectChanges();
-      }, 0);
-    }
-  }
+  // ngOnChanges(changes: SimpleChanges): void {
+  //   if (changes['produto'] && this.produto) {
+  //     this.loadProdutoData(this.produto);
+  //     setTimeout(() => {
+  //       const descricaoControl = this.produtoForm.get('descricao');
+  //       descricaoControl?.setValue(this.produto.descricao);
+  //       this.changeDetectorRef.detectChanges();
+  //     }, 0);
+  //   }
+  // }
 
 
-  loadProdutoData(produto: Produto) {
-    if (this.produtoForm) {
-      if (produto.produtoId) {
-        const nomeCategorias = Array.isArray(produto.categorias)
-          ? produto.categorias.map((categoria: any) => ({
-            nome: categoria.nome,
-          }))
-          : [];
-
-        const nomeTags = Array.isArray(produto.tags)
-          ? produto.tags.map((tag: any) => ({
-            nome: tag.nome,
-          }))
-          : [];
-
-
-        // Atualizando o formulário com os valores do produto
-        this.produtoForm.patchValue({
-          nome: produto.nome,
-          marca: produto.marca,
-          descricao: produto.descricao,
-          validade: produto.validade ? new Date(produto.validade) : null,
-          unidadeMedida: produto.unidadeMedida || null,
-          dataFabricacao: produto.dataFabricacao
-            ? new Date(produto.dataFabricacao)
-            : null,
-          lote: produto.lote,
-          peso: produto.peso,
-          preco: produto.preco,
-          ingredientes: produto.ingredientes,
-          paisOrigem: produto.paisOrigem,
-          categorias: nomeCategorias,
-          tags: nomeTags,
-        });
-      }
-    } else {
-      console.error('produtoForm não definido');
-    }
-  }
+  // loadProdutoData(produto: Produto) {
+  //   if (this.produtoForm) {
+  //     if (produto.produtoId) {
+  //       const nomeCategorias = Array.isArray(produto.categorias)
+  //         ? produto.categorias.map((categoria: any) => ({
+  //           nome: categoria.nome,
+  //         }))
+  //         : [];
+  //
+  //       const nomeTags = Array.isArray(produto.tags)
+  //         ? produto.tags.map((tag: any) => ({
+  //           nome: tag.nome,
+  //         }))
+  //         : [];
+  //
+  //
+  //       // Atualizando o formulário com os valores do produto
+  //       this.produtoForm.patchValue({
+  //         nome: produto.nome,
+  //         marca: produto.marca,
+  //         descricao: produto.descricao,
+  //         validade: produto.validade ? new Date(produto.validade) : null,
+  //         unidadeMedida: produto.unidadeMedida || null,
+  //         dataFabricacao: produto.dataFabricacao
+  //           ? new Date(produto.dataFabricacao)
+  //           : null,
+  //         lote: produto.lote,
+  //         peso: produto.peso,
+  //         preco: produto.preco,
+  //         ingredientes: produto.ingredientes,
+  //         paisOrigem: produto.paisOrigem,
+  //         categorias: nomeCategorias,
+  //         tags: nomeTags,
+  //       });
+  //     }
+  //   } else {
+  //     console.error('produtoForm não definido');
+  //   }
+  // }
 
   onSave(): void {
     // Construir o objeto novoProduto com as informações do formulário
-    const novoProduto: Produto = {
-      nome: this.produtoForm.get('nome')?.value,
-      preco: this.produtoForm.get('preco')?.value,
-      peso: this.produtoForm.get('peso')?.value,
-      unidadeMedida: this.produtoForm.get('unidadeMedida')?.value,
-      ingredientes: this.produtoForm.get('ingredientes')?.value,
-      marca: this.produtoForm.get('marca')?.value,
-      descricao: this.produtoForm.get('descricao')?.value,
-      paisOrigem: this.produtoForm.get('paisOrigem')?.value,
-      validade: this.produtoForm.get('validade')?.value
-        ? this.produtoForm.get('validade')?.value
-        : null,
-      dataFabricacao: this.produtoForm.get('dataFabricacao')?.value
-        ? this.produtoForm.get('dataFabricacao')?.value
-        : null,
-      lote: this.produtoForm.get('lote')?.value,
-
-      // Aqui, cada string será mapeada para um objeto com a chave `nome`
-      categorias: this.produtoForm.get('categorias')?.value
-        ? this.produtoForm
-          .get('categorias')
-          ?.value.map((categoria: string) => ({nome: categoria}))
-        : [],
-
-      // Mesma coisa para tags
-      tags: this.produtoForm.get('tags')?.value
-        ? this.produtoForm
-          .get('tags')
-          ?.value.map((tag: string) => ({nome: tag}))
-        : []
-    };
-
-    console.log(novoProduto.tags);
+    // const novoProduto: Produto = {
+    //   nome: this.produtoForm.get('nome')?.value,
+    //   preco: this.produtoForm.get('preco')?.value,
+    //   peso: this.produtoForm.get('peso')?.value,
+    //   unidadeMedida: this.produtoForm.get('unidadeMedida')?.value,
+    //   ingredientes: this.produtoForm.get('ingredientes')?.value,
+    //   marca: this.produtoForm.get('marca')?.value,
+    //   descricao: this.produtoForm.get('descricao')?.value,
+    //   paisOrigem: this.produtoForm.get('paisOrigem')?.value,
+    //   validade: this.produtoForm.get('validade')?.value
+    //     ? this.produtoForm.get('validade')?.value
+    //     : null,
+    //   dataFabricacao: this.produtoForm.get('dataFabricacao')?.value
+    //     ? this.produtoForm.get('dataFabricacao')?.value
+    //     : null,
+    //   lote: this.produtoForm.get('lote')?.value,
+    //
+    //   // Aqui, cada string será mapeada para um objeto com a chave `nome`
+    //   categorias: this.produtoForm.get('categorias')?.value
+    //     ? this.produtoForm
+    //       .get('categorias')
+    //       ?.value.map((categoria: string) => ({nome: categoria}))
+    //     : [],
+    //
+    //   // Mesma coisa para tags
+    //   tags: this.produtoForm.get('tags')?.value
+    //     ? this.produtoForm
+    //       .get('tags')
+    //       ?.value.map((tag: string) => ({nome: tag}))
+    //     : []
+    // };
 
     const formData = this.createFormData(this.produtoForm, this.selectedImage);
-    console.log('Produto cadastrado', novoProduto);
 
     if (this.produto && this.produto.produtoId) {
       // Atualizar produto existente
@@ -382,7 +376,7 @@ export class ProdutoFormComponent implements OnInit {
             this.onCancel();
 
             setTimeout(() => {
-              this.router.navigate(['produtos']);
+              this.router.navigate(['produtos']).then();
             }, 2000);
           } else {
             this.messageService.add({
@@ -420,7 +414,7 @@ export class ProdutoFormComponent implements OnInit {
               this.onCancel();
 
               setTimeout(() => {
-                this.router.navigate(['produtos']);
+                this.router.navigate(['produtos']).then();
               }, 2000);
             } else {
               this.messageService.add({
