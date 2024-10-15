@@ -103,10 +103,11 @@ section {
 
 .historia-produto {
   min-height: 200px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  align-items: center;
+}
+
+.descricao-produto{
+  width: 100%;
+  padding: 0 40px;
 }
 
 h3 {
