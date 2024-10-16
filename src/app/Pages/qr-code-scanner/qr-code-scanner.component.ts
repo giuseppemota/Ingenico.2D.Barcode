@@ -8,6 +8,8 @@ import { MessageService } from 'primeng/api';
 import { MessageModule } from 'primeng/message';
 import { BarcodeFormat } from '@zxing/library';
 import { DialogModule } from 'primeng/dialog';
+import {ButtonModule} from "primeng/button";
+import {StyleClassModule} from "primeng/styleclass";
 
 @Component({
   selector: 'app-qr-code-scanner',
@@ -20,6 +22,8 @@ import { DialogModule } from 'primeng/dialog';
     ToastModule,
     MessageModule,
     DialogModule,
+    ButtonModule,
+    StyleClassModule
   ],
   templateUrl: './qr-code-scanner.component.html',
   styleUrls: ['./qr-code-scanner.component.scss'],
@@ -37,33 +41,11 @@ export class QrCodeScannerComponent implements OnInit{
   dadosProduto!: any
   displayModal: boolean = false;
 
-  timeout : any;
+  overlay: boolean = true;
 
   constructor(private messageService: MessageService) {}
 
-  ngOnInit(): void {
-    this.startTimer();
-  }
-
-  startTimer() {
-    clearTimeout(this.timeout);
-    this.timeout = setTimeout(() => this.aplicarBlur(), 5000);
-  }
-
-  aplicarBlur(){
-    const camera = document.querySelector('.camera-container');
-    if(camera){
-      camera.classList.add('blur');
-    }
-  }
-
-  removerBlur() {
-    const camera = document.querySelector('.camera-container');
-    if(camera){
-      camera.classList.remove('blur');
-      this.startTimer();
-    }
-  }
+  ngOnInit(): void {}
 
   onCamerasFound(devices: MediaDeviceInfo[]): void {
     this.availableDevices = devices;
@@ -129,5 +111,12 @@ export class QrCodeScannerComponent implements OnInit{
   handleFormattedData(data: string): void {
     this.dadosProduto = JSON.parse(data)
     this.displayModal = true;
+  }
+
+  clickOverlay(){
+    this.overlay = false;
+    setTimeout(() => {
+      this.overlay = true;
+    }, 5000);
   }
 }

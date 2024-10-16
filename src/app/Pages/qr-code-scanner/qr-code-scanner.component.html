@@ -1,15 +1,21 @@
+<div class="scanner-overlay" (click)="clickOverlay()" *ngIf="overlay">
+  <h1>Clique para Iniciar a Leitura</h1>
+</div>
+
 <div class="scanner-container">
-  <button (click)="removerBlur()">INICIAR LEITURA</button>
   <h1 class="title">LEITURA DE QR CODE</h1>
   <div *ngIf="hasDevices" class="dropdown-container">
     <p-dropdown [options]="availableDevices" [(ngModel)]="currentDevice" optionLabel="label"
-      placeholder="Selecione a câmera" (onChange)="onDeviceSelectChange($event)" [showClear]="true"></p-dropdown>
+                placeholder="Selecione a câmera" (onChange)="onDeviceSelectChange($event)"
+                [showClear]="true"></p-dropdown>
   </div>
 
-  <div class="camera-container">
-    <zxing-scanner [device]="currentDevice" (scanSuccess)="onCodeResult($event)" (deviceChange)="onDeviceChange($event)"
-      [formats]="formatsEnabled" (camerasFound)="onCamerasFound($event)" (permissionResponse)="onHasPermission($event)"
-      [tryHarder]="true" class="scanner"></zxing-scanner>
+  <div class="camera-container" *ngIf="!overlay">
+    <zxing-scanner [device]="currentDevice" (scanSuccess)="onCodeResult($event)"
+                   (deviceChange)="onDeviceChange($event)"
+                   [formats]="formatsEnabled" (camerasFound)="onCamerasFound($event)"
+                   (permissionResponse)="onHasPermission($event)"
+                   [tryHarder]="true" class="scanner"></zxing-scanner>
   </div>
 
   <div *ngIf="hasPermission === null">
@@ -30,7 +36,7 @@
   </div>
 
   <p-dialog [(visible)]="displayModal" header="Dados do QR Code" [modal]="true" [closable]="true"
-    [style]="{width: '100vw', height: '100vh'}">
+            [style]="{width: '100vw', height: '100vh'}">
     <div *ngIf="dadosProduto">
       <p><strong>Nome:</strong> {{ dadosProduto.nome }}</p>
       <p><strong>Descrição:</strong> {{ dadosProduto.descricao }}</p>
