@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -8,7 +8,8 @@ import { MessageService } from 'primeng/api';
 import { MessageModule } from 'primeng/message';
 import { BarcodeFormat } from '@zxing/library';
 import { DialogModule } from 'primeng/dialog';
-import { Produto } from '../../Models/product.model';
+import {ButtonModule} from "primeng/button";
+import {StyleClassModule} from "primeng/styleclass";
 
 @Component({
   selector: 'app-qr-code-scanner',
@@ -21,12 +22,14 @@ import { Produto } from '../../Models/product.model';
     ToastModule,
     MessageModule,
     DialogModule,
+    ButtonModule,
+    StyleClassModule
   ],
   templateUrl: './qr-code-scanner.component.html',
   styleUrls: ['./qr-code-scanner.component.scss'],
   providers: [],
 })
-export class QrCodeScannerComponent implements OnInit {
+export class QrCodeScannerComponent implements OnInit{
   availableDevices: MediaDeviceInfo[] = [];
   currentDevice: MediaDeviceInfo | undefined;
   hasDevices: boolean | undefined;
@@ -37,6 +40,8 @@ export class QrCodeScannerComponent implements OnInit {
 
   dadosProduto!: any
   displayModal: boolean = false;
+
+  overlay: boolean = true;
 
   constructor(private messageService: MessageService) {}
 
@@ -106,5 +111,12 @@ export class QrCodeScannerComponent implements OnInit {
   handleFormattedData(data: string): void {
     this.dadosProduto = JSON.parse(data)
     this.displayModal = true;
+  }
+
+  clickOverlay(){
+    this.overlay = false;
+    setTimeout(() => {
+      this.overlay = true;
+    }, 5000);
   }
 }

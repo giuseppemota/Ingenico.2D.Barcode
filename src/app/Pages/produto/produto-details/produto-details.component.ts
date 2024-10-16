@@ -106,6 +106,6 @@ export class ProdutoDetailsComponent implements OnInit, AfterViewInit {
   }
 
   voltarParaLeituraQR() {
-    this.router.navigate(['/leitor-qrcode']);
+    this.router.navigate(['/leitor-qrcode']).then();
   }
 }
