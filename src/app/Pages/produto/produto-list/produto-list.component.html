@@ -108,7 +108,7 @@
     (onHide)="closeDetailsDialog()"
     [(visible)]="displayDetailsDialog"
     [baseZIndex]="10000"
-    [closable]="true"
+    closable="false"
     [modal]="true"
     [resizable]="true"
     [style]="{ width: '80vw' }"
@@ -182,6 +182,14 @@
             <td>{{ selectedProduct.categorias }}</td>
           </tr>
         </table>
+      </div>
+      <div style="display: flex; justify-content: center;margin-top: 30px;">
+        <p-button
+          type="button"
+          (click)="onCancel()"
+          label="Fechar"
+          [style]="{background: 'white', 'border-color': '#0C1E58', color: '#0C1E58', width: '100%'}"
+        ></p-button>
       </div>
     </section>
   </p-dialog>

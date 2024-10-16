@@ -30,7 +30,7 @@
   </div>
 
   <p-dialog [(visible)]="displayModal" header="Dados do QR Code" [modal]="true" [closable]="true"
-    [style]="{width: '50vw'}">
+    [style]="{width: '100vw', height: '100vh'}">
     <div *ngIf="dadosProduto">
       <p><strong>Nome:</strong> {{ dadosProduto.nome }}</p>
       <p><strong>Descrição:</strong> {{ dadosProduto.descricao }}</p>

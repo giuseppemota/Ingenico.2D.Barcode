@@ -363,7 +363,6 @@ export class ProdutoFormComponent implements OnInit {
     console.log(novoProduto.tags);
 
     const formData = this.createFormData(this.produtoForm, this.selectedImage);
-    console.log('Produto cadastrado', novoProduto);
 
     if (this.produto && this.produto.produtoId) {
       // Atualizar produto existente
@@ -382,7 +381,7 @@ export class ProdutoFormComponent implements OnInit {
             this.onCancel();
 
             setTimeout(() => {
-              this.router.navigate(['produtos']);
+              this.router.navigate(['produtos']).then();
             }, 2000);
           } else {
             this.messageService.add({
@@ -420,7 +419,7 @@ export class ProdutoFormComponent implements OnInit {
               this.onCancel();
 
               setTimeout(() => {
-                this.router.navigate(['produtos']);
+                this.router.navigate(['produtos']).then();
               }, 2000);
             } else {
               this.messageService.add({

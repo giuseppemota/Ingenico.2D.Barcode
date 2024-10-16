@@ -303,6 +303,11 @@ export class ProdutoListComponent implements OnInit {
     }
   }
 
+  onCancel(): void {
+    this.selectedProduct = {} as Produto;
+    this.closeDetailsDialog();
+  }
+
   // saveProduct(product: Produto): void {
   //   if (this.isEditMode) {
   //     if (product.id) {
