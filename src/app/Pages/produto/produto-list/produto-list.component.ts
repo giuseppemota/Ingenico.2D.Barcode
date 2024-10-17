@@ -24,6 +24,8 @@ import {QRCodeModule} from 'angularx-qrcode';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import localePt from '@angular/common/locales/pt';
+import { environment } from '../../../../environments/environment.development';
+
 
 registerLocaleData(localePt, 'pt-BR');
 
@@ -71,6 +73,7 @@ export class ProdutoListComponent implements OnInit {
   infoQrCode: string = '';
   qrCodeFormatado: string = '';
   isLinkQrCode: boolean = false;
+  deployUrl: string = environment.deployUrl;
   // baseUrl: string = environment.apiUrl;
 
   // Variáveis para paginação
@@ -121,8 +124,9 @@ export class ProdutoListComponent implements OnInit {
   }
 
   generateProductLink(produto: any): string {
-    return `http://localhost:4200/produtos/${produto.produtoId}`;
+    return `${this.deployUrl}/produtos/${produto.produtoId}`;
   }
+
 
   updateQrCode(): void {
     if (this.isLinkQrCode) {
