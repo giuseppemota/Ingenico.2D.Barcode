@@ -41,7 +41,7 @@
       <p><strong>Nome:</strong> {{ dadosProduto.nome }}</p>
       <p><strong>Descrição:</strong> {{ dadosProduto.descricao }}</p>
       <p><strong>Marca:</strong> {{ dadosProduto.marca }}</p>
-      <p><strong>Peso:</strong> {{ dadosProduto.peso }} {{ dadosProduto.unidadeMedida }}</p>
+      <p><strong>Peso:</strong> {{ dadosProduto.peso }}</p>
       <p><strong>Preço:</strong> R$ {{ dadosProduto.preco | number:'1.2-2' }}</p>
       <p><strong>Ingredientes:</strong> {{ dadosProduto.ingredientes }}</p>
       <p><strong>País de Origem:</strong> {{ dadosProduto.paisOrigem }}</p>
@@ -51,12 +51,12 @@
 
       <p><strong>Categorias:</strong>
         <span *ngFor="let categoria of dadosProduto.categorias; let isLast = last">
-          {{ categoria.nome }}<span *ngIf="!isLast">, </span>
+          {{ categoria }}<span *ngIf="!isLast">, </span>
         </span>
       </p>
       <p><strong>Tags:</strong>
         <span *ngFor="let tag of dadosProduto.tags; let isLast = last">
-          {{ tag.nome }}<span *ngIf="!isLast">, </span>
+          {{ tag }}<span *ngIf="!isLast">, </span>
         </span>
       </p>
     </div>

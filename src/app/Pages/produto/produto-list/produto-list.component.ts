@@ -142,11 +142,14 @@ export class ProdutoListComponent implements OnInit {
     formattedData += `Marca - ${produto.marca}\n`;
     formattedData += `Peso - ${produto.peso} ${produto.unidadeMedida}\n`;
     formattedData += `Preço - ${produto.preco}\n`;
+    formattedData += `Validade - ${produto.validade}\n`;
+    formattedData += `Data de Fabricação - ${produto.dataFabricacao}\n`;
+    formattedData += `Lote - ${produto.lote}\n`;
     formattedData += `País de Origem - ${produto.paisOrigem}\n`;
     formattedData += `Categorias - ${produto.categorias
       .map((categoria: any) => categoria.nome)
       .join(', ')}\n`;
-    formattedData += `Tags: ${produto.tags
+    formattedData += `Tags - ${produto.tags
       .map((tag: any) => tag.nome)
       .join(', ')}\n`;
 
