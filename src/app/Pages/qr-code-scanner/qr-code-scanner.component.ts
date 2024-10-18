@@ -1,15 +1,16 @@
-import {Component, OnInit} from '@angular/core';
-import { ZXingScannerModule } from '@zxing/ngx-scanner';
-import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
-import { DropdownChangeEvent, DropdownModule } from 'primeng/dropdown';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
-import { MessageModule } from 'primeng/message';
-import { BarcodeFormat } from '@zxing/library';
-import { DialogModule } from 'primeng/dialog';
+import {Component} from '@angular/core';
+import {ZXingScannerModule} from '@zxing/ngx-scanner';
+import {CommonModule} from '@angular/common';
+import {FormsModule} from '@angular/forms';
+import {DropdownChangeEvent, DropdownModule} from 'primeng/dropdown';
+import {ToastModule} from 'primeng/toast';
+import {MessageService} from 'primeng/api';
+import {MessageModule} from 'primeng/message';
+import {BarcodeFormat} from '@zxing/library';
+import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from "primeng/button";
 import {StyleClassModule} from "primeng/styleclass";
+import {Produto} from "../../Models/product.model";
 
 @Component({
   selector: 'app-qr-code-scanner',
@@ -29,7 +30,7 @@ import {StyleClassModule} from "primeng/styleclass";
   styleUrls: ['./qr-code-scanner.component.scss'],
   providers: [],
 })
-export class QrCodeScannerComponent implements OnInit{
+export class QrCodeScannerComponent{
   availableDevices: MediaDeviceInfo[] = [];
   currentDevice: MediaDeviceInfo | undefined;
   hasDevices: boolean | undefined;
@@ -38,19 +39,16 @@ export class QrCodeScannerComponent implements OnInit{
 
   formatsEnabled: BarcodeFormat[] = [BarcodeFormat.QR_CODE];
 
-  dadosProduto!: any
+  dadosProduto!: Produto;
   displayModal: boolean = false;
 
   overlay: boolean = true;
 
   constructor(private messageService: MessageService) {}
 
-  ngOnInit(): void {}
-
   onCamerasFound(devices: MediaDeviceInfo[]): void {
     this.availableDevices = devices;
     this.hasDevices = Boolean(devices && devices.length);
-    console.log(this.hasDevices);
   }
 
   onDeviceSelectChange(event: DropdownChangeEvent) {
@@ -89,11 +87,12 @@ export class QrCodeScannerComponent implements OnInit{
   }
 
   onCodeResult(result: string) {
+    // console.log('Resultado do QR code:', result);
     if (result.startsWith('LINK - ')) {
       const link = result.substring('LINK - '.length);
       this.handleLink(link);
-    } else if (result.startsWith('DADOS:')) {
-      const formattedData = result.substring('DADOS:'.length);
+    } else if (result.startsWith('Nome - ')) {
+      const formattedData = result;
       this.handleFormattedData(formattedData);
     } else {
       this.messageService.add({
@@ -109,14 +108,85 @@ export class QrCodeScannerComponent implements OnInit{
   }
 
   handleFormattedData(data: string): void {
-    this.dadosProduto = JSON.parse(data)
+    this.dadosProduto = this.converterParaProduto(data)
+    console.log("NOME DO PRODUTO" ,this.dadosProduto.nome);
     this.displayModal = true;
   }
 
-  clickOverlay(){
-    this.overlay = false;
-    setTimeout(() => {
-      this.overlay = true;
-    }, 5000);
+  converterParaProduto(dados: string): Produto {
+    const linhas = dados.split('\n'); // Dividir as linhas do texto
+    const produto: Partial<Produto> = {
+      tags: [],
+      categorias: []
+    }; // Partial para permitir campos opcionais até o objeto estar completo
+
+    linhas.forEach((linha) => {
+      const [chave, valor] = linha.split(' - '); // Separar chave e valor
+      if (chave && valor) {
+        const chaveLimpa = chave.trim();
+        const valorLimpo = valor.trim();
+
+        // Mapear as chaves para a interface Produto
+        switch (chaveLimpa) {
+          case 'Nome':
+            produto.nome = valorLimpo;
+            break;
+          case 'Ingredientes':
+            produto.ingredientes = valorLimpo;
+            break;
+          case 'Descrição':
+            produto.descricao = valorLimpo;
+            break;
+          case 'Marca':
+            produto.marca = valorLimpo;
+            break;
+          case 'Peso':
+            const [peso, unidade] = valorLimpo.split(' ');
+            produto.peso = parseFloat(peso);
+            produto.unidadeMedida = unidade;
+            break;
+          case 'Preço':
+            produto.preco = parseFloat(valorLimpo);
+            break;
+          case 'País de Origem':
+            produto.paisOrigem = valorLimpo;
+            break;
+          case 'Categorias':
+            produto.categorias = valorLimpo.split(',').map((categoria) => categoria.trim());
+            break;
+          case 'Validade':
+            produto.validade = new Date(valorLimpo);
+            break;
+          case 'Data de Fabricação':
+            produto.dataFabricacao = new Date(valorLimpo);
+            break;
+          case 'Lote':
+            produto.lote = valorLimpo;
+            break;
+          case 'Tags':
+            produto.tags = valorLimpo.split(',').map((tag) => tag.trim());
+            break;
+          default:
+            // Caso haja alguma chave desconhecida
+            console.warn(`Chave não reconhecida: ${chaveLimpa}`);
+        }
+      }
+    });
+
+    return produto as Produto; // Garantimos que o objeto agora seja do tipo Produto
+  }
+
+  clickOverlay() {
+    const div = document.getElementsByClassName('scanner-overlay')[0];
+    if (div) {
+      div.classList.add('slide-up');
+      setTimeout(() => {
+        this.overlay = false;
+      }, 1000); // Tempo da animação
+      setTimeout(() => {
+        this.overlay = true;
+        div.classList.remove('slide-up');
+      }, 20000);
+    }
   }
 }

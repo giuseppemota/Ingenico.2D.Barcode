@@ -1,68 +1,136 @@
 <div class="scanner-overlay" (click)="clickOverlay()" *ngIf="overlay">
-  <h1>Clique para Iniciar a Leitura</h1>
+  <div class="texto-overlay">
+    <h1>Iniciar a Leitura</h1>
+    <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="#0C1E58" class="bi bi-hand-index-thumb-fill"
+         viewBox="0 0 16 16">
+      <path
+        d="M8.5 1.75v2.716l.047-.002c.312-.012.742-.016 1.051.046.28.056.543.18.738.288.273.152.456.385.56.642l.132-.012c.312-.024.794-.038 1.158.108.37.148.689.487.88.716q.113.137.195.248h.582a2 2 0 0 1 1.99 2.199l-.272 2.715a3.5 3.5 0 0 1-.444 1.389l-1.395 2.441A1.5 1.5 0 0 1 12.42 16H6.118a1.5 1.5 0 0 1-1.342-.83l-1.215-2.43L1.07 8.589a1.517 1.517 0 0 1 2.373-1.852L5 8.293V1.75a1.75 1.75 0 0 1 3.5 0"/>
+    </svg>
+  </div>
 </div>
 
-<div class="scanner-container">
-  <h1 class="title">LEITURA DE QR CODE</h1>
-  <div *ngIf="hasDevices" class="dropdown-container">
-    <p-dropdown [options]="availableDevices" [(ngModel)]="currentDevice" optionLabel="label"
-                placeholder="Selecione a câmera" (onChange)="onDeviceSelectChange($event)"
-                [showClear]="true"></p-dropdown>
-  </div>
-
-  <div class="camera-container" *ngIf="!overlay">
-    <zxing-scanner [device]="currentDevice" (scanSuccess)="onCodeResult($event)"
-                   (deviceChange)="onDeviceChange($event)"
-                   [formats]="formatsEnabled" (camerasFound)="onCamerasFound($event)"
-                   (permissionResponse)="onHasPermission($event)"
-                   [tryHarder]="true" class="scanner"></zxing-scanner>
-  </div>
-
-  <div *ngIf="hasPermission === null">
-    <p-message severity="warn" text="Aguardando acesso a dispositivos"></p-message>
-  </div>
-
-  <div *ngIf="hasDevices === null">
-    <p-message severity="error" text="Não foi possível verificar os dispositivos"></p-message>
-  </div>
-
-
-  <div *ngIf="hasPermission === false && hasPermission !== null">
-    <p-message severity="error" text="Você precisa permitir o acesso à câmera para ler o QR Code."></p-message>
-  </div>
-
-  <div *ngIf="!hasDevices && hasPermission !== false">
-    <p-message severity="info" text="Nenhum dispositivo encontrado"></p-message>
-  </div>
-
-  <p-dialog [(visible)]="displayModal" header="Dados do QR Code" [modal]="true" [closable]="true"
-            [style]="{width: '100vw', height: '100vh'}">
-    <div *ngIf="dadosProduto">
-      <p><strong>Nome:</strong> {{ dadosProduto.nome }}</p>
-      <p><strong>Descrição:</strong> {{ dadosProduto.descricao }}</p>
-      <p><strong>Marca:</strong> {{ dadosProduto.marca }}</p>
-      <p><strong>Peso:</strong> {{ dadosProduto.peso }} {{ dadosProduto.unidadeMedida }}</p>
-      <p><strong>Preço:</strong> R$ {{ dadosProduto.preco | number:'1.2-2' }}</p>
-      <p><strong>Ingredientes:</strong> {{ dadosProduto.ingredientes }}</p>
-      <p><strong>País de Origem:</strong> {{ dadosProduto.paisOrigem }}</p>
-      <p><strong>Validade:</strong> {{ dadosProduto.validade | date:'dd/MM/yyyy' }}</p>
-      <p><strong>Data de Fabricação:</strong> {{ dadosProduto.dataFabricacao | date:'dd/MM/yyyy' }}</p>
-      <p><strong>Lote:</strong> {{ dadosProduto.lote }}</p>
-
-      <p><strong>Categorias:</strong>
-        <span *ngFor="let categoria of dadosProduto.categorias; let isLast = last">
-          {{ categoria.nome }}<span *ngIf="!isLast">, </span>
-        </span>
-      </p>
-      <p><strong>Tags:</strong>
-        <span *ngFor="let tag of dadosProduto.tags; let isLast = last">
-          {{ tag.nome }}<span *ngIf="!isLast">, </span>
-        </span>
-      </p>
+<!--Container com camera e informações-->
+<div class="main-container">
+  <!--Dropdown, Mensagens e Camera-->
+  <div class="container-drop-msg-cam">
+    <!--DROPDOWN-->
+    <div class="dropdown-container">
+      <p-dropdown [options]="availableDevices" [(ngModel)]="currentDevice" optionLabel="label"
+                  placeholder="Selecione a câmera" (onChange)="onDeviceSelectChange($event)"
+                  [style]="{width: '100%'}"
+                  *ngIf="hasDevices"
+                  [showClear]="true">
+      </p-dropdown>
     </div>
-    <div *ngIf="!dadosProduto">
-      <p>Dados do produto não disponíveis.</p>
+    <!--CAMERA-->
+    <div class="camera-container">
+      <!--Nenhum dispositivo encontrado-->
+      <div *ngIf="!hasDevices && hasPermission !== false" class="menssagem">
+        <p-message [style]="{width: '320px'}"  severity="info" text="Nenhum dispositivo encontrado"></p-message>
+      </div>
+
+      <!--Você precisa permitir o acesso à câmera para ler o QR Code.-->
+      <div *ngIf="hasPermission === false && hasPermission !== null" class="menssagem">
+        <p-message [style]="{width: '320px'}" severity="error" text="Você precisa permitir o acesso à câmera para ler o QR Code."></p-message>
+      </div>
+
+      <!--Aguardando acesso aos dispositivos-->
+      <div *ngIf="hasPermission === null">
+        <p-message [style]="{width: '320px'}"  severity="warn" text="Aguardando acesso a dispositivos" class="menssagem"></p-message>
+      </div>
+
+      <!--Não foi possível verificar os dispositivos-->
+      <div *ngIf="hasDevices === null">
+        <p-message [style]="{width: '320px'}"  severity="error" text="Não foi possível verificar os dispositivos" class="menssagem"></p-message>
+      </div>
+
+      <!--Tela do Scanner-->
+      <zxing-scanner [device]="currentDevice" (scanSuccess)="onCodeResult($event)"
+                     (deviceChange)="onDeviceChange($event)"
+                     [formats]="formatsEnabled" (camerasFound)="onCamerasFound($event)"
+                     (permissionResponse)="onHasPermission($event)"
+                     *ngIf="!overlay"
+                     [tryHarder]="true" class="scanner">
+      </zxing-scanner>
     </div>
-    <p-toast></p-toast>
-  </p-dialog>
+  </div>
+
+  <!--Informaçoes lateral-->
+  <div class="container-informacoes">
+    <div class="informacao-abaixo">
+      <div></div>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="#252525" class="bi bi-arrow-down-square-fill"
+           viewBox="0 0 16 16">
+        <path
+          d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm6.5 4.5v5.793l2.146-2.147a.5.5 0 0 1 .708.708l-3 3a.5.5 0 0 1-.708 0l-3-3a.5.5 0 1 1 .708-.708L7.5 10.293V4.5a.5.5 0 0 1 1 0"/>
+      </svg>
+      <p>INSTRUÇÕES</p>
+      <div></div>
+    </div>
+    <div class="titulo-informacoes">
+      <h1>SEJA BEM VINDO !</h1>
+    </div>
+    <div class="descricao-informacoes">
+      <p style="font-weight: bold">Informações importantes:</p>
+      <div class="informacao">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#252525"
+             class="bi bi-1-square-fill svg-icon" viewBox="0 0 16 16">
+          <path
+            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm7.283 4.002V12H7.971V5.338h-.065L6.072 6.656V5.385l1.899-1.383z"/>
+        </svg>
+        <p>Busque o QR CODE no seu produto.</p>
+      </div>
+      <div class="informacao">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#252525"
+             class="bi bi-2-square-fill svg-icon" viewBox="0 0 16 16">
+          <path
+            d="M2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2zm4.646 6.24v.07H5.375v-.064c0-1.213.879-2.402 2.637-2.402 1.582 0 2.613.949 2.613 2.215 0 1.002-.6 1.667-1.287 2.43l-.096.107-1.974 2.22v.077h3.498V12H5.422v-.832l2.97-3.293c.434-.475.903-1.008.903-1.705 0-.744-.557-1.236-1.313-1.236-.843 0-1.336.615-1.336 1.306"/>
+        </svg>
+        <p>Aponte o QR CODE do produto para câmera, sem obstruções.</p>
+      </div>
+    </div>
+    <div class="descricao-informacoes">
+      <p style="font-weight: bold;margin-top:40px;">OBS: Caso o QR CODE não seja reconhecido, tente novamente.</p>
+      <div class="informacao">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="#252525"
+             class="bi bi-exclamation-circle-fill svg-icon" viewBox="0 0 16 16">
+          <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0M8 4a.905.905 0 0 0-.9.995l.35 3.507a.552.552 0 0 0 1.1 0l.35-3.507A.905.905 0 0 0 8 4m.002 6a1 1 0 1 0 0 2 1 1 0 0 0 0-2"/>
+        </svg>
+        <p>Verifique a integridade visual do QR CODE.</p>
+      </div>
+    </div>
+  </div>
 </div>
+
+<!--Dados do QR CODE-->
+<p-dialog [(visible)]="displayModal" header="Dados do QR Code" [modal]="true" [closable]="true"
+          [style]="{width: '100vw', height: '100vh'}">
+  <div *ngIf="dadosProduto">
+    <p><strong>Nome:</strong> {{ dadosProduto.nome }}</p>
+    <p><strong>Descrição:</strong> {{ dadosProduto.descricao }}</p>
+    <p><strong>Marca:</strong> {{ dadosProduto.marca }}</p>
+    <p><strong>Peso:</strong> {{ dadosProduto.peso }} {{ dadosProduto.unidadeMedida }}</p>
+    <p><strong>Preço:</strong> R$ {{ dadosProduto.preco | number:'1.2-2' }}</p>
+    <p><strong>Ingredientes:</strong> {{ dadosProduto.ingredientes }}</p>
+    <p><strong>País de Origem:</strong> {{ dadosProduto.paisOrigem }}</p>
+    <p><strong>Validade:</strong> {{ dadosProduto.validade | date:'dd/MM/yyyy' }}</p>
+    <p><strong>Data de Fabricação:</strong> {{ dadosProduto.dataFabricacao | date:'dd/MM/yyyy' }}</p>
+    <p><strong>Lote:</strong> {{ dadosProduto.lote }}</p>
+
+    <p><strong>Categorias:</strong>
+      <span *ngFor="let categoria of dadosProduto.categorias; let isLast = last">
+          {{ categoria }}<span *ngIf="!isLast">, </span>
+        </span>
+    </p>
+    <p><strong>Tags:</strong>
+      <span *ngFor="let tag of dadosProduto.tags; let isLast = last">
+          {{ tag }}<span *ngIf="!isLast">, </span>
+        </span>
+    </p>
+  </div>
+  <div *ngIf="!dadosProduto">
+    <p>Dados do produto não disponíveis.</p>
+  </div>
+  <p-toast></p-toast>
+</p-dialog>
