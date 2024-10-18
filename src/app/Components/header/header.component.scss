@@ -1,25 +1,29 @@
-.conteiner{
+.conteiner {
   height: 60px;
   padding: 10px 30px 10px 30px;
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: center;
   position: sticky;
-}
-.logo {
-  width: 8rem;
-}
-.btn-logout{
-  height: 35px;
-  width: 100px;
+  z-index: 100;
 }
 
+.logo {
+  width: 9rem;
+}
+
+.btn-logout {
+  position: absolute;
+  right: 30px;
+  height: 35px;
+  width: 90px;
+}
 
 @media (max-width: 768px) {
   .logo {
-    width: 6rem;
+    width: 7rem;
   }
-  .btn-logout{
+  .btn-logout {
     height: 35px;
     width: 90px;
   }
