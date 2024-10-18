@@ -10,7 +10,7 @@ import {BarcodeFormat} from '@zxing/library';
 import {DialogModule} from 'primeng/dialog';
 import {ButtonModule} from "primeng/button";
 import {StyleClassModule} from "primeng/styleclass";
-import {Produto} from "../../Models/product.model";
+import { Produto } from '../../Models/product.model';
 
 @Component({
   selector: 'app-qr-code-scanner',
