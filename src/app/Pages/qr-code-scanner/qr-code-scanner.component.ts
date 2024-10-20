@@ -1,4 +1,4 @@
-import {Component} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {ZXingScannerModule} from '@zxing/ngx-scanner';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
@@ -30,7 +30,7 @@ import { Produto } from '../../Models/product.model';
   styleUrls: ['./qr-code-scanner.component.scss'],
   providers: [],
 })
-export class QrCodeScannerComponent{
+export class QrCodeScannerComponent implements OnInit {
   availableDevices: MediaDeviceInfo[] = [];
   currentDevice: MediaDeviceInfo | undefined;
   hasDevices: boolean | undefined;
@@ -45,6 +45,18 @@ export class QrCodeScannerComponent{
   overlay: boolean = true;
 
   constructor(private messageService: MessageService) {}
+
+  ngOnInit() {
+    this.checkIfMobile();
+  }
+
+  // Verificação inicial para ativação do overlay
+  checkIfMobile() {
+    const isMobile = window.innerWidth <= 768;
+    if (isMobile) {
+      this.overlay = false;
+    }
+  }
 
   onCamerasFound(devices: MediaDeviceInfo[]): void {
     this.availableDevices = devices;
