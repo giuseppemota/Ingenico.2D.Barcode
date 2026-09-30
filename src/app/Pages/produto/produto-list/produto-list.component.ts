@@ -24,7 +24,7 @@ import {QRCodeModule} from 'angularx-qrcode';
 import {ProgressSpinnerModule} from 'primeng/progressspinner';
 import {InputSwitchModule} from 'primeng/inputswitch';
 import localePt from '@angular/common/locales/pt';
-import { environment } from '../../../../environments/environment.development';
+import { environment } from '../../../../environments/environment';
 
 
 registerLocaleData(localePt, 'pt-BR');

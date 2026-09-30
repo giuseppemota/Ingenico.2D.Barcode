@@ -1,0 +1,16 @@
+node_modules
+dist
+.angular
+.git
+.gitignore
+.devcontainer
+.vscode
+.editorconfig
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.DS_Store
+Thumbs.db
+Dockerfile*
+docker-compose*.yml
+README.md

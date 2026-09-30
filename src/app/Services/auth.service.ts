@@ -3,7 +3,7 @@ import { User } from '../Models/user';
 import { BehaviorSubject, tap } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { environment } from '../../environments/environment.development';
+import { environment } from '../../environments/environment';
 
 interface AuthResponseData {
   token: string;
