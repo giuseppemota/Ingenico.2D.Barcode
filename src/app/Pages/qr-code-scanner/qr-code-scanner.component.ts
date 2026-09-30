@@ -52,9 +52,11 @@ export class QrCodeScannerComponent implements OnInit {
 
   // Verificação inicial para ativação do overlay
   checkIfMobile() {
-    const isMobile = window.innerWidth <= 768;
-    if (isMobile) {
-      this.overlay = false;
+    if (typeof window !== 'undefined') {
+      const isMobile = window.innerWidth <= 768;
+      if (isMobile) {
+        this.overlay = false;
+      }
     }
   }
 
@@ -116,7 +118,9 @@ export class QrCodeScannerComponent implements OnInit {
   }
 
   handleLink(link: string): void {
-    window.location.href = link;
+    if (typeof window !== 'undefined') {
+      window.location.href = link;
+    }
   }
 
   handleFormattedData(data: string): void {
@@ -189,16 +193,18 @@ export class QrCodeScannerComponent implements OnInit {
   }
 
   clickOverlay() {
-    const div = document.getElementsByClassName('scanner-overlay')[0];
-    if (div) {
-      div.classList.add('slide-up');
-      setTimeout(() => {
-        this.overlay = false;
-      }, 1000); // Tempo da animação
-      setTimeout(() => {
-        this.overlay = true;
-        div.classList.remove('slide-up');
-      }, 20000);
+    if (typeof document !== 'undefined') {
+      const div = document.getElementsByClassName('scanner-overlay')[0];
+      if (div) {
+        div.classList.add('slide-up');
+        setTimeout(() => {
+          this.overlay = false;
+        }, 1000); // Tempo da animação
+        setTimeout(() => {
+          this.overlay = true;
+          div.classList.remove('slide-up');
+        }, 20000);
+      }
     }
   }
 }

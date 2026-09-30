@@ -332,6 +332,10 @@ export class ProdutoListComponent implements OnInit {
 }
 
 function richTextToPlainText(richText: string): string {
+  if (!richText) return '';
+  if (typeof document === 'undefined') {
+    return richText.replace(/<[^>]*>/g, '');
+  }
   const tempElement = document.createElement('div'); // Cria um elemento temporário
   tempElement.innerHTML = richText; // Insere o rich text (HTML) nele
   return tempElement.textContent || tempElement.innerText || ''; // Extrai o texto simples
